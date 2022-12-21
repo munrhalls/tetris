@@ -17,7 +17,7 @@ if (!requestAnimFrame)
   );
 
 const startBtn = document.getElementById("startBtn");
-const quitBtn = document.getElementById("quitBtn");
+const pauseBtn = document.getElementById("pauseBtn");
 
 const tetris = document.getElementById("tetris");
 
@@ -167,12 +167,12 @@ function cancelAnimation() {
 
 startBtn.onclick = function () {
   startBtn.classList.add("hidden");
-  quitBtn.classList.remove("hidden");
+  pauseBtn.classList.remove("hidden");
   runAnimation();
 };
 
-quitBtn.onclick = function () {
-  quitBtn.classList.add("hidden");
+pauseBtn.onclick = function () {
+  pauseBtn.classList.add("hidden");
   startBtn.classList.remove("hidden");
   cancelAnimation();
 };
