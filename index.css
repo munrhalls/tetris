@@ -1,13 +1,11 @@
-#tetris__container {
+#tetris {
     margin: auto;
     height: 90vh;
     width: 70vw;
     border: 3px solid black;
 }
 
-#tetris {
+#tetrominoe {
     position: relative;
     background: black;
-    height: 100px;
-    width: 100px;
 }

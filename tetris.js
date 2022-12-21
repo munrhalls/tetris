@@ -11,11 +11,13 @@ window.requestAnimFrame = (function () {
   );
 })();
 
-var container = document.getElementById("tetris__container");
-var elem = document.getElementById("tetris");
+var container = document.getElementById("tetris");
+var elem = document.getElementById("tetrominoe");
+
 var startTime = undefined;
 
-let moveHorizontally = container.clientWidth / 2 - elem.clientWidth / 2;
+let tWidth = 100;
+let moveHorizontally = container.clientWidth / 2 - tWidth / 2;
 
 function render(time) {
   window.onkeydown = (e) => {
@@ -25,14 +27,15 @@ function render(time) {
 
   if (time === undefined) time = Date.now();
   if (startTime === undefined) startTime = time;
+
   elem.style.left = 0 + moveHorizontally + "px";
   elem.style.height = "100px";
+  elem.style.width = "100px";
   elem.style.background = "black";
   elem.style.top = (((time - startTime) / 50) % 500) + "px";
 }
 
 const startBtn = document.getElementById("start__btn");
-const quitBtn = document.getElementById("quit__btn");
 
 startBtn.onclick = function () {
   (function animloop() {
@@ -40,5 +43,3 @@ startBtn.onclick = function () {
     requestAnimFrame(animloop, elem);
   })();
 };
-
-quitBtn.onclick = function () {};
