@@ -84,13 +84,28 @@ function setCurrentTetro() {
   current.style.height = `${standardSquare}px`;
   current.style.width = `${standardSquare}px`;
   current.style.left = `${horizontalTrackPos}px`;
-  current.style.left = tetris.appendChild(current);
+  tetris.appendChild(current);
   currentTetro = current;
+
+  if (
+    currentTetro === undefined ||
+    !currentTetro.style.left ||
+    !currentTetro.style.width ||
+    !currentTetro.style.height
+  )
+    throw new Error(
+      "Current tetrominoe variables did not initialize properly."
+    );
+  if (
+    !Array(...currentTetro.classList).includes("tetrominoe") ||
+    !Array(...currentTetro.classList).includes("current")
+  )
+    throw new Error(
+      "Current tetrominoe DOM classes did not initialize properly"
+    );
 }
 
 // Current tetrominoe ready
-
-function listToCurrentMoves(e) {}
 
 function paintVariables() {
   if (verticalTrackPos > verticalTrack - standardSquare)
