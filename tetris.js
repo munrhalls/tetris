@@ -11,14 +11,15 @@ window.requestAnimFrame = (function () {
   );
 })();
 
-const startBtn = document.getElementById("start__btn");
+const startBtn = document.getElementById("startBtn");
 const tetris = document.getElementById("tetris");
 
 let currentTetro = undefined;
-let standardSquare = 10;
+let verticalSpeed = 500;
+let standardSquare = 20;
 let verticalTrackPos = 0;
-let verticalTrack = standardSquare * 50;
-let horizontalTrack = standardSquare * 30;
+let verticalTrack = standardSquare * 25;
+let horizontalTrack = standardSquare * 15;
 
 tetris.style.height = `${verticalTrack}px`;
 tetris.style.width = `${horizontalTrack}px`;
@@ -30,6 +31,7 @@ function setCurrentTetro() {
   div.classList.add("current");
   div.style.height = `${standardSquare}px`;
   div.style.width = `${standardSquare}px`;
+  div.style.left = `${horizontalTrack / 2 - standardSquare / 2}px`;
   div.style.left = tetris.appendChild(div);
   currentTetro = div;
 }
@@ -45,7 +47,7 @@ function runAnimation() {
 
   setInterval(function () {
     requestAnimationFrame(paintVariables);
-  }, 1000);
+  }, verticalSpeed);
 }
 
 startBtn.onclick = function () {

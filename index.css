@@ -1,6 +1,7 @@
 body {
     min-height: 100vh;
     display: flex;
+    flex-direction: column;;
     justify-content: center;
     align-content: center;
 }
@@ -10,7 +11,18 @@ body {
     border: 3px solid black;
 }
 
+
 .tetrominoe {
     position: relative;
     background: black;
+}
+
+
+#startBtn {
+    margin: auto;
+    height: 80px;
+    width: 60px;
+    background: #000;
+    color: #fff;
+    cursor: pointer;
 }
