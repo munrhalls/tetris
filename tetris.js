@@ -18,11 +18,13 @@ var startTime = undefined;
 
 let tWidth = 100;
 let moveHorizontally = container.clientWidth / 2 - tWidth / 2;
+let speeding = 0;
 
 function render(time) {
   window.onkeydown = (e) => {
     if (e.keyCode === 37) moveHorizontally -= 10;
     if (e.keyCode === 39) moveHorizontally += 10;
+    if (e.keyCode === 40) speeding += 10;
   };
 
   if (time === undefined) time = Date.now();
@@ -32,7 +34,7 @@ function render(time) {
   elem.style.height = "100px";
   elem.style.width = "100px";
   elem.style.background = "black";
-  elem.style.top = (((time - startTime) / 50) % 500) + "px";
+  elem.style.top = (((time - startTime) / 50) % 500) + speeding + "px";
 }
 
 const startBtn = document.getElementById("start__btn");
