@@ -13,9 +13,18 @@ window.requestAnimFrame = (function () {
 
 const startBtn = document.getElementById("start__btn");
 
-function paint() {
-  console.log("paint");
+function paintVariables(variables) {
+  console.log("repaint");
 }
-startBtn.onclick = function (e) {
-  requestAnimationFrame(paint);
+
+function runAnimation() {
+  let condition = 0;
+
+  setInterval(function () {
+    requestAnimationFrame(paintVariables);
+  }, 1000);
+}
+
+startBtn.onclick = function () {
+  runAnimation();
 };
