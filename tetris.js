@@ -20,7 +20,7 @@ const startBtn = document.getElementById("startBtn");
 const tetris = document.getElementById("tetris");
 
 if (!startBtn || !tetris) throw new Error("DOM nodes are missing.");
-
+let score = [];
 let currentTetro = undefined;
 let verticalFrequency = 10;
 let standardSquare = 20;
@@ -34,6 +34,7 @@ let horizontalTrackPos = horizontalTrack / 2 - standardSquare / 2;
 let frozenTopTrackPos = [];
 
 if (
+  score === undefined ||
   verticalFrequency === undefined ||
   standardSquare === undefined ||
   verticalTrack === undefined ||
@@ -106,6 +107,16 @@ function setCurrentTetro() {
 }
 
 // Current tetrominoe ready
+
+function moveCurrentTetro() {
+  window.onkeydown = function (e) {
+    if (e.keyCode === 37 && horizontalTrackPos !== 0)
+      horizontalTrackPos -= standardSquare;
+  };
+}
+
+moveCurrentTetro();
+// Moving current tetrominoe
 
 function paintVariables() {
   if (verticalTrackPos > verticalTrack - standardSquare)
