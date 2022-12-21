@@ -15,24 +15,27 @@ const startBtn = document.getElementById("start__btn");
 const tetris = document.getElementById("tetris");
 
 let currentTetro = undefined;
-let trackPos = 0;
-let trackLength = Math.floor(tetris.getBoundingClientRect().height);
+let standardSquare = 10;
+let verticalTrackPos = 0;
+let verticalTrack = standardSquare * 70;
+
+tetris.style.height = `${verticalTrack}px`;
 
 setCurrentTetro();
 function setCurrentTetro() {
   const div = document.createElement("div");
   div.classList.add("tetrominoe");
   div.classList.add("current");
-  div.style.height = "50px";
-  div.style.width = "50px";
-  tetris.appendChild(div);
+  div.style.height = `${standardSquare}px`;
+  div.style.width = `${standardSquare}px`;
+  div.style.left = tetris.appendChild(div);
   currentTetro = div;
 }
 
 function paintVariables() {
   console.log(currentTetro);
-  trackPos += 10;
-  currentTetro.style.top = trackPos + "px";
+  verticalTrackPos += 10;
+  currentTetro.style.top = verticalTrackPos + "px";
 }
 
 function runAnimation() {
