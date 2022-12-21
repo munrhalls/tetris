@@ -19,8 +19,8 @@ let moveHorizontally = container.clientWidth / 2 - elem.clientWidth / 2;
 
 function render(time) {
   window.onkeydown = (e) => {
-    if (e.keyCode === 37)
-      if (e.keyCode === 39) console.log(e.keyCode, moveRight);
+    if (e.keyCode === 37) moveHorizontally -= 10;
+    if (e.keyCode === 39) moveHorizontally += 10;
   };
 
   if (time === undefined) time = Date.now();
