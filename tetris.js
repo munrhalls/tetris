@@ -22,14 +22,27 @@ const tetris = document.getElementById("tetris");
 if (!startBtn || !tetris) throw new Error("DOM nodes are missing.");
 
 let currentTetro = undefined;
-let verticalFrequency = 1;
+let verticalFrequency = 10;
 let standardSquare = 20;
 
-let verticalTrackPos = 0;
 let verticalTrack = standardSquare * 25;
 let horizontalTrack = standardSquare * 15;
+let verticalTrackPos = 0;
+
+let horizontalTrackPos = horizontalTrack / 2 - standardSquare / 2;
 
 let frozenTopTrackPos = [];
+
+if (
+  verticalFrequency === undefined ||
+  standardSquare === undefined ||
+  verticalTrack === undefined ||
+  horizontalTrack === undefined ||
+  verticalTrackPos === undefined ||
+  horizontalTrackPos === undefined ||
+  !Array.isArray(frozenTopTrackPos)
+)
+  throw new Error("Initial variables did not initialize properly.");
 
 tetris.style.height = `${verticalTrack}px`;
 tetris.style.width = `${horizontalTrack}px`;
@@ -70,12 +83,14 @@ function setCurrentTetro() {
   current.classList.add("current");
   current.style.height = `${standardSquare}px`;
   current.style.width = `${standardSquare}px`;
-  current.style.left = `${horizontalTrack / 2 - standardSquare / 2}px`;
+  current.style.left = `${horizontalTrackPos}px`;
   current.style.left = tetris.appendChild(current);
   currentTetro = current;
 }
 
 // Current tetrominoe ready
+
+function listToCurrentMoves(e) {}
 
 function paintVariables() {
   if (verticalTrackPos > verticalTrack - standardSquare)
