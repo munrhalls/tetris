@@ -11,30 +11,45 @@ window.requestAnimFrame = (function () {
   );
 })();
 
-var container = document.getElementById("tetris");
-var elem = document.getElementById("tetrominoe");
+var plain = document.getElementById("tetris");
 
 var startTime = undefined;
 
 let tWidth = 100;
-let moveHorizontally = container.clientWidth / 2 - tWidth / 2;
+let moveHorizontally = plain.clientWidth / 2 - tWidth / 2;
 let speeding = 0;
 
+function makeTetrominoe() {
+  const newTetrominoe = document.createElement("div");
+  newTetrominoe.className = "tetrominoe";
+  newTetrominoe.id =
+    "tetrominoe-" + document.getElementsByClassName("tetrominoe")?.length || 0;
+
+  plain.appendChild(newTetrominoe);
+  return newTetrominoe;
+}
+
+var tetrominoe = makeTetrominoe();
+
 function render(time) {
-  window.onkeydown = (e) => {
-    if (e.keyCode === 37) moveHorizontally -= 10;
-    if (e.keyCode === 39) moveHorizontally += 10;
-    if (e.keyCode === 40) speeding += 10;
-  };
+  const plainBot = Math.round(plain.getBoundingClientRect().bottom);
+  const tetrominoeBot = Math.round(tetrominoe.getBoundingClientRect().bottom);
+
+  if (plainBot > tetrominoeBot)
+    window.onkeydown = (e) => {
+      if (e.keyCode === 37) moveHorizontally -= 10;
+      if (e.keyCode === 39) moveHorizontally += 10;
+      if (e.keyCode === 40) speeding += 10;
+    };
 
   if (time === undefined) time = Date.now();
   if (startTime === undefined) startTime = time;
 
-  elem.style.left = 0 + moveHorizontally + "px";
-  elem.style.height = "100px";
-  elem.style.width = "100px";
-  elem.style.background = "black";
-  elem.style.top = (((time - startTime) / 50) % 500) + speeding + "px";
+  tetrominoe.style.left = 0 + moveHorizontally + "px";
+  tetrominoe.style.height = "100px";
+  tetrominoe.style.width = "100px";
+  tetrominoe.style.background = "black";
+  tetrominoe.style.top = (((time - startTime) / 50) % 500) + speeding + "px";
 }
 
 const startBtn = document.getElementById("start__btn");
@@ -42,6 +57,6 @@ const startBtn = document.getElementById("start__btn");
 startBtn.onclick = function () {
   (function animloop() {
     render();
-    requestAnimFrame(animloop, elem);
+    requestAnimFrame(animloop, tetrominoe);
   })();
 };
