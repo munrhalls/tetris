@@ -1,7 +1,12 @@
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
 #tetris {
     margin: auto;
-    height: 90vh;
-    width: 70vw;
     border: 3px solid black;
 }
 

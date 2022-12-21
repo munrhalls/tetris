@@ -17,9 +17,11 @@ const tetris = document.getElementById("tetris");
 let currentTetro = undefined;
 let standardSquare = 10;
 let verticalTrackPos = 0;
-let verticalTrack = standardSquare * 70;
+let verticalTrack = standardSquare * 50;
+let horizontalTrack = standardSquare * 30;
 
 tetris.style.height = `${verticalTrack}px`;
+tetris.style.width = `${horizontalTrack}px`;
 
 setCurrentTetro();
 function setCurrentTetro() {
