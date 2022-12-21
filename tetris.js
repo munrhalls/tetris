@@ -24,9 +24,12 @@ if (!startBtn || !tetris) throw new Error("DOM nodes are missing.");
 let currentTetro = undefined;
 let verticalFrequency = 50;
 let standardSquare = 20;
+
 let verticalTrackPos = 0;
 let verticalTrack = standardSquare * 25;
 let horizontalTrack = standardSquare * 15;
+
+let frozenTopTrackPos = [];
 
 tetris.style.height = `${verticalTrack}px`;
 tetris.style.width = `${horizontalTrack}px`;
@@ -75,10 +78,15 @@ function setCurrentTetro() {
 // Current tetrominoe ready
 
 function paintVariables() {
-  if (
-    verticalTrackPos > verticalTrack - standardSquare ||
-    verticalTrackPos === verticalTrack - standardSquare
-  ) {
+  if (verticalTrackPos > verticalTrack - standardSquare)
+    throw new Error("Tetrominoe went outside of vertical track.");
+
+  if (frozenTopTrackPos.includes(verticalTrackPos + standardSquare)) {
+    frozenTopTrackPos.push(verticalTrackPos);
+    verticalTrackPos = 0;
+    setCurrentTetro();
+  } else if (verticalTrackPos === verticalTrack - standardSquare) {
+    frozenTopTrackPos.push(verticalTrack - standardSquare);
     verticalTrackPos = 0;
     setCurrentTetro();
   } else {
