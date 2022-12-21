@@ -14,6 +14,8 @@ window.requestAnimFrame = (function () {
 const startBtn = document.getElementById("startBtn");
 const tetris = document.getElementById("tetris");
 
+if (!startBtn || !tetris) throw new Error("DOM nodes are missing.");
+
 let currentTetro = undefined;
 let verticalFrequency = 50;
 let standardSquare = 20;
@@ -24,7 +26,27 @@ let horizontalTrack = standardSquare * 15;
 tetris.style.height = `${verticalTrack}px`;
 tetris.style.width = `${horizontalTrack}px`;
 
+if (!tetris.style.height || !tetris.style.width)
+  throw new Error("Tetris board size not initialized properly.");
+
+if (
+  tetris.style.height !== `${verticalTrack}px` ||
+  tetris.style.width !== `${horizontalTrack}px`
+)
+  throw new Error("Tetris board size not initialized properly.");
 setCurrentTetro();
+
+if (
+  !document.getElementsByClassName("current")[0] ||
+  document.getElementsByClassName("current").length > 1
+)
+  throw new Error("Current tetrominoe failed to be initialized properly.");
+
+if (
+  !document.getElementsByClassName("current")[0].style.height ||
+  !document.getElementsByClassName("current")[0].style.width
+)
+  throw new Error("Current tetrominoe size was not set.");
 
 function setCurrentTetro() {
   if (document.getElementsByClassName("current")[0]) {
@@ -56,8 +78,6 @@ function paintVariables() {
 }
 
 function runAnimation() {
-  let condition = 0;
-
   setInterval(function () {
     requestAnimationFrame(paintVariables);
   }, verticalFrequency);
