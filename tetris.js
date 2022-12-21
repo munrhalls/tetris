@@ -17,9 +17,12 @@ if (!requestAnimFrame)
   );
 
 const startBtn = document.getElementById("startBtn");
+const quitBtn = document.getElementById("quitBtn");
+
 const tetris = document.getElementById("tetris");
 
 if (!startBtn || !tetris) throw new Error("DOM nodes are missing.");
+let animation;
 let score = [];
 let currentTetro = undefined;
 let verticalFrequency = 100;
@@ -153,11 +156,23 @@ function paintVariables() {
 }
 
 function runAnimation() {
-  setInterval(function () {
+  animation = setInterval(function () {
     requestAnimationFrame(paintVariables);
   }, verticalFrequency);
 }
 
+function cancelAnimation() {
+  clearInterval(animation);
+}
+
 startBtn.onclick = function () {
+  startBtn.classList.add("hidden");
+  quitBtn.classList.remove("hidden");
   runAnimation();
+};
+
+quitBtn.onclick = function () {
+  quitBtn.classList.add("hidden");
+  startBtn.classList.remove("hidden");
+  cancelAnimation();
 };

@@ -19,11 +19,15 @@ body {
 }
 
 
-#startBtn {
+.btn {
     margin: auto;
     height: 80px;
     width: 60px;
     background: #000;
     color: #fff;
     cursor: pointer;
+}
+
+.hidden {
+    display: none;
 }
