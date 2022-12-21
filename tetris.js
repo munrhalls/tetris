@@ -11,6 +11,11 @@ window.requestAnimFrame = (function () {
   );
 })();
 
+if (!requestAnimFrame)
+  throw new Error(
+    "Window requestAnimationFrame method did not initialize properly."
+  );
+
 const startBtn = document.getElementById("startBtn");
 const tetris = document.getElementById("tetris");
 
@@ -34,6 +39,9 @@ if (
   tetris.style.width !== `${horizontalTrack}px`
 )
   throw new Error("Tetris board size not initialized properly.");
+
+// Board ready
+
 setCurrentTetro();
 
 if (
@@ -63,6 +71,8 @@ function setCurrentTetro() {
   current.style.left = tetris.appendChild(current);
   currentTetro = current;
 }
+
+// Current tetrominoe ready
 
 function paintVariables() {
   if (
