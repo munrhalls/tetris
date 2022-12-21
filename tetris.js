@@ -15,7 +15,7 @@ const startBtn = document.getElementById("startBtn");
 const tetris = document.getElementById("tetris");
 
 let currentTetro = undefined;
-let verticalSpeed = 500;
+let verticalFrequency = 50;
 let standardSquare = 20;
 let verticalTrackPos = 0;
 let verticalTrack = standardSquare * 25;
@@ -25,21 +25,31 @@ tetris.style.height = `${verticalTrack}px`;
 tetris.style.width = `${horizontalTrack}px`;
 
 setCurrentTetro();
+
 function setCurrentTetro() {
-  const div = document.createElement("div");
-  div.classList.add("tetrominoe");
-  div.classList.add("current");
-  div.style.height = `${standardSquare}px`;
-  div.style.width = `${standardSquare}px`;
-  div.style.left = `${horizontalTrack / 2 - standardSquare / 2}px`;
-  div.style.left = tetris.appendChild(div);
-  currentTetro = div;
+  if (document.getElementsByClassName("current")[0]) {
+    const previous = document.getElementsByClassName("current")[0];
+    previous.classList.remove("current");
+  }
+
+  const current = document.createElement("div");
+  current.classList.add("tetrominoe");
+  current.classList.add("current");
+  current.style.height = `${standardSquare}px`;
+  current.style.width = `${standardSquare}px`;
+  current.style.left = `${horizontalTrack / 2 - standardSquare / 2}px`;
+  current.style.left = tetris.appendChild(current);
+  currentTetro = current;
 }
 
 function paintVariables() {
-  console.log(currentTetro);
-  verticalTrackPos += 10;
-  currentTetro.style.top = verticalTrackPos + "px";
+  if (verticalTrackPos > verticalTrack || verticalTrackPos === verticalTrack) {
+    verticalTrackPos = 0;
+    setCurrentTetro();
+  } else {
+    verticalTrackPos += 10;
+    currentTetro.style.top = verticalTrackPos + "px";
+  }
 }
 
 function runAnimation() {
@@ -47,7 +57,7 @@ function runAnimation() {
 
   setInterval(function () {
     requestAnimationFrame(paintVariables);
-  }, verticalSpeed);
+  }, verticalFrequency);
 }
 
 startBtn.onclick = function () {
