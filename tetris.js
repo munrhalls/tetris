@@ -43,7 +43,10 @@ function setCurrentTetro() {
 }
 
 function paintVariables() {
-  if (verticalTrackPos > verticalTrack || verticalTrackPos === verticalTrack) {
+  if (
+    verticalTrackPos > verticalTrack - standardSquare ||
+    verticalTrackPos === verticalTrack - standardSquare
+  ) {
     verticalTrackPos = 0;
     setCurrentTetro();
   } else {
