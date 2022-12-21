@@ -11,21 +11,21 @@ window.requestAnimFrame = (function () {
   );
 })();
 
+var container = document.getElementById("tetris__container");
 var elem = document.getElementById("tetris");
 var startTime = undefined;
 
+let moveHorizontally = container.clientWidth / 2 - elem.clientWidth / 2;
+
 function render(time) {
-  let right = 0;
-  let left = 0;
-  window.onkeyup = (e) => {
-    if (e.keyCode === 37) left = 10;
-    if (e.keyCode === 39) right = 10;
-    console.log(left);
+  window.onkeydown = (e) => {
+    if (e.keyCode === 37)
+      if (e.keyCode === 39) console.log(e.keyCode, moveRight);
   };
 
   if (time === undefined) time = Date.now();
   if (startTime === undefined) startTime = time;
-  elem.style.right = elem.style.right.split("px")[0] + right + "px";
+  elem.style.left = 0 + moveHorizontally + "px";
   elem.style.height = "100px";
   elem.style.background = "black";
   elem.style.top = (((time - startTime) / 50) % 500) + "px";
