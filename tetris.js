@@ -22,7 +22,7 @@ const tetris = document.getElementById("tetris");
 if (!startBtn || !tetris) throw new Error("DOM nodes are missing.");
 
 let currentTetro = undefined;
-let verticalFrequency = 50;
+let verticalFrequency = 1;
 let standardSquare = 20;
 
 let verticalTrackPos = 0;
@@ -81,7 +81,9 @@ function paintVariables() {
   if (verticalTrackPos > verticalTrack - standardSquare)
     throw new Error("Tetrominoe went outside of vertical track.");
 
-  if (frozenTopTrackPos.includes(verticalTrackPos + standardSquare)) {
+  if (frozenTopTrackPos[0] === verticalTrack) {
+    return "Game over!";
+  } else if (frozenTopTrackPos.includes(verticalTrackPos + standardSquare)) {
     frozenTopTrackPos.push(verticalTrackPos);
     verticalTrackPos = 0;
     setCurrentTetro();
