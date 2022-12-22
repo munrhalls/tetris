@@ -1,3 +1,6 @@
+@import './reset.css';
+@import './font.css';
+
 body {
     min-height: 100vh;
     display: flex;
@@ -28,19 +31,19 @@ body {
 }
 
 #gameOver .title {
-    font-size: 2rem;
-    margin: 1rem 2rem;
+    font-size: 1rem;
+    margin: 1rem 1rem;
     
 }
 
 #gameOver .score {
-    font-size: 2rem;
-    margin: 1rem 2rem;
+    font-size: 1rem;
+    margin: 1rem 1rem;
 }   
 
 #gameOver .highest-assembly {
-    font-size: 2rem;
-    margin: 1rem 2rem;
+    font-size: 1rem;
+    margin: 1rem 1rem;
 }
 
 .tetrominoe {
