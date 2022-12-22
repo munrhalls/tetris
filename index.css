@@ -50,6 +50,11 @@ body {
     margin: 1rem 1rem;
 }
 
+#gameOver #restartBtn {
+    color: '#fff';
+    width: 140px;
+    height: 80px;
+}
 .tetrominoe {
     position: absolute;
     background: black;
@@ -58,8 +63,9 @@ body {
 
 .btn {
     margin: auto;
-    height: 60px;
-    width: 60px;
+    width: 140px;
+    height: 80px;
+    border-radius: 5px;
     background: #000;
     color: #fff;
     cursor: pointer;

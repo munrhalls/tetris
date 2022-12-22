@@ -241,9 +241,22 @@ function displayGameOver() {
   }. Press start to play again.`;
   highestTetrisNode.classList.add("highest-assembly");
   gameOver.appendChild(highestTetrisNode);
+  const restartBtn = document.createElement("button");
+  restartBtn.id = "restartBtn";
+  restartBtn.classList.add("btn");
+  restartBtn.innerText = "PLAY AGAIN";
+  restartBtn.onclick = function () {
+    startBtn.classList.add("hidden");
+    pauseBtn.classList.remove("hidden");
+    tetris.replaceChildren("");
+
+    runAnimation();
+  };
+  gameOver.appendChild(restartBtn);
 
   tetris.replaceChildren(gameOver);
 }
+gameOver();
 
 startBtn.onclick = function () {
   startBtn.classList.add("hidden");
