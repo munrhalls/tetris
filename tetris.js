@@ -173,7 +173,11 @@ function paintVariables() {
       pair[1] === horizontalTrackPos
   );
 
-  if (frozenTrackYXPosPairs.find((pair) => pair[0] === 0 || pair[0] < 0)) {
+  const isGameOver = frozenTrackYXPosPairs.find(
+    (pair) => pair[0] === 0 || pair[0] < 0
+  );
+
+  if (isGameOver) {
     return "Game over!";
   } else if (nextStepCollides) {
     frozenTrackYXPosPairs.push([verticalTrackPos, horizontalTrackPos]);
@@ -185,9 +189,8 @@ function paintVariables() {
       verticalTrack - standardSquare,
       horizontalTrackPos,
     ]);
-    console.log(frozenTrackYXPosPairs);
     verticalTrackPos = 0;
-    horizontalTrackPos = 0;
+    horizontalTrackPos = horizontalHalf;
     setNewCurrentTetro();
   } else {
     passivelyMoveCurrentTetro();
