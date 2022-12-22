@@ -1,6 +1,10 @@
 @import './reset.css';
 @import './font.css';
 
+*, *::before, *::after {
+    box-sizing: content-box;
+  }
+
 body {
     min-height: 100vh;
     display: flex;
