@@ -178,7 +178,7 @@ function paintVariables() {
   );
 
   if (isGameOver) {
-    return "Game over!";
+    return gameOver();
   } else if (nextStepCollides) {
     frozenTrackYXPosPairs.push([verticalTrackPos, horizontalTrackPos]);
     verticalTrackPos = 0;
@@ -213,6 +213,21 @@ function cancelAnimation() {
 }
 
 // game runner
+
+function gameOver() {
+  pauseBtn.classList.add("hidden");
+  startBtn.classList.remove("hidden");
+  cancelAnimation();
+  displayGameOver();
+}
+
+function displayGameOver() {
+  tetris.children = [];
+  const gameOver = document.createElement("article");
+  gameOver.innerText = "Game over";
+  gameOver.id = "gameOver";
+  tetris.appendChild(gameOver);
+}
 
 startBtn.onclick = function () {
   startBtn.classList.add("hidden");
