@@ -122,15 +122,17 @@ function moveCurrentTetro() {
     const left = e.keyCode === 37;
     const right = e.keyCode === 39;
     const bottom = e.keyCode === 40;
+    console.log(animation);
+    if (!animation) return;
 
     if (verticalTrackPos >= verticalTrack)
       throw new Error("Tetrominoe went outside of vertical track.");
 
-    if (
-      horizontalTrackPos < 0 ||
-      horizontalTrackPos > horizontalTrack - standardSquare
-    )
-      throw new Error("Tetrominoe went out of left or right bound.");
+    if (horizontalTrackPos < 0)
+      throw new Error("Tetrominoe went out of left bound.");
+
+    if (horizontalTrackPos > horizontalTrack - standardSquare)
+      throw new Error("Tetrominoe went ouf of right bound.");
 
     console.log(e.keyCode);
 
@@ -205,5 +207,8 @@ pauseBtn.onclick = function () {
   pauseBtn.classList.add("hidden");
   startBtn.classList.remove("hidden");
 
-  if (animation) cancelAnimation();
+  if (animation) {
+    cancelAnimation();
+    animation = null;
+  }
 };
