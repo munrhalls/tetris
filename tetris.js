@@ -222,11 +222,10 @@ function gameOver() {
 }
 
 function displayGameOver() {
-  tetris.children = [];
   const gameOver = document.createElement("article");
   gameOver.innerText = "Game over";
   gameOver.id = "gameOver";
-  tetris.appendChild(gameOver);
+  tetris.replaceChildren(gameOver);
 }
 
 startBtn.onclick = function () {
