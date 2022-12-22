@@ -211,4 +211,7 @@ pauseBtn.onclick = function () {
     cancelAnimation();
     animation = null;
   }
+  
+  if (animation)
+    throw new Error("Animation variable not null after game paused.");
 };
