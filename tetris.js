@@ -23,6 +23,8 @@ const tetris = document.getElementById("tetris");
 
 if (!startBtn || !tetris) throw new Error("DOM nodes are missing.");
 let animation;
+let isGameOver = false;
+let nextStepCollides = false;
 let score = [];
 let currentTetro = undefined;
 let verticalFrequency = 1;
@@ -166,16 +168,15 @@ passivelyMoveCurrentTetro();
 // Moving current tetrominoe
 
 function paintVariables() {
-  const nextStepCollides = frozenTrackYXPosPairs.find(
+  nextStepCollides = frozenTrackYXPosPairs.find(
     (pair) =>
       pair[0] === verticalTrackPos + standardSquare &&
       pair[1] === horizontalTrackPos
   );
 
-  const isGameOver = frozenTrackYXPosPairs.find(
+  isGameOver = frozenTrackYXPosPairs.find(
     (pair) => pair[0] === 0 || pair[0] < 0
   );
-
   if (isGameOver) {
     return gameOver();
   } else if (nextStepCollides) {
@@ -234,6 +235,7 @@ function displayGameOver() {
     0
   )}!`;
   scoreNode.classList.add("score");
+
   gameOver.appendChild(scoreNode);
   if (score[0]) {
     const highestTetrisNode = document.createElement("h1");
@@ -249,14 +251,30 @@ function displayGameOver() {
   restartBtn.classList.add("btn");
   restartBtn.innerText = "PLAY AGAIN";
   restartBtn.onclick = function () {
+    (function () {
+      animation;
+      isGameOver = false;
+      nextStepCollides = false;
+      score = [];
+      currentTetro = undefined;
+      verticalFrequency = 1;
+      standardSquare = 20;
+
+      verticalTrack = standardSquare * 25;
+      horizontalTrack = standardSquare * 15;
+      verticalTrackPos = 0;
+
+      horizontalHalf = horizontalTrack / 2 - standardSquare / 2;
+      horizontalTrackPos = horizontalHalf;
+
+      frozenTrackYXPosPairs = [];
+    })();
     startBtn.classList.add("hidden");
     pauseBtn.classList.remove("hidden");
-    tetris.replaceChildren("");
-
+    tetris.replaceChildren();
     runAnimation();
   };
   gameOver.appendChild(restartBtn);
-
   tetris.replaceChildren(gameOver);
 }
 
