@@ -123,7 +123,7 @@ function moveCurrentTetro() {
     const right = e.keyCode === 39;
     const bottom = e.keyCode === 40;
 
-    if (verticalTrackPos > verticalTrack)
+    if (verticalTrackPos >= verticalTrack)
       throw new Error("Tetrominoe went outside of vertical track.");
 
     if (
@@ -140,14 +140,23 @@ function moveCurrentTetro() {
     if (right && horizontalTrackPos < horizontalTrack - standardSquare)
       return (horizontalTrackPos += standardSquare);
 
-    if (bottom && verticalTrackPos < verticalTrack) {
-      console.log(bottom, verticalTrackPos, verticalTrack);
+    if (bottom && verticalTrackPos < verticalTrack - standardSquare) {
       return (verticalTrackPos += standardSquare);
     }
   };
 }
 
+function passivelyMoveCurrentTetro() {
+  if (verticalTrackPos > verticalTrack)
+    throw new Error("Tetrominoe went out of bottom bound.");
+  if (verticalTrackPos < verticalTrack) {
+    verticalTrackPos += standardSquare;
+  }
+}
+
 moveCurrentTetro();
+
+passivelyMoveCurrentTetro();
 
 // Moving current tetrominoe
 
@@ -165,7 +174,7 @@ function paintVariables() {
     horizontalTrackPos = 0;
     setCurrentTetro();
   } else {
-    verticalTrackPos += 10;
+    passivelyMoveCurrentTetro();
     currentTetro.style.top = `${verticalTrackPos}px`;
     currentTetro.style.left = `${horizontalTrackPos}px`;
   }
@@ -183,6 +192,8 @@ function runAnimation() {
 function cancelAnimation() {
   clearInterval(animation);
 }
+
+// game runner
 
 startBtn.onclick = function () {
   startBtn.classList.add("hidden");
