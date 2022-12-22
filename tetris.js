@@ -69,7 +69,7 @@ if (
 
 // Board ready
 
-setCurrentTetro();
+setNewCurrentTetro();
 
 if (
   !document.getElementsByClassName("current")[0] ||
@@ -83,7 +83,7 @@ if (
 )
   throw new Error("Current tetrominoe size was not set.");
 
-function setCurrentTetro() {
+function setNewCurrentTetro() {
   if (document.getElementsByClassName("current")[0]) {
     const previous = document.getElementsByClassName("current")[0];
     previous.classList.remove("current");
@@ -167,22 +167,28 @@ passivelyMoveCurrentTetro();
 // Moving current tetrominoe
 
 function paintVariables() {
+  const nextStepCollides = frozenTrackYXPosPairs.find(
+    (pair) =>
+      pair[0] === verticalTrackPos + standardSquare &&
+      pair[1] === horizontalTrackPos
+  );
+
   if (frozenTrackYXPosPairs.find((pair) => pair[0] === 0 || pair[0] < 0)) {
     return "Game over!";
-  } else if (
-    frozenTrackYXPosPairs.includes([verticalTrackPos, horizontalTrackPos])
-  ) {
+  } else if (nextStepCollides) {
+    frozenTrackYXPosPairs.push([verticalTrackPos, horizontalTrackPos]);
     verticalTrackPos = 0;
     horizontalTrackPos = horizontalHalf;
-    setCurrentTetro();
+    setNewCurrentTetro();
   } else if (verticalTrackPos === verticalTrack - standardSquare) {
     frozenTrackYXPosPairs.push([
       verticalTrack - standardSquare,
       horizontalTrackPos,
     ]);
+    console.log(frozenTrackYXPosPairs);
     verticalTrackPos = 0;
     horizontalTrackPos = 0;
-    setCurrentTetro();
+    setNewCurrentTetro();
   } else {
     passivelyMoveCurrentTetro();
     currentTetro.style.top = `${verticalTrackPos}px`;
