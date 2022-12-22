@@ -256,7 +256,6 @@ function displayGameOver() {
 
   tetris.replaceChildren(gameOver);
 }
-gameOver();
 
 startBtn.onclick = function () {
   startBtn.classList.add("hidden");
