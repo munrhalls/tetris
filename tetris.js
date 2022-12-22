@@ -36,7 +36,6 @@ let horizontalHalf = horizontalTrack / 2 - standardSquare / 2;
 let horizontalTrackPos = horizontalHalf;
 
 let frozenTrackYXPosPairs = [];
-gameOver();
 if (
   score === undefined ||
   verticalFrequency === undefined ||
