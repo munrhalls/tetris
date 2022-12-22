@@ -21,7 +21,22 @@ body {
     right: 0;
     background: #000;
     color: #fff;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
 }
+
+#gameOver .title {
+    font-size: 2rem;
+    margin: 1rem 2rem;
+    
+}
+
+#gameOver .score {
+    font-size: 2rem;
+    margin: 1rem 2rem;
+}   
 
 .tetrominoe {
     position: absolute;

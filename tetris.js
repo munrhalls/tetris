@@ -36,7 +36,7 @@ let horizontalHalf = horizontalTrack / 2 - standardSquare / 2;
 let horizontalTrackPos = horizontalHalf;
 
 let frozenTrackYXPosPairs = [];
-
+gameOver();
 if (
   score === undefined ||
   verticalFrequency === undefined ||
@@ -223,8 +223,26 @@ function gameOver() {
 
 function displayGameOver() {
   const gameOver = document.createElement("article");
-  gameOver.innerText = "Game over";
   gameOver.id = "gameOver";
+  const titleNode = document.createElement("h1");
+  titleNode.innerText = "Game over.";
+  titleNode.classList.add("title");
+  gameOver.appendChild(titleNode);
+
+  const scoreNode = document.createElement("h1");
+  scoreNode.innerText = `Congratulations, your score is: ${score.reduce(
+    (acc, val) => acc + val,
+    0
+  )}!`;
+  scoreNode.classList.add("score");
+  gameOver.appendChild(scoreNode);
+  const highestTetrisNode = document.createElement("h1");
+  highestTetrisNode.innerText = `Your highest tetris assembly was: ${
+    score.sort((a, b) => a + b)[0]
+  }. Press start to play again.`;
+  highestTetrisNode.classList.add("highest-assembly");
+  gameOver.appendChild(highestTetrisNode);
+
   tetris.replaceChildren(gameOver);
 }
 
