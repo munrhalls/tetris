@@ -25,16 +25,17 @@ if (!startBtn || !tetris) throw new Error("DOM nodes are missing.");
 let animation;
 let score = [];
 let currentTetro = undefined;
-let verticalFrequency = 100;
+let verticalFrequency = 1;
 let standardSquare = 20;
 
 let verticalTrack = standardSquare * 25;
 let horizontalTrack = standardSquare * 15;
 let verticalTrackPos = 0;
 
-let horizontalTrackPos = horizontalTrack / 2 - standardSquare / 2;
+let horizontalHalf = horizontalTrack / 2 - standardSquare / 2;
+let horizontalTrackPos = horizontalHalf;
 
-let frozenTopTrackPos = [];
+let frozenTrackYXPosPairs = [];
 
 if (
   score === undefined ||
@@ -44,7 +45,7 @@ if (
   horizontalTrack === undefined ||
   verticalTrackPos === undefined ||
   horizontalTrackPos === undefined ||
-  !Array.isArray(frozenTopTrackPos)
+  !Array.isArray(frozenTrackYXPosPairs)
 )
   throw new Error("Initial variables did not initialize properly.");
 
@@ -122,8 +123,11 @@ function moveCurrentTetro() {
     const left = e.keyCode === 37;
     const right = e.keyCode === 39;
     const bottom = e.keyCode === 40;
-    console.log(animation);
     if (!animation) return;
+    if (!animation)
+      throw new Error(
+        "Execution not paused upon animation variable being null."
+      );
 
     if (verticalTrackPos >= verticalTrack)
       throw new Error("Tetrominoe went outside of vertical track.");
@@ -163,15 +167,19 @@ passivelyMoveCurrentTetro();
 // Moving current tetrominoe
 
 function paintVariables() {
-  if (frozenTopTrackPos[0] === verticalTrack) {
+  if (frozenTrackYXPosPairs.find((pair) => pair[0] === 0 || pair[0] < 0)) {
     return "Game over!";
-  } else if (frozenTopTrackPos.includes(verticalTrackPos + standardSquare)) {
-    frozenTopTrackPos.push(verticalTrackPos);
+  } else if (
+    frozenTrackYXPosPairs.includes([verticalTrackPos, horizontalTrackPos])
+  ) {
     verticalTrackPos = 0;
-    horizontalTrackPos = 0;
+    horizontalTrackPos = horizontalHalf;
     setCurrentTetro();
   } else if (verticalTrackPos === verticalTrack - standardSquare) {
-    frozenTopTrackPos.push(verticalTrack - standardSquare);
+    frozenTrackYXPosPairs.push([
+      verticalTrack - standardSquare,
+      horizontalTrackPos,
+    ]);
     verticalTrackPos = 0;
     horizontalTrackPos = 0;
     setCurrentTetro();
@@ -211,7 +219,7 @@ pauseBtn.onclick = function () {
     cancelAnimation();
     animation = null;
   }
-  
+
   if (animation)
     throw new Error("Animation variable not null after game paused.");
 };
