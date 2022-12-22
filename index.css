@@ -4,6 +4,7 @@ body {
     flex-direction: column;;
     justify-content: center;
     align-content: center;
+    overflow: hidden;
 }
 
 #tetris {
@@ -21,7 +22,7 @@ body {
 
 .btn {
     margin: auto;
-    height: 80px;
+    height: 60px;
     width: 60px;
     background: #000;
     color: #fff;

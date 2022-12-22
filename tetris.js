@@ -48,6 +48,12 @@ if (
 )
   throw new Error("Initial variables did not initialize properly.");
 
+if (horizontalTrackPos < 0 || horizontalTrackPos > horizontalTrack)
+  throw new Error("Tetrominoe went out of left or right bound.");
+
+if (verticalTrackPos < 0 || verticalTrackPos > verticalTrack)
+  throw new Error("Tetrominoe went out of bottom bound.");
+
 tetris.style.height = `${verticalTrack}px`;
 tetris.style.width = `${horizontalTrack}px`;
 
@@ -117,36 +123,46 @@ function moveCurrentTetro() {
     const right = e.keyCode === 39;
     const bottom = e.keyCode === 40;
 
-    if (horizontalTrackPos < 0 || horizontalTrackPos > horizontalTrack)
+    if (verticalTrackPos > verticalTrack)
+      throw new Error("Tetrominoe went outside of vertical track.");
+
+    if (
+      horizontalTrackPos < 0 ||
+      horizontalTrackPos > horizontalTrack - standardSquare
+    )
       throw new Error("Tetrominoe went out of left or right bound.");
 
-    if (horizontalTrackPos === 0 || horizontalTrackPos === horizontalTrack)
-      return;
+    console.log(e.keyCode);
 
-    if (left) {
-      horizontalTrackPos -= standardSquare;
+    if (left && horizontalTrackPos !== 0)
+      return (horizontalTrackPos -= standardSquare);
+
+    if (right && horizontalTrackPos < horizontalTrack - standardSquare)
+      return (horizontalTrackPos += standardSquare);
+
+    if (bottom && verticalTrackPos < verticalTrack) {
+      console.log(bottom, verticalTrackPos, verticalTrack);
+      return (verticalTrackPos += standardSquare);
     }
-    if (right) return (horizontalTrackPos += standardSquare);
-    if (bottom) return (verticalTrackPos += standardSquare);
   };
 }
 
 moveCurrentTetro();
+
 // Moving current tetrominoe
 
 function paintVariables() {
-  if (verticalTrackPos > verticalTrack - standardSquare)
-    throw new Error("Tetrominoe went outside of vertical track.");
-
   if (frozenTopTrackPos[0] === verticalTrack) {
     return "Game over!";
   } else if (frozenTopTrackPos.includes(verticalTrackPos + standardSquare)) {
     frozenTopTrackPos.push(verticalTrackPos);
     verticalTrackPos = 0;
+    horizontalTrackPos = 0;
     setCurrentTetro();
   } else if (verticalTrackPos === verticalTrack - standardSquare) {
     frozenTopTrackPos.push(verticalTrack - standardSquare);
     verticalTrackPos = 0;
+    horizontalTrackPos = 0;
     setCurrentTetro();
   } else {
     verticalTrackPos += 10;
@@ -159,6 +175,9 @@ function runAnimation() {
   animation = setInterval(function () {
     requestAnimationFrame(paintVariables);
   }, verticalFrequency);
+
+  if (!animation)
+    throw new Error("Animation failed to start or be initialized properly.");
 }
 
 function cancelAnimation() {
@@ -174,5 +193,6 @@ startBtn.onclick = function () {
 pauseBtn.onclick = function () {
   pauseBtn.classList.add("hidden");
   startBtn.classList.remove("hidden");
-  cancelAnimation();
+
+  if (animation) cancelAnimation();
 };
