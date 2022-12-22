@@ -235,12 +235,15 @@ function displayGameOver() {
   )}!`;
   scoreNode.classList.add("score");
   gameOver.appendChild(scoreNode);
-  const highestTetrisNode = document.createElement("h1");
-  highestTetrisNode.innerText = `Your highest tetris assembly was: ${
-    score.sort((a, b) => a + b)[0]
-  }. Press start to play again.`;
-  highestTetrisNode.classList.add("highest-assembly");
-  gameOver.appendChild(highestTetrisNode);
+  if (score[0]) {
+    const highestTetrisNode = document.createElement("h1");
+    highestTetrisNode.innerText = `Your highest tetris assembly was: ${
+      score.sort((a, b) => a + b)[0] || 0
+    }. Press start to play again.`;
+    highestTetrisNode.classList.add("highest-assembly");
+    gameOver.appendChild(highestTetrisNode);
+  }
+
   const restartBtn = document.createElement("button");
   restartBtn.id = "restartBtn";
   restartBtn.classList.add("btn");
