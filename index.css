@@ -20,6 +20,10 @@ body {
     border: 3px solid black;
 }
 
+#tetris .row {
+    display: flex;    
+}
+
 #gameOver {
     position: absolute;
     top: 0;
