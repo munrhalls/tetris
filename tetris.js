@@ -61,7 +61,10 @@ function setNewCurrentTetro() {
     [1, 14],
   ];
 
-  for (let yx of tetro) {
+  for (let xy of tetro) {
+    const cell = document.getElementById(`cellXY-${xy[0]}-${xy[1]}`);
+    cell.classList.add("black");
+    console.log(cell);
   }
 }
 
