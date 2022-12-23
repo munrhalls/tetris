@@ -18,13 +18,13 @@ if (!requestAnimFrame)
 
 const startBtn = document.getElementById("startBtn");
 const pauseBtn = document.getElementById("pauseBtn");
-
 const tetris = document.getElementById("tetris");
 const rows = 24;
 const columns = 16;
-
 const standardSquare = 20;
+const verticalFrequency = 1;
 const grid = [];
+let animation = false;
 
 for (let x = 0; x < rows; x++) {
   grid.push([]);
@@ -45,115 +45,53 @@ for (let x = 0; x < rows; x++) {
   tetris.appendChild(row);
 }
 
-if (!startBtn || !tetris) throw new Error("DOM nodes are missing.");
-let animation;
-let isGameOver = false;
-let nextStepCollides = false;
-let score = [];
-let currentTetro = undefined;
-let verticalFrequency = 50;
-
-let verticalTrack = standardSquare * 25;
-let horizontalTrack = standardSquare * 15;
-let verticalTrackPos = 0;
-
-let horizontalHalf = horizontalTrack / 2 - standardSquare / 2;
-let horizontalTrackPos = horizontalHalf;
-
-let frozenTrackYXPosPairs = [];
-if (
-  score === undefined ||
-  verticalFrequency === undefined ||
-  standardSquare === undefined ||
-  verticalTrack === undefined ||
-  horizontalTrack === undefined ||
-  verticalTrackPos === undefined ||
-  horizontalTrackPos === undefined ||
-  !Array.isArray(frozenTrackYXPosPairs)
-)
-  throw new Error("Initial variables did not initialize properly.");
-
-if (horizontalTrackPos < 0 || horizontalTrackPos > horizontalTrack)
-  throw new Error("Tetrominoe went out of left or right bound.");
-
-if (verticalTrackPos < 0 || verticalTrackPos > verticalTrack)
-  throw new Error("Tetrominoe went out of bottom bound.");
-
-tetris.style.height = `${verticalTrack}px`;
-tetris.style.width = `${horizontalTrack}px`;
-
-if (!tetris.style.height || !tetris.style.width)
-  throw new Error("Tetris board size not initialized properly.");
-
-if (
-  tetris.style.height !== `${verticalTrack}px` ||
-  tetris.style.width !== `${horizontalTrack}px`
-)
-  throw new Error("Tetris board size not initialized properly.");
+const rowNodes = document.getElementsByClassName("row");
+const colNodes = document.getElementsByClassName("column");
 
 // Board ready
 
 setNewCurrentTetro();
 
-if (
-  !document.getElementsByClassName("current")[0] ||
-  document.getElementsByClassName("current").length > 1
-)
-  throw new Error("Current tetrominoe failed to be initialized properly.");
-
-if (
-  !document.getElementsByClassName("current")[0].style.height ||
-  !document.getElementsByClassName("current")[0].style.width
-)
-  throw new Error("Current tetrominoe size was not set.");
-
 function setNewCurrentTetro() {
-  const currentTetro = [];
+  const tetro = [
+    [0, 12],
+    [0, 13],
+    [1, 14],
+  ];
+  const rowNodes = document.getElementsByClassName("row");
+  const colNodes = document.getElementsByClassName("column");
 }
 
 // Current tetrominoe ready
 
 function moveCurrentTetro() {
-  window.onkeydown = function (e) {
-    const left = e.keyCode === 37;
-    const right = e.keyCode === 39;
-    const bottom = e.keyCode === 40;
-    if (!animation) return;
-    if (!animation)
-      throw new Error(
-        "Execution not paused upon animation variable being null."
-      );
-
-    if (verticalTrackPos >= verticalTrack)
-      throw new Error("Tetrominoe went outside of vertical track.");
-
-    if (horizontalTrackPos < 0)
-      throw new Error("Tetrominoe went out of left bound.");
-
-    if (horizontalTrackPos > horizontalTrack - standardSquare)
-      throw new Error("Tetrominoe went ouf of right bound.");
-
-    console.log(e.keyCode);
-
-    if (left && horizontalTrackPos !== 0)
-      return (horizontalTrackPos -= standardSquare);
-
-    if (right && horizontalTrackPos < horizontalTrack - standardSquare)
-      return (horizontalTrackPos += standardSquare);
-
-    if (bottom && verticalTrackPos < verticalTrack - standardSquare) {
-      return (verticalTrackPos += standardSquare);
-    }
-  };
+  // window.onkeydown = function (e) {
+  //   const left = e.keyCode === 37;
+  //   const right = e.keyCode === 39;
+  //   const bottom = e.keyCode === 40;
+  //   if (!animation) return;
+  //   if (!animation)
+  //     throw new Error(
+  //       "Execution not paused upon animation variable being null."
+  //     );
+  //   if (verticalTrackPos >= verticalTrack)
+  //     throw new Error("Tetrominoe went outside of vertical track.");
+  //   if (horizontalTrackPos < 0)
+  //     throw new Error("Tetrominoe went out of left bound.");
+  //   if (horizontalTrackPos > horizontalTrack - standardSquare)
+  //     throw new Error("Tetrominoe went ouf of right bound.");
+  //   console.log(e.keyCode);
+  //   if (left && horizontalTrackPos !== 0)
+  //     return (horizontalTrackPos -= standardSquare);
+  //   if (right && horizontalTrackPos < horizontalTrack - standardSquare)
+  //     return (horizontalTrackPos += standardSquare);
+  //   if (bottom && verticalTrackPos < verticalTrack - standardSquare) {
+  //     return (verticalTrackPos += standardSquare);
+  //   }
+  // };
 }
 
-function passivelyMoveCurrentTetro() {
-  if (verticalTrackPos > verticalTrack)
-    throw new Error("Tetrominoe went out of bottom bound.");
-  if (verticalTrackPos < verticalTrack) {
-    verticalTrackPos += standardSquare;
-  }
-}
+function passivelyMoveCurrentTetro() {}
 
 moveCurrentTetro();
 
@@ -163,33 +101,7 @@ passivelyMoveCurrentTetro();
 
 function checkCollision() {}
 
-function paintVariables() {
-  nextStepCollides = checkCollision();
-
-  isGameOver = frozenTrackYXPosPairs.find(
-    (pair) => pair[0] === 0 || pair[0] < 0
-  );
-  if (isGameOver) {
-    return gameOver();
-  } else if (nextStepCollides) {
-    frozenTrackYXPosPairs.push([verticalTrackPos, horizontalTrackPos]);
-    verticalTrackPos = 0;
-    horizontalTrackPos = horizontalHalf;
-    setNewCurrentTetro();
-  } else if (verticalTrackPos === verticalTrack - standardSquare) {
-    frozenTrackYXPosPairs.push([
-      verticalTrack - standardSquare,
-      horizontalTrackPos,
-    ]);
-    verticalTrackPos = 0;
-    horizontalTrackPos = horizontalHalf;
-    setNewCurrentTetro();
-  } else {
-    passivelyMoveCurrentTetro();
-    currentTetro.style.top = `${verticalTrackPos}px`;
-    currentTetro.style.left = `${horizontalTrackPos}px`;
-  }
-}
+function paintVariables() {}
 
 function runAnimation() {
   animation = setInterval(function () {
@@ -243,24 +155,6 @@ function displayGameOver() {
   restartBtn.classList.add("btn");
   restartBtn.innerText = "PLAY AGAIN";
   restartBtn.onclick = function () {
-    (function () {
-      animation;
-      isGameOver = false;
-      nextStepCollides = false;
-      score = [];
-      currentTetro = undefined;
-      verticalFrequency = 1;
-      standardSquare = 20;
-
-      verticalTrack = standardSquare * 25;
-      horizontalTrack = standardSquare * 15;
-      verticalTrackPos = 0;
-
-      horizontalHalf = horizontalTrack / 2 - standardSquare / 2;
-      horizontalTrackPos = horizontalHalf;
-
-      frozenTrackYXPosPairs = [];
-    })();
     startBtn.classList.add("hidden");
     pauseBtn.classList.remove("hidden");
     tetris.replaceChildren();
