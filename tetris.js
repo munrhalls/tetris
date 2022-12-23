@@ -1,3 +1,6 @@
+import makeBoard from "./makeBoard.js";
+makeBoard();
+
 window.requestAnimFrame = (function () {
   return (
     window.requestAnimationFrame ||
@@ -18,53 +21,37 @@ if (!requestAnimFrame)
 
 const startBtn = document.getElementById("startBtn");
 const pauseBtn = document.getElementById("pauseBtn");
-const tetris = document.getElementById("tetris");
-
-const rows = 24;
-const columns = 16;
-const standardSquare = 20;
-const verticalFrequency = 1;
-
-let animation = false;
-
-const grid = [];
-for (let x = 0; x < rows; x++) {
-  grid.push([]);
-  const row = document.createElement("div");
-  row.style.height = `${standardSquare}px`;
-  row.classList.add(`row`);
-  row.id = `x-${x}`;
-
-  for (let y = 0; y < columns; y++) {
-    grid[grid.length - 1].push(y);
-    const cell = document.createElement("div");
-    cell.style.height = `${standardSquare}px`;
-    cell.style.width = `${standardSquare}px`;
-    cell.classList.add(`cell`);
-    cell.id = `cellXY-${x}-${y}`;
-    row.appendChild(cell);
-  }
-  tetris.appendChild(row);
-}
-
-const rowNodes = document.getElementsByClassName("row");
-const cellNodes = document.getElementsByClassName("cell");
 
 // Board ready
-
-setNewCurrentTetro();
+//////////////////////////////////////////////
 
 function setNewCurrentTetro() {
   const tetro = [
-    [0, 12],
-    [0, 13],
-    [1, 14],
+    [0, 1],
+    [0, 2],
+    [0, 3],
+    [1, 3],
+  ];
+  // move tetro
+  tetro.forEach((el) => (el[0] = el[0] + 1));
+  tetro.forEach((el) => (el[0] = el[0] + 1));
+  // check collision
+  const frozen = [
+    [23, 0],
+    [22, 0],
+    [21, 0],
+    [21, 1],
+    [21, 2],
   ];
 
   for (let xy of tetro) {
     const cell = document.getElementById(`cellXY-${xy[0]}-${xy[1]}`);
     cell.classList.add("black");
-    console.log(cell);
+  }
+
+  for (let xy of frozen) {
+    const cell = document.getElementById(`cellXY-${xy[0]}-${xy[1]}`);
+    cell.classList.add("black");
   }
 }
 
@@ -73,10 +60,6 @@ function setNewCurrentTetro() {
 function moveCurrentTetro() {}
 
 function passivelyMoveCurrentTetro() {}
-
-moveCurrentTetro();
-
-passivelyMoveCurrentTetro();
 
 function checkCollision() {}
 
@@ -90,11 +73,9 @@ function runAnimation() {
   if (!animation)
     throw new Error("Animation failed to start or be initialized properly.");
 }
-
 function cancelAnimation() {
   clearInterval(animation);
 }
-
 // game runner
 
 function gameOver() {
@@ -124,3 +105,9 @@ pauseBtn.onclick = function () {
   if (animation)
     throw new Error("Animation variable not null after game paused.");
 };
+
+setNewCurrentTetro();
+
+moveCurrentTetro();
+
+passivelyMoveCurrentTetro();
