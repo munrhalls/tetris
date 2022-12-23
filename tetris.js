@@ -272,6 +272,7 @@ function displayGameOver() {
     startBtn.classList.add("hidden");
     pauseBtn.classList.remove("hidden");
     tetris.replaceChildren();
+    setNewCurrentTetro();
     runAnimation();
   };
   gameOver.appendChild(restartBtn);
