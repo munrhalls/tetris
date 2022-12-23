@@ -33,9 +33,10 @@ function setNewCurrentTetro() {
     [1, 3],
   ];
   // move tetro
-  tetro.forEach((el) => (el[0] = el[0] + 1));
-  tetro.forEach((el) => (el[0] = el[0] + 1));
-  // check collision
+
+  tetro.forEach((el) => (el[0] = el[0] + 20));
+
+  // check vertical collision
   const frozen = [
     [23, 0],
     [22, 0],
@@ -52,7 +53,18 @@ function setNewCurrentTetro() {
   for (let xy of frozen) {
     const cell = document.getElementById(`cellXY-${xy[0]}-${xy[1]}`);
     cell.classList.add("black");
+    cell.classList.add("frozen");
   }
+
+  const freeze = tetro.find((xy) => {
+    const nextVerticalCell = document.getElementById(
+      `cellXY-${xy[0] + 1}-${xy[1]}`
+    );
+    console.log(nextVerticalCell);
+    console.log([...nextVerticalCell.classList].includes("frozen"));
+    return [...nextVerticalCell.classList].includes("frozen");
+  });
+  console.log(freeze);
 }
 
 // Current tetrominoe ready
