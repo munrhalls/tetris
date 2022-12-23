@@ -33,22 +33,22 @@ for (let x = 0; x < rows; x++) {
   const row = document.createElement("div");
   row.style.height = `${standardSquare}px`;
   row.classList.add(`row`);
-  row.classList.add(`x-${x}`);
+  row.id = `x-${x}`;
 
   for (let y = 0; y < columns; y++) {
     grid[grid.length - 1].push(y);
-    const column = document.createElement("div");
-    column.style.height = `${standardSquare}px`;
-    column.style.width = `${standardSquare}px`;
-    column.classList.add(`column`);
-    column.classList.add(`y-${y}`);
-    row.appendChild(column);
+    const cell = document.createElement("div");
+    cell.style.height = `${standardSquare}px`;
+    cell.style.width = `${standardSquare}px`;
+    cell.classList.add(`cell`);
+    cell.id = `cellXY-${x}-${y}`;
+    row.appendChild(cell);
   }
   tetris.appendChild(row);
 }
 
 const rowNodes = document.getElementsByClassName("row");
-const colNodes = document.getElementsByClassName("column");
+const cellNodes = document.getElementsByClassName("cell");
 
 // Board ready
 
@@ -60,6 +60,9 @@ function setNewCurrentTetro() {
     [0, 13],
     [1, 14],
   ];
+
+  for (let yx of tetro) {
+  }
 }
 
 // Current tetrominoe ready
