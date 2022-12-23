@@ -20,28 +20,30 @@ const startBtn = document.getElementById("startBtn");
 const pauseBtn = document.getElementById("pauseBtn");
 
 const tetris = document.getElementById("tetris");
+const rows = 24;
+const columns = 16;
+
 const standardSquare = 20;
 const grid = [];
 
-for (let y = 0; y < 24; y++) {
+for (let x = 0; x < rows; x++) {
   grid.push([]);
   const row = document.createElement("div");
   row.style.height = `${standardSquare}px`;
   row.classList.add(`row`);
-  row.classList.add(`x-${y}`);
+  row.classList.add(`x-${x}`);
 
-  for (let x = 0; x < 16; x++) {
-    grid[grid.length - 1].push(x);
+  for (let y = 0; y < columns; y++) {
+    grid[grid.length - 1].push(y);
     const column = document.createElement("div");
     column.style.height = `${standardSquare}px`;
     column.style.width = `${standardSquare}px`;
     column.classList.add(`column`);
-    column.classList.add(`y-${x}`);
+    column.classList.add(`y-${y}`);
     row.appendChild(column);
   }
   tetris.appendChild(row);
 }
-console.log(grid);
 
 if (!startBtn || !tetris) throw new Error("DOM nodes are missing.");
 let animation;
@@ -106,38 +108,7 @@ if (
   throw new Error("Current tetrominoe size was not set.");
 
 function setNewCurrentTetro() {
-  if (document.getElementsByClassName("current")[0]) {
-    const previous = document.getElementsByClassName("current")[0];
-    previous.classList.remove("current");
-    previous.classList.add("frozen");
-  }
-
-  const current = document.createElement("div");
-  current.classList.add("tetrominoe");
-  current.classList.add("current");
-  current.style.height = `${standardSquare * 1}px`;
-  current.style.width = `${standardSquare * 2}px`;
-  current.style.left = `${horizontalTrackPos}px`;
-  current.style.top = `0px`;
-  tetris.appendChild(current);
-  currentTetro = current;
-
-  if (
-    currentTetro === undefined ||
-    !currentTetro.style.left ||
-    !currentTetro.style.width ||
-    !currentTetro.style.height
-  )
-    throw new Error(
-      "Current tetrominoe variables did not initialize properly."
-    );
-  if (
-    !Array(...currentTetro.classList).includes("tetrominoe") ||
-    !Array(...currentTetro.classList).includes("current")
-  )
-    throw new Error(
-      "Current tetrominoe DOM classes did not initialize properly"
-    );
+  const currentTetro = [];
 }
 
 // Current tetrominoe ready
@@ -190,36 +161,7 @@ passivelyMoveCurrentTetro();
 
 // Moving current tetrominoe ready
 
-function checkCollision() {
-  let collides = false;
-  const verticalCollision = [...document.getElementsByClassName("frozen")].find(
-    (frozen) =>
-      parseInt(frozen.style.top.split("px")[0]) - standardSquare ===
-      verticalTrackPos
-  );
-
-  if (verticalCollision) {
-    const horizontalCollision = [
-      ...document.getElementsByClassName("frozen"),
-    ].find((frozen) => {
-      const current = document.getElementsByClassName("current")[0];
-      if (!currentTetro) throw Error("Current tetrominoe not set properly.");
-      const frozenXLeft = parseInt(frozen.style.left.split("px")[0]);
-      const frozenXRight =
-        frozenXLeft + parseInt(frozen.style.width.split("px")[0]);
-
-      const currentXLeft = parseInt(current.style.left.split("px")[0]);
-      const currentXRight =
-        currentXLeft + parseInt(current.style.width.split("px")[0]);
-
-      if (currentXLeft > frozenXLeft && currentXLeft < frozenXRight) {
-        collides = true;
-      }
-    });
-  }
-  console.log(collides);
-  return collides;
-}
+function checkCollision() {}
 
 function paintVariables() {
   nextStepCollides = checkCollision();
