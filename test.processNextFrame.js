@@ -1,0 +1,66 @@
+export default function testProcessNextFrame() {
+  const testAction = funnelConditionChecks();
+  if (testAction === undefined)
+    throw new Error("Funnel does not return anything @processNextFrame.");
+
+  switch (testAction) {
+    case "game over":
+      handleGameOver(testAction);
+      break;
+    case "freeze":
+      handleFreeze(testAction);
+      break;
+    default:
+      handleMoveCurrentXYGroupCells(testAction);
+  }
+}
+
+function funnelConditionChecks() {
+  if (isUpperBoundHit()) return "game over";
+  let runsAfter = isUpperBoundHit();
+  if (runsAfter)
+    throw new Error("Guarded clause disrespected, code runs after.");
+
+  if (isFreeze()) return "freeze";
+  runsAfter = isFreeze();
+  if (runsAfter)
+    throw new Error("Guarded clause disrespected, code runs after.");
+
+  return "default";
+}
+function isUpperBoundHit() {
+  return false;
+}
+function handleGameOver() {
+  if (action !== "game over")
+    throw new Error("Switch statement action mismatch.");
+  console.log("handling game over");
+  return "game over";
+}
+
+function isFreeze() {
+  if (
+    isCurrentGroupXYToHitAnyFrozenGroupXY() ||
+    isCurrentGroupXYToHitBotBound()
+  )
+    return "freeze";
+}
+function isCurrentGroupXYToHitAnyFrozenGroupXY() {
+  return "freeze";
+}
+function isCurrentGroupXYToHitBotBound() {
+  return "freeze";
+}
+function handleFreeze(action) {
+  if (action !== "freeze") throw new Error("Switch statement action mismatch.");
+  console.log("handling freeze");
+}
+
+function getCurrentXYGroupCells() {
+  return "curr cells";
+}
+
+function handleMoveCurrentXYGroupCells(testAction) {
+  if (action) throw new Error("Switch statement action mismatch.");
+  console.log("mv class by one vertically");
+}

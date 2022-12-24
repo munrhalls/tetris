@@ -1,3 +1,6 @@
+import testProcessNextFrame from "./test.processNextFrame.js";
+testProcessNextFrame();
+
 export default function processNextFrame() {
   let cells = getCurrentXYGroupCells();
   const action = funnelConditionChecks();
@@ -6,6 +9,9 @@ export default function processNextFrame() {
     case "game over":
       handleGameOver();
       break;
+    case "freeze":
+      handleFreeze();
+      break;
     default:
       handleMoveCurrentXYGroupCells();
   }
@@ -13,26 +19,40 @@ export default function processNextFrame() {
 
 function funnelConditionChecks() {
   if (isUpperBoundHit()) return "game over";
-
+  if (isFreeze()) return "freeze";
   return false;
 }
-
 function isUpperBoundHit() {
   return false;
+}
+function handleGameOver() {
+  console.log("handling game over");
+  return "game over";
+}
+
+function isFreeze() {
+  if (
+    isCurrentGroupXYToHitAnyFrozenGroupXY() ||
+    isCurrentGroupXYToHitBotBound()
+  )
+    return "freeze";
+}
+function isCurrentGroupXYToHitAnyFrozenGroupXY() {
+  return "freeze";
+}
+function isCurrentGroupXYToHitBotBound() {
+  return "freeze";
+}
+function handleFreeze() {
+  console.log("handling freeze");
 }
 
 function getCurrentXYGroupCells() {
   return "curr cells";
 }
 
-function handleGameOver() {
-  console.log("handling game over");
-  return "game over";
-}
-
 function handleMoveCurrentXYGroupCells() {
   console.log("mv class by one vertically");
-  return "mv class by one vertically";
 }
 
 ////
