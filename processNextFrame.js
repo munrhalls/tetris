@@ -12,6 +12,8 @@ export default function processNextFrame() {
     case "freeze":
       handleFreeze();
       break;
+    case "illegal move":
+      handleIllegalMove();
 
     default:
       handleMoveCurrentXYGroupCells();
@@ -20,37 +22,41 @@ export default function processNextFrame() {
 
 function funnelConditionChecks() {
   if (isUpperBoundHit()) return "game over";
-  if (isFreeze()) return "freeze";
+  if (nextMoveOverlapsFrozen()) return "freeze";
+  if (nextMoveOverlapsBottomCell()) return "freeze";
+  if (nextMoveOverlapsHorizontalBounds()) return "illegal move";
   return false;
 }
 function isUpperBoundHit() {
   return false;
 }
-function handleGameOver() {
-  console.log("handling game over");
-  return "game over";
-}
 
-function isFreeze() {
-  if (nextMoveOverlapsFrozen() || nextMoveOverlapsBottomCell()) return "freeze";
-}
 function nextMoveOverlapsFrozen() {
   return "freeze";
 }
 function nextMoveOverlapsBottomCell() {
   return "freeze";
 }
+function nextMoveOverlapsHorizontalBounds() {
+  return "illegal move";
+}
+
+function handleGameOver() {
+  console.log("handling game over");
+}
 function handleFreeze() {
   console.log("handling freeze");
 }
-
-function getCurrentXYGroupCells() {
-  return "curr cells";
+function handleIllegalMove() {
+  console.log("handle illegal move");
 }
-
 function handleMoveCurrentXYGroupCells() {
   console.log("mv class by one vertically");
 }
+
+// function getCurrentXYGroupCells() {
+//   console.log("curr cells");
+// }
 
 ////
 ///
