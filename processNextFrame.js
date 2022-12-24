@@ -14,9 +14,10 @@ export default function processNextFrame() {
       break;
     case "illegal move":
       handleIllegalMove();
-
-    default:
+    case "pass":
       handleMoveCurrentXYGroupCells();
+    default:
+      throw new Error("Funnel @processNextFrame leaks. Porous checks.");
   }
 }
 
@@ -25,7 +26,7 @@ function funnelConditionChecks() {
   if (nextMoveOverlapsFrozen()) return "freeze";
   if (nextMoveOverlapsBottomCell()) return "freeze";
   if (nextMoveOverlapsHorizontalBounds()) return "illegal move";
-  return false;
+  return "pass";
 }
 function isUpperBoundHit() {
   return false;
