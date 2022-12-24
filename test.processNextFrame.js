@@ -35,7 +35,6 @@ function isUpperBoundHit() {
 function handleGameOver() {
   if (action !== "game over")
     throw new Error("Switch statement action mismatch.");
-  console.log("handling game over");
   return "game over";
 }
 
@@ -61,7 +60,6 @@ function isCurrentGroupXYToHitBotBound() {
 }
 function handleFreeze(action) {
   if (action !== "freeze") throw new Error("Switch statement action mismatch.");
-  console.log("handling freeze");
 }
 
 function getCurrentXYGroupCells() {

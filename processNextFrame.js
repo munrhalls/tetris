@@ -2,56 +2,57 @@ import testProcessNextFrame from "./test.processNextFrame.js";
 testProcessNextFrame();
 
 export default function processNextFrame() {
-  let cells = getCurrentXYGroupCells();
-  const action = funnelConditionChecks();
+  const currXYCells = [...document.getElementsByClassName("current")];
+  const action = funnelConditionChecks(currXYCells);
 
   switch (action) {
     case "game over":
       handleGameOver();
       break;
     case "freeze":
-      handleFreeze();
+      handleFreeze(currXYCells);
       break;
     case "illegal move":
-      handleIllegalMove();
+      handleIllegalMove(currXYCells);
     case "pass":
-      handleMoveCurrentXYGroupCells();
+      handleMoveCurrentXYGroupCells(currXYCells);
     default:
       throw new Error("Funnel @processNextFrame leaks. Porous checks.");
   }
 }
 
-function funnelConditionChecks() {
-  if (isUpperBoundHit()) return "game over";
-  if (nextMoveOverlapsFrozen()) return "freeze";
-  if (nextMoveOverlapsBottomCell()) return "freeze";
-  if (nextMoveOverlapsHorizontalBounds()) return "illegal move";
+function funnelConditionChecks(currXYCells) {
+  if (isUpperBoundHit(currXYCells)) return "game over";
+  if (nextMoveOverlapsFrozen(currXYCells)) return "freeze";
+  if (nextMoveOverlapsBottomCell(currXYCells)) return "freeze";
+  if (nextMoveOverlapsHorizontalBounds(currXYCells)) return "illegal move";
   return "pass";
 }
-function isUpperBoundHit() {
-  return false;
+function isUpperBoundHit(currXYCells) {
+  console.log(currXYCells);
+  return true;
 }
 
-function nextMoveOverlapsFrozen() {
+function nextMoveOverlapsFrozen(currXYCells) {
   return "freeze";
 }
-function nextMoveOverlapsBottomCell() {
+function nextMoveOverlapsBottomCell(currXYCells) {
   return "freeze";
 }
-function nextMoveOverlapsHorizontalBounds() {
+function nextMoveOverlapsHorizontalBounds(currXYCells) {
   return "illegal move";
 }
 
 function handleGameOver() {
   console.log("handling game over");
 }
-function handleFreeze() {
+function handleFreeze(currXYCells) {
   console.log("handling freeze");
 }
-function handleIllegalMove() {
+function handleIllegalMove(currXYCells) {
   console.log("handle illegal move");
 }
-function handleMoveCurrentXYGroupCells() {
+function handleMoveCurrentXYGroupCells(currXYCells) {
   console.log("mv class by one vertically");
 }
 
