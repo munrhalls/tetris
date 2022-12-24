@@ -64,7 +64,6 @@ function setNewCurrentTetro() {
     console.log([...nextVerticalCell.classList].includes("frozen"));
     return [...nextVerticalCell.classList].includes("frozen");
   });
-  console.log(freeze);
 }
 
 // Current tetrominoe ready
@@ -75,7 +74,18 @@ function passivelyMoveCurrentTetro() {}
 
 function checkCollision() {}
 
-function paintVariables() {}
+function paintVariables() {
+  // 1st tick or - AFTER - current coords group FREEZE/BOTTOM
+  // new current coords group is generated and delivered here
+  // current coords group is painted
+  // conditions determining state of
+  // 2nd tick
+  // passive movement to bottom
+  //
+  // some stuff that says which cells count as current tetro
+  // some stuff that says which cells count as frozen tetro
+  //
+}
 
 function runAnimation() {
   animation = setInterval(function () {
