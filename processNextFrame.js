@@ -12,6 +12,7 @@ export default function processNextFrame() {
     case "freeze":
       handleFreeze();
       break;
+
     default:
       handleMoveCurrentXYGroupCells();
   }
@@ -31,16 +32,12 @@ function handleGameOver() {
 }
 
 function isFreeze() {
-  if (
-    isCurrentGroupXYToHitAnyFrozenGroupXY() ||
-    isCurrentGroupXYToHitBotBound()
-  )
-    return "freeze";
+  if (nextMoveOverlapsFrozen() || nextMoveOverlapsBottomCell()) return "freeze";
 }
-function isCurrentGroupXYToHitAnyFrozenGroupXY() {
+function nextMoveOverlapsFrozen() {
   return "freeze";
 }
-function isCurrentGroupXYToHitBotBound() {
+function nextMoveOverlapsBottomCell() {
   return "freeze";
 }
 function handleFreeze() {
