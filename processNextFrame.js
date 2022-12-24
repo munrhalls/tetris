@@ -1,14 +1,39 @@
 export default function processNextFrame() {
   let cells = getCurrentXYGroupCells();
-  console.log(cells);
+  const action = funnelConditionChecks();
+
+  switch (action) {
+    case "game over":
+      handleGameOver();
+      break;
+    default:
+      handleMoveCurrentXYGroupCells();
+  }
+}
+
+function funnelConditionChecks() {
+  if (isUpperBoundHit()) return "game over";
+
+  return false;
+}
+
+function isUpperBoundHit() {
+  return false;
 }
 
 function getCurrentXYGroupCells() {
   return "curr cells";
 }
 
-function 
+function handleGameOver() {
+  console.log("handling game over");
+  return "game over";
+}
 
+function handleMoveCurrentXYGroupCells() {
+  console.log("mv class by one vertically");
+  return "mv class by one vertically";
+}
 
 ////
 ///
