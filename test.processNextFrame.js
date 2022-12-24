@@ -69,6 +69,7 @@ function getCurrentXYGroupCells() {
 }
 
 function handleMoveCurrentXYGroupCells(testAction) {
-  if (action) throw new Error("Switch statement action mismatch.");
+  console.log(testAction);
+  if (testAction) throw new Error("Switch statement action mismatch.");
   console.log("mv class by one vertically");
 }
