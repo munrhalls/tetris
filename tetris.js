@@ -1,5 +1,6 @@
 import makeBoard from "./makeBoard.js";
 import processCurrentFrame from "./processCurrentFrame.js";
+import processNextFrame from "./processNextFrame.js";
 makeBoard();
 
 window.requestAnimFrame = (function () {
@@ -24,10 +25,6 @@ const startBtn = document.getElementById("startBtn");
 const pauseBtn = document.getElementById("pauseBtn");
 let animInterval = null;
 
-function processNextFrame() {
-  console.log("next frame");
-}
-
 function shiftFrame() {
   processCurrentFrame();
   processNextFrame();
@@ -49,4 +46,4 @@ startBtn.onclick = function () {
   cancelAnimation();
 };
 
-// loopShiftingFrame(50);
+loopShiftingFrame(50);
