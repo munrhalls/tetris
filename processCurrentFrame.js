@@ -1,40 +1,23 @@
 export default function processCurrentFrame() {
-  const tetro = [
-    [0, 1],
-    [0, 2],
-    [0, 3],
-    [1, 3],
-  ];
-  // move tetro
+  if (!document.getElementsByClassName("current")[0]) {
+    const xyGroup = generateNewXYGroup();
 
-  tetro.forEach((el) => (el[0] = el[0] + 20));
-
-  // check vertical collision
-  const frozen = [
-    [23, 0],
-    [22, 0],
-    [21, 0],
-    [21, 1],
-    [21, 2],
-  ];
-
-  for (let xy of tetro) {
-    const cell = document.getElementById(`cellXY-${xy[0]}-${xy[1]}`);
-    cell.classList.add("black");
+    for (let xy of xyGroup) {
+      const cell = document.getElementById(`cellXY-${xy[0]}-${xy[1]}`);
+      cell.classList.add("current");
+      cell.classList.add("black");
+    }
   }
+}
 
-  for (let xy of frozen) {
-    const cell = document.getElementById(`cellXY-${xy[0]}-${xy[1]}`);
-    cell.classList.add("black");
-    cell.classList.add("frozen");
-  }
-
-  const freeze = tetro.find((xy) => {
-    const nextVerticalCell = document.getElementById(
-      `cellXY-${xy[0] + 1}-${xy[1]}`
-    );
-    console.log(nextVerticalCell);
-    console.log([...nextVerticalCell.classList].includes("frozen"));
-    return [...nextVerticalCell.classList].includes("frozen");
-  });
+function generateNewXYGroup() {
+  // procedurally randomize or generate new xyGroup
+  // init mock
+  const xyGroup = [
+    [0, 5],
+    [0, 6],
+    [0, 7],
+    [1, 7],
+  ];
+  return xyGroup;
 }

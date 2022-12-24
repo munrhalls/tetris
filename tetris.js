@@ -1,26 +1,10 @@
 import makeBoard from "./makeBoard.js";
+import requestAnimFrame from "./animateFrame.js";
 import processCurrentFrame from "./processCurrentFrame.js";
 import processNextFrame from "./processNextFrame.js";
 makeBoard();
 
-window.requestAnimFrame = (function () {
-  return (
-    window.requestAnimationFrame ||
-    window.webkitRequestAnimationFrame ||
-    window.mozRequestAnimationFrame ||
-    window.oRequestAnimationFrame ||
-    window.msRequestAnimationFrame ||
-    function (callback, element) {
-      window.setTimeout(callback, 1000 / 60);
-    }
-  );
-})();
-
-if (!requestAnimFrame)
-  throw new Error(
-    "Window requestAnimationFrame method did not initialize properly."
-  );
-
+console.log(requestAnimFrame);
 const startBtn = document.getElementById("startBtn");
 const pauseBtn = document.getElementById("pauseBtn");
 let animInterval = null;
@@ -32,7 +16,7 @@ function shiftFrame() {
 
 function loopShiftingFrame(frequency) {
   animInterval = setInterval(function () {
-    requestAnimationFrame(shiftFrame);
+    requestAnimFrame(shiftFrame);
   }, frequency);
 
   if (!animInterval)
@@ -46,4 +30,9 @@ startBtn.onclick = function () {
   cancelAnimation();
 };
 
-loopShiftingFrame(50);
+pauseBtn.onclick = function () {
+  console.log("pause");
+};
+
+loopShiftingFrame(1000);
+// cancelAnimation();
