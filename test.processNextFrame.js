@@ -1,5 +1,6 @@
+const testAction = funnelConditionChecks();
+
 export default function testProcessNextFrame() {
-  const testAction = funnelConditionChecks();
   if (testAction === undefined)
     throw new Error("Funnel does not return anything @processNextFrame.");
 
@@ -44,6 +45,13 @@ function isFreeze() {
     isCurrentGroupXYToHitBotBound()
   )
     return "freeze";
+  runsAfter = isCurrentGroupXYToHitAnyFrozenGroupXY();
+  if (runsAfter)
+    throw new Error("Guarded clause disrespected, code runs after.");
+
+  runsAfter = isCurrentGroupXYToHitBotBound();
+  if (runsAfter)
+    throw new Error("Guarded clause disrespected, code runs after.");
 }
 function isCurrentGroupXYToHitAnyFrozenGroupXY() {
   return "freeze";
