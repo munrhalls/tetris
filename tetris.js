@@ -87,7 +87,7 @@ function paintVariables() {
   //
 }
 
-function runAnimation() {
+function loopShiftingFrame() {
   animation = setInterval(function () {
     requestAnimationFrame(paintVariables);
   }, verticalFrequency);
@@ -112,7 +112,7 @@ function displayGameOver() {}
 startBtn.onclick = function () {
   startBtn.classList.add("hidden");
   pauseBtn.classList.remove("hidden");
-  runAnimation();
+  loopShiftingFrame();
 };
 
 pauseBtn.onclick = function () {
