@@ -1,17 +1,14 @@
 import makeBoard from "./makeBoard.js";
 import requestAnimFrame from "./animateFrame.js";
-import processCurrentFrame from "./processCurrentFrame.js";
-import processNextFrame from "./processNextFrame.js";
+import processFrame from "./processFrame.js";
 makeBoard();
 
-console.log(requestAnimFrame);
 const startBtn = document.getElementById("startBtn");
 const pauseBtn = document.getElementById("pauseBtn");
 let animInterval = null;
 
 function shiftFrame() {
-  processCurrentFrame();
-  processNextFrame();
+  // processFrame();
 }
 
 function loopShiftingFrame(frequency) {
