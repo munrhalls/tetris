@@ -1,6 +1,3 @@
-const tetris = document.getElementById("tetris");
-
-
 let xyGroup = null;
 let frozenGroups = [];
 let moveCommand = undefined;
@@ -54,7 +51,7 @@ function initializeTetro() {
   }
 }
 
-function unpaintTetro() {
+function unpaintTetro(xy) {
   for (let xy of xyGroup) {
     unpaintCell(xy);
   }
