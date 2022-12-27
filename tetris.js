@@ -2,35 +2,43 @@ import makeBoard from "./makeBoard.js";
 import requestAnimFrame from "./animateFrame.js";
 import processFrame from "./processFrame.js";
 
-makeBoard();
+document.addEventListener("DOMContentLoaded", initializeGame);
+let isGameRunning = null;
 
-const startBtn = document.getElementById("startBtn");
-const pauseBtn = document.getElementById("pauseBtn");
-let animInterval = null;
+async function initializeGame() {
+  await makeBoard();
+  await makeInterface();
+  await loopShiftingFrame(1000);
+}
+
+console.log([...document.getElementsByTagName("main")].length);
 
 function shiftFrame() {
   processFrame();
 }
 
-function loopShiftingFrame(frequency) {
-  animInterval = setInterval(function () {
+async function loopShiftingFrame(frequency) {
+  isGameRunning = setInterval(function () {
     requestAnimFrame(shiftFrame);
   }, frequency);
 
-  if (!animInterval)
+  if (!isGameRunning)
     throw new Error("Animation failed to start or be initialized properly.");
 }
+
 function cancelAnimation() {
-  clearInterval(animInterval);
+  clearInterval(isGameRunning);
 }
 
-startBtn.onclick = function () {
-  cancelAnimation();
-};
+async function makeInterface() {
+  const startBtn = document.getElementById("startBtn");
+  const pauseBtn = document.getElementById("pauseBtn");
 
-pauseBtn.onclick = function () {
-  console.log("pause");
-};
+  startBtn.onclick = function () {
+    cancelAnimation();
+  };
 
-loopShiftingFrame(1000);
-// cancelAnimation();
+  pauseBtn.onclick = function () {
+    console.log("pause");
+  };
+}

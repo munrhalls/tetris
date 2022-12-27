@@ -1,4 +1,4 @@
-export default function makeBoard() {
+export default async function makeBoard() {
   const tetris = document.getElementById("tetris");
 
   const rows = 24;

@@ -1,19 +1,36 @@
-let xyGroup = [];
+const rows = document.getElementsByClassName("row");
+console.log([...document.getElementsByTagName("main")].length);
+console.log(rows);
+setTimeout(() => {
+  console.log([...rows]);
+}, 100);
+
+const columns = 16;
+let xyGroup = null;
 let frozenGroups = [];
 
 export default function processFrame() {
-  if (!xyGroup.length) {
-    xyGroup.push([0, 1]);
-    xyGroup.push([0, 2]);
-    xyGroup.push([1, 2]);
-    xyGroup.push([2, 2]);
-
-    for (let xy of xyGroup) {
-      const cell = document.getElementById(`cellXY-${xy[0]}-${xy[1]}`);
-      cell.classList.add("black");
-    }
+  if (!xyGroup) {
+    initializeTetro();
+  } else {
+    moveTetro();
   }
+}
 
-  frozenGroups.push(xyGroup[0]);
-  xyGroup.pop();
+function initializeTetro() {
+  xyGroup = [
+    [0, 1],
+    [0, 2],
+    [1, 2],
+    [2, 2],
+  ];
+
+  for (let xy of xyGroup) {
+    const cell = document.getElementById(`cellXY-${xy[0]}-${xy[1]}`);
+    cell.classList.add("black");
+  }
+}
+
+function moveTetro() {
+  // xy 0 = i; until
 }
