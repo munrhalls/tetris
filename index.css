@@ -65,6 +65,9 @@ body {
     background: black;
 }
 
+.frozen {
+    opacity: 0.25;
+}
 
 .btn {
     margin: auto;

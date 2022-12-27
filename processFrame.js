@@ -10,6 +10,7 @@ export default function processFrame() {
     initializeTetro();
   } else {
     if (isAtBoundBottom()) return freezeTetro();
+    if (isAtFrozenTetro()) return freezeTetro();
     unpaintTetro();
     moveTetroBottom();
     paintTetro();
@@ -35,7 +36,9 @@ function initializeMovesInterface() {
       paintTetro();
     }
     if (e.code === "ArrowDown") {
-      if (isAtBoundBottom()) return;
+      if (isAtBoundBottom()) return freezeTetro();
+      if (isAtFrozenTetro()) return freezeTetro();
+
       unpaintTetro();
       moveTetroBottom();
       paintTetro();
@@ -76,6 +79,15 @@ function isAtBoundBottom() {
   }
   return false;
 }
+function isAtFrozenTetro() {
+  for (let xy of xyGroup) {
+    const cell = document.getElementById(
+      `cellXY-${parseInt(xy[0] + 1)}-${xy[1]}`
+    );
+    if ([...cell.classList].includes("frozen")) return true;
+  }
+  return false;
+}
 function moveTetroLeft() {
   for (let xy of xyGroup) {
     xy[1] = xy[1] - 1;
@@ -93,6 +105,11 @@ function moveTetroBottom() {
 }
 function freezeTetro() {
   frozenTetroes.push(xyGroup);
+  for (let xy of xyGroup) {
+    const cell = document.getElementById(`cellXY-${xy[0]}-${xy[1]}`);
+    cell.classList.add("frozen");
+  }
+
   xyGroup = null;
 }
 function unpaintTetro(xy) {
