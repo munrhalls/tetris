@@ -10,6 +10,7 @@ export default function processFrame() {
     unpaintTetro();
     switch (moveCommand) {
       case "left":
+        if (isAtBoundLeft()) break;
         moveTetroLeft();
         break;
       case "right":
@@ -62,6 +63,21 @@ function unpaintTetro() {
 }
 function unpaintCell(xy) {
   document.getElementById(`cellXY-${xy[0]}-${xy[1]}`).classList.remove("black");
+}
+function isAtBoundLeft() {
+  let isAtBoundLeft;
+
+  for (let xy of xyGroup) {
+    if (xy[1] - 1 < 0) {
+      console.log(xy[1] - 1 < 2);
+      isAtBoundLeft = true;
+      break;
+    } else {
+      isAtBoundLeft = false;
+    }
+  }
+
+  return isAtBoundLeft;
 }
 function moveTetroLeft() {
   for (let xy of xyGroup) {
