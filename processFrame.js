@@ -2,13 +2,14 @@ let xyGroup = null;
 let frozenGroups = [];
 let moveCommand = undefined;
 const tetris = document.getElementById("tetris");
-const rows = parseInt(tetris.getAttribute("columns"));
+const rows = parseInt(tetris.getAttribute("rows"));
 const columns = parseInt(tetris.getAttribute("columns"));
 
 export default function processFrame() {
   if (!xyGroup) {
     initializeTetro();
   } else {
+    if (isAtBoundBottom()) return;
     unpaintTetro();
     moveTetroBottom();
     paintTetro();
@@ -45,8 +46,10 @@ function initializeTetro() {
   xyGroup = [
     [0, 1],
     [0, 2],
-    [1, 2],
-    [2, 2],
+    [0, 3],
+    [0, 4],
+    [1, 4],
+    [2, 4],
   ];
 
   for (let xy of xyGroup) {
@@ -64,19 +67,21 @@ function unpaintCell(xy) {
 }
 function isAtBoundLeft() {
   for (let xy of xyGroup) {
-    return xy[1] - 1 < 0 ? true : false;
+    if (xy[1] - 1 < 0) return true;
   }
+  return false;
 }
 function isAtBoundRight() {
   for (let xy of xyGroup) {
-    return xy[1] + 1 > columns ? true : false;
+    if (xy[1] + 1 >= columns) return true;
   }
+  return false;
 }
 function isAtBoundBottom() {
-  console.log(rows);
   for (let xy of xyGroup) {
-    return xy[0] + 1 > rows ? true : false;
+    if (xy[0] + 1 >= rows) return true;
   }
+  return false;
 }
 function moveTetroLeft() {
   for (let xy of xyGroup) {
