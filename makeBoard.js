@@ -1,12 +1,12 @@
-export default async function makeBoard() {
-  const tetris = document.getElementById("tetris");
-  const rows = 24;
-  const columns = 16;
-  const standardSquare = 20;
-  const grid = [];
-  tetris.setAttribute("rows", rows);
-  tetris.setAttribute("columns", columns);
+const tetris = document.getElementById("tetris");
+const rows = 24;
+const columns = 16;
+const standardSquare = 20;
+const grid = [];
+tetris.setAttribute("rows", `${rows}`);
+tetris.setAttribute("columns", `${columns}`);
 
+export default async function makeBoard() {
   setTimeout(() => {
     for (let x = 0; x < rows; x++) {
       grid.push([]);

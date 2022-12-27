@@ -1,6 +1,9 @@
 let xyGroup = null;
 let frozenGroups = [];
 let moveCommand = undefined;
+const tetris = document.getElementById("tetris");
+const rows = parseInt(tetris.getAttribute("columns"));
+const columns = parseInt(tetris.getAttribute("columns"));
 
 export default function processFrame() {
   if (!xyGroup) {

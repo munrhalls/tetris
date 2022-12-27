@@ -3,8 +3,6 @@ import requestAnimFrame from "./animateFrame.js";
 import processFrame from "./processFrame.js";
 
 document.addEventListener("DOMContentLoaded", initializeGame);
-const rows = 24;
-const columns = 16;
 let isGameRunning = null;
 let frequency = 500;
 
@@ -15,7 +13,7 @@ async function initializeGame() {
 }
 
 function shiftFrame() {
-  processFrame(rows, columns);
+  processFrame();
 }
 
 async function loopShiftingFrame(frequency) {
