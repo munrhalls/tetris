@@ -79,6 +79,15 @@ function isAtBoundRight() {
 }
 function isAtBoundBottom() {
   for (let xy of xyGroup) {
+    const cell = document.getElementById(
+      `cellXY-${parseInt(xy[0] + 2)}-${xy[1]}`
+    );
+    cell.style.backgroundColor = "blue";
+    const cell2 = document.getElementById(
+      `cellXY-${parseInt(xy[0] + 1)}-${xy[1]}`
+    );
+    cell2.style.backgroundColor = "";
+    console.log(cell);
     if (xy[0] + 1 >= rows) return true;
   }
   return false;
