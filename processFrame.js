@@ -10,7 +10,7 @@ export default function processFrame() {
     initializeTetro();
   } else {
     if (isAtBoundBottom()) return freezeTetro();
-    if (isAtFrozenTetro()) return freezeTetro();
+    if (isAtFrozenTetroBottom()) return freezeTetro();
     unpaintTetro();
     moveTetroBottom();
     paintTetro();
@@ -25,19 +25,22 @@ function initializeMovesInterface() {
     if (!xyGroup) return;
     if (e.code === "ArrowLeft") {
       if (isAtBoundLeft()) return;
+      if (isAtFrozenTetroLeft()) return freezeTetro();
       unpaintTetro();
       moveTetroLeft();
       paintTetro();
     }
     if (e.code === "ArrowRight") {
       if (isAtBoundRight()) return;
+      if (isAtFrozenTetroRight()) return freezeTetro();
+
       unpaintTetro();
       moveTetroRight();
       paintTetro();
     }
     if (e.code === "ArrowDown") {
       if (isAtBoundBottom()) return freezeTetro();
-      if (isAtFrozenTetro()) return freezeTetro();
+      if (isAtFrozenTetroBottom()) return freezeTetro();
 
       unpaintTetro();
       moveTetroBottom();
@@ -79,7 +82,26 @@ function isAtBoundBottom() {
   }
   return false;
 }
-function isAtFrozenTetro() {
+
+function isAtFrozenTetroLeft() {
+  for (let xy of xyGroup) {
+    const cell = document.getElementById(
+      `cellXY-${xy[0]}-${parseInt(xy[1]) - 1}`
+    );
+    if ([...cell.classList].includes("frozen")) return true;
+  }
+  return false;
+}
+function isAtFrozenTetroRight() {
+  for (let xy of xyGroup) {
+    const cell = document.getElementById(
+      `cellXY-${xy[0]}-${parseInt(xy[1]) + 1}`
+    );
+    if ([...cell.classList].includes("frozen")) return true;
+  }
+  return false;
+}
+function isAtFrozenTetroBottom() {
   for (let xy of xyGroup) {
     const cell = document.getElementById(
       `cellXY-${parseInt(xy[0] + 1)}-${xy[1]}`
