@@ -1,4 +1,6 @@
 const tetris = document.getElementById("tetris");
+
+
 let xyGroup = null;
 let frozenGroups = [];
 let moveCommand = undefined;
@@ -8,20 +10,7 @@ export default function processFrame() {
     initializeTetro();
   } else {
     unpaintTetro();
-    switch (moveCommand) {
-      case "left":
-        if (isAtBoundLeft()) break;
-        moveTetroLeft();
-        break;
-      case "right":
-        moveTetroRight();
-        break;
-      case "down":
-        moveTetroDown();
-        break;
-    }
-
-    moveTetroDown();
+    moveTetroBottom();
     paintTetro();
     moveCommand = undefined;
   }
@@ -32,13 +21,22 @@ initializeMovesInterface();
 function initializeMovesInterface() {
   window.addEventListener("keydown", function (e) {
     if (e.code === "ArrowLeft") {
-      moveCommand = "left";
+      if (isAtBoundLeft()) return;
+      unpaintTetro();
+      moveTetroLeft();
+      paintTetro();
     }
     if (e.code === "ArrowRight") {
-      moveCommand = "right";
+      if (isAtBoundRight()) return;
+      unpaintTetro();
+      moveTetroRight();
+      paintTetro();
     }
     if (e.code === "ArrowDown") {
-      moveCommand = "down";
+      if (isAtBoundBottom()) return;
+      unpaintTetro();
+      moveTetroBottom();
+      paintTetro();
     }
   });
 }
@@ -69,6 +67,17 @@ function isAtBoundLeft() {
     return xy[1] - 1 < 0 ? true : false;
   }
 }
+function isAtBoundRight() {
+  for (let xy of xyGroup) {
+    return xy[1] + 1 > columns ? true : false;
+  }
+}
+function isAtBoundBottom() {
+  console.log(rows);
+  for (let xy of xyGroup) {
+    return xy[0] + 1 > rows ? true : false;
+  }
+}
 function moveTetroLeft() {
   for (let xy of xyGroup) {
     xy[1] = xy[1] - 1;
@@ -79,9 +88,9 @@ function moveTetroRight() {
     xy[1] = xy[1] + 1;
   }
 }
-function moveTetroDown() {
+function moveTetroBottom() {
   for (let xy of xyGroup) {
-    xy[0] = xy[0] + 2;
+    xy[0] = xy[0] + 1;
   }
 }
 function paintTetro() {
