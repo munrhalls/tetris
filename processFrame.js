@@ -1,11 +1,4 @@
-const rows = document.getElementsByClassName("row");
-console.log([...document.getElementsByTagName("main")].length);
-console.log(rows);
-setTimeout(() => {
-  console.log([...rows]);
-}, 100);
-
-const columns = 16;
+const tetris = document.getElementById("tetris");
 let xyGroup = null;
 let frozenGroups = [];
 
@@ -13,7 +6,9 @@ export default function processFrame() {
   if (!xyGroup) {
     initializeTetro();
   } else {
+    unpaintTetro();
     moveTetro();
+    paintTetro();
   }
 }
 
@@ -26,11 +21,30 @@ function initializeTetro() {
   ];
 
   for (let xy of xyGroup) {
-    const cell = document.getElementById(`cellXY-${xy[0]}-${xy[1]}`);
-    cell.classList.add("black");
+    document.getElementById(`cellXY-${xy[0]}-${xy[1]}`).classList.add("black");
   }
 }
 
-function moveTetro() {
-  // xy 0 = i; until
+function unpaintTetro() {
+  for (let xy of xyGroup) {
+    unpaintCell(xy);
+  }
 }
+function unpaintCell(xy) {
+  document.getElementById(`cellXY-${xy[0]}-${xy[1]}`).classList.remove("black");
+}
+function moveTetro() {
+  for (let xy of xyGroup) {
+    xy[0] = xy[0] + 1;
+  }
+}
+function paintTetro() {
+  for (let xy of xyGroup) {
+    paintCell(xy);
+  }
+}
+function paintCell(xy) {
+  document.getElementById(`cellXY-${xy[0]}-${xy[1]}`).classList.add("black");
+}
+
+function updateTetro() {}
