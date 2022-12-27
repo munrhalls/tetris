@@ -4,11 +4,12 @@ import processFrame from "./processFrame.js";
 
 document.addEventListener("DOMContentLoaded", initializeGame);
 let isGameRunning = null;
+let frequency = 500;
 
 async function initializeGame() {
   await makeBoard();
   await makeInterface();
-  await loopShiftingFrame(1000);
+  await loopShiftingFrame(frequency);
 }
 
 console.log([...document.getElementsByTagName("main")].length);
