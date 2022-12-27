@@ -15,6 +15,9 @@ export default function processFrame() {
       case "right":
         moveTetroRight();
         break;
+      case "down":
+        moveTetroDown();
+        break;
     }
 
     moveTetroDown();
@@ -32,6 +35,9 @@ function initializeMovesInterface() {
     }
     if (e.code === "ArrowRight") {
       moveCommand = "right";
+    }
+    if (e.code === "ArrowDown") {
+      moveCommand = "down";
     }
   });
 }
@@ -69,7 +75,7 @@ function moveTetroRight() {
 }
 function moveTetroDown() {
   for (let xy of xyGroup) {
-    xy[0] = xy[0] + 1;
+    xy[0] = xy[0] + 2;
   }
 }
 function paintTetro() {
