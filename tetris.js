@@ -12,13 +12,9 @@ async function initializeGame() {
   await loopShiftingFrame(frequency);
 }
 
-function shiftFrame() {
-  processFrame();
-}
-
 async function loopShiftingFrame(frequency) {
   isGameRunning = setInterval(function () {
-    requestAnimFrame(shiftFrame);
+    requestAnimFrame(processFrame);
   }, frequency);
 
   if (!isGameRunning)
