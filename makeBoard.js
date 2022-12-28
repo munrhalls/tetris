@@ -1,6 +1,6 @@
 const tetris = document.getElementById("tetris");
-const rows = 24;
-const columns = 16;
+const rows = 28;
+const columns = 22;
 const standardSquare = 20;
 const grid = [];
 localStorage.setItem("isGameOver", "false");
