@@ -7,6 +7,8 @@ let runGame = null;
 let frequency = 500;
 
 async function initializeGame() {
+  document.getElementById("tetris").style.display = "block";
+  document.getElementById("gameOver").style.display = "none";
   localStorage.setItem("isGameOver", "false");
   await makeBoard();
   await makeInterface();
@@ -37,7 +39,8 @@ async function loopShiftingFrame(frequency) {
 }
 
 function handleGameOver() {
-  console.log("Game over");
+  document.getElementById("tetris").style.display = "none";
+  document.getElementById("gameOver").style.display = "block";
   cancelAnimation();
 }
 function cancelAnimation() {
