@@ -27,9 +27,8 @@ async function makeInterface() {
 }
 
 async function loopShiftingFrame(frequency) {
-  if (localStorage.getItem("isGameOver") === "true") return handleGameOver();
-
   runGame = setInterval(function () {
+    if (localStorage.getItem("isGameOver") === "true") return handleGameOver();
     requestAnimFrame(processFrame);
   }, frequency);
 
