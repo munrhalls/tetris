@@ -12,19 +12,6 @@ async function initializeGame() {
   await loopShiftingFrame(frequency);
 }
 
-async function loopShiftingFrame(frequency) {
-  isGameRunning = setInterval(function () {
-    requestAnimFrame(processFrame);
-  }, frequency);
-
-  if (!isGameRunning)
-    throw new Error("Animation failed to start or be initialized properly.");
-}
-
-function cancelAnimation() {
-  clearInterval(isGameRunning);
-}
-
 async function makeInterface() {
   const startBtn = document.getElementById("startBtn");
   const pauseBtn = document.getElementById("pauseBtn");
@@ -36,4 +23,22 @@ async function makeInterface() {
   pauseBtn.onclick = function () {
     console.log("pause");
   };
+}
+
+async function loopShiftingFrame(frequency) {
+  if (Boolean(localStorage.getItem("isGameOver"))) handleGameOver();
+
+  isGameRunning = setInterval(function () {
+    requestAnimFrame(processFrame);
+  }, frequency);
+
+  if (!isGameRunning)
+    throw new Error("Animation failed to start or be initialized properly.");
+}
+
+function handleGameOver() {
+  cancelAnimation();
+}
+function cancelAnimation() {
+  clearInterval(isGameRunning);
 }

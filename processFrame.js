@@ -6,10 +6,11 @@ const rows = parseInt(tetris.getAttribute("rows"));
 const columns = parseInt(tetris.getAttribute("columns"));
 
 export default function processFrame() {
+  if (isGameOver()) return localStorage.setItem("isGameOver", `${true}`);
+
   if (!xyGroup) {
     initializeTetro();
   } else {
-    if (isGameOver()) return 
     if (isAtBoundBottom()) return freezeTetro();
     if (isAtFrozenTetroBottom()) return freezeTetro();
     unpaintTetro();
@@ -124,7 +125,7 @@ function freezeTetro() {
 function isGameOver() {
   let isGameOver = false;
   for (let frozenTetro of frozenTetroes) {
-    for (xy of frozenTetro) {
+    for (let xy of frozenTetro) {
       if (parseInt(xy[0]) < 1) {
         isGameOver = true;
         break;
