@@ -3,7 +3,7 @@ const rows = 24;
 const columns = 16;
 const standardSquare = 20;
 const grid = [];
-localStorage.setItem("isGameOver", `${false}`);
+localStorage.setItem("isGameOver", "false");
 tetris.setAttribute("rows", `${rows}`);
 tetris.setAttribute("columns", `${columns}`);
 

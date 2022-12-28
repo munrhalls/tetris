@@ -3,10 +3,11 @@ import requestAnimFrame from "./animateFrame.js";
 import processFrame from "./processFrame.js";
 
 document.addEventListener("DOMContentLoaded", initializeGame);
-let isGameRunning = null;
+let runGame = null;
 let frequency = 500;
 
 async function initializeGame() {
+  localStorage.setItem("isGameOver", "false");
   await makeBoard();
   await makeInterface();
   await loopShiftingFrame(frequency);
@@ -26,19 +27,20 @@ async function makeInterface() {
 }
 
 async function loopShiftingFrame(frequency) {
-  if (Boolean(localStorage.getItem("isGameOver"))) handleGameOver();
+  if (localStorage.getItem("isGameOver") === "true") return handleGameOver();
 
-  isGameRunning = setInterval(function () {
+  runGame = setInterval(function () {
     requestAnimFrame(processFrame);
   }, frequency);
 
-  if (!isGameRunning)
+  if (!runGame)
     throw new Error("Animation failed to start or be initialized properly.");
 }
 
 function handleGameOver() {
+  console.log("Game over");
   cancelAnimation();
 }
 function cancelAnimation() {
-  clearInterval(isGameRunning);
+  clearInterval(runGame);
 }
