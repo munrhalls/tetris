@@ -1,4 +1,4 @@
-import generateNewTetro from "./generateNewTetro.js";
+import makeNewTetro from "./makeNewTetro.js";
 
 let xyGroup = null;
 let frozenTetroes = [];
@@ -12,7 +12,7 @@ export default function processFrame() {
   if (isGameOver()) return localStorage.setItem("isGameOver", "true");
 
   if (!xyGroup) {
-    xyGroup = generateNewTetro();
+    xyGroup = makeNewTetro();
   } else {
     if (isAtBoundBottom()) return freezeTetro();
     if (isAtFrozenTetroBottom()) return freezeTetro();
