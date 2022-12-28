@@ -145,6 +145,7 @@ function unpaintTetro() {
   }
 }
 function unpaintCell(xy) {
+  if (xy[0] < 0) return;
   document.getElementById(`cellXY-${xy[0]}-${xy[1]}`).classList.remove("black");
 }
 function paintTetro() {
@@ -153,5 +154,6 @@ function paintTetro() {
   }
 }
 function paintCell(xy) {
+  if (xy[0] < 0) return;
   document.getElementById(`cellXY-${xy[0]}-${xy[1]}`).classList.add("black");
 }
