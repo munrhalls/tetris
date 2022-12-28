@@ -75,6 +75,7 @@ function isAtBoundBottom() {
 
 function isAtFrozenTetroLeft() {
   for (let xy of xyGroup) {
+    if (xy[0] < 0) return;
     const cell = document.getElementById(
       `cellXY-${xy[0]}-${parseInt(xy[1]) - 1}`
     );
@@ -84,6 +85,7 @@ function isAtFrozenTetroLeft() {
 }
 function isAtFrozenTetroRight() {
   for (let xy of xyGroup) {
+    if (xy[0] < 0) return;
     const cell = document.getElementById(
       `cellXY-${xy[0]}-${parseInt(xy[1]) + 1}`
     );
@@ -93,6 +95,7 @@ function isAtFrozenTetroRight() {
 }
 function isAtFrozenTetroBottom() {
   for (let xy of xyGroup) {
+    if (xy[0] < 0) return;
     const cell = document.getElementById(
       `cellXY-${parseInt(xy[0] + 1)}-${xy[1]}`
     );
@@ -103,6 +106,7 @@ function isAtFrozenTetroBottom() {
 function freezeTetro() {
   frozenTetroes.push(xyGroup);
   for (let xy of xyGroup) {
+    if (xy[0] < 0) return;
     const cell = document.getElementById(`cellXY-${xy[0]}-${xy[1]}`);
     cell.classList.add("frozen");
   }
