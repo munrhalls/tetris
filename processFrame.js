@@ -10,7 +10,7 @@ export default function processFrame() {
   if (isGameOver()) return localStorage.setItem("isGameOver", "true");
 
   if (!xyGroup) {
-    initializeTetro();
+    generateNewTetro();
   } else {
     if (isAtBoundBottom()) return freezeTetro();
     if (isAtFrozenTetroBottom()) return freezeTetro();
@@ -52,7 +52,7 @@ function initializeMovesInterface() {
   });
 }
 
-function initializeTetro() {
+function generateNewTetro() {
   xyGroup = [
     [0, 1],
     [0, 2],
@@ -152,7 +152,7 @@ function moveTetroBottom() {
   }
 }
 
-function unpaintTetro(xy) {
+function unpaintTetro() {
   for (let xy of xyGroup) {
     unpaintCell(xy);
   }
