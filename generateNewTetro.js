@@ -4,11 +4,8 @@ const columns = parseInt(tetris.getAttribute("columns"));
 let xyGroup = null;
 
 export default function generateNewTetro() {
-  const rndNum = getRandomInt(3, 9);
   initializeTetro();
-  addLeft();
-  addLeft();
-  addLeft();
+  keepAddingUntilRndMax();
   paintTetro();
   return xyGroup;
 }
@@ -21,6 +18,14 @@ function getRandomInt(min, max) {
 
 function initializeTetro() {
   xyGroup = [[0, Math.ceil(columns / 2)]];
+}
+function keepAddingUntilRndMax() {
+  const rndMax = getRandomInt(3, 8);
+
+  for (let i = 0; i < rndMax; i++) {
+    addLeft();
+    console.log(xyGroup);
+  }
 }
 function addLeft() {
   let nextXY = [...xyGroup[xyGroup.length - 1]];
