@@ -2,7 +2,6 @@ import makeNewTetro from "./makeNewTetro.js";
 
 let xyGroup = null;
 let frozenTetroes = [];
-let moveCommand = undefined;
 const tetris = document.getElementById("tetris");
 const rows = parseInt(tetris.getAttribute("rows"));
 const columns = parseInt(tetris.getAttribute("columns"));
@@ -13,13 +12,13 @@ export default function processFrame() {
 
   if (!xyGroup) {
     xyGroup = makeNewTetro();
+    console.log(xyGroup.color);
   } else {
     if (isAtBoundBottom()) return freezeTetro();
     if (isAtFrozenTetroBottom()) return freezeTetro();
     unpaintTetro();
     moveTetroBottom();
     paintTetro();
-    moveCommand = undefined;
   }
 }
 
@@ -150,7 +149,9 @@ function unpaintTetro() {
 }
 function unpaintCell(xy) {
   if (xy[0] < 0) return;
-  document.getElementById(`cellXY-${xy[0]}-${xy[1]}`).classList.remove("black");
+  document
+    .getElementById(`cellXY-${xy[0]}-${xy[1]}`)
+    .classList.remove(xyGroup.color);
 }
 function paintTetro() {
   for (let xy of xyGroup) {
@@ -159,5 +160,7 @@ function paintTetro() {
 }
 function paintCell(xy) {
   if (xy[0] < 0) return;
-  document.getElementById(`cellXY-${xy[0]}-${xy[1]}`).classList.add("black");
+  document
+    .getElementById(`cellXY-${xy[0]}-${xy[1]}`)
+    .classList.add(xyGroup.color);
 }

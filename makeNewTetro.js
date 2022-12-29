@@ -1,8 +1,10 @@
 const tetris = document.getElementById("tetris");
 const columns = parseInt(tetris.getAttribute("columns"));
+const colors = ["blue", "purple", "black"];
 
 export default function makeNewTetro() {
   let xyGroup = [[0, Math.floor(columns / 2)]];
+  xyGroup.color = colors[getRandomInt(0, colors.length)];
 
   rndLineAtRndDir(xyGroup);
   rndLineAtRndDir(xyGroup);
