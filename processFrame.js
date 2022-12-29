@@ -53,11 +53,11 @@ function initializeMovesInterface() {
     }
 
     if (e.code === "KeyA") {
-      console.log(e.code);
+      rotateTetroCounterClockwise();
     }
 
     if (e.code === "KeyD") {
-      console.log(e.code);
+      rotateTetroClockwise();
     }
   });
 }
@@ -151,6 +151,12 @@ function moveTetroBottom() {
   }
 }
 
+function rotateTetroCounterClockwise() {
+  console.log("rotate counter clockwise");
+}
+function rotateTetroClockwise() {
+  console.log("rotate clockwise");
+}
 function unpaintTetro() {
   for (let xy of xyGroup) {
     unpaintCell(xy);
