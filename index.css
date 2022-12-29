@@ -66,8 +66,7 @@ body {
 }
 
 .frozen {
-    border: 1px solid #777;
-    box-shadow: inset 0 0 1px 1px whitesmoke;
+    border: 1px solid ghostwhite;
 }
 
 .btn {

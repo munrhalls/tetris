@@ -1,11 +1,15 @@
 .black {
     background: #000;
+    /* border: 1px solid ghostwhite; */
+    box-shadow: 0 0 1px 1px ghostwhite;
 }
 
 .blue {
     background: blue;
+    box-shadow: 0 0 1px 1px ghostwhite;
 }
 
 .purple {
     background: purple;
+    box-shadow: 0 0 1px 1px ghostwhite;
 }
