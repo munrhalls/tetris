@@ -95,7 +95,7 @@ function isAtFrozenTetroRight() {
 }
 function isAtFrozenTetroBottom() {
   for (let xy of xyGroup) {
-    if (xy[0] < 0) return;
+    if (xy[0] < 1) return;
     const cell = document.getElementById(
       `cellXY-${parseInt(xy[0] + 1)}-${xy[1]}`
     );

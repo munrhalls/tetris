@@ -2,35 +2,40 @@ const tetris = document.getElementById("tetris");
 const columns = parseInt(tetris.getAttribute("columns"));
 
 export default function makeNewTetro() {
-  let xyGroup = [[0, Math.ceil(columns / 2)]];
+  let xyGroup = [[0, Math.floor(columns / 2)]];
 
-  const top = [-1, 0];
-  const bottom = [1, 0];
-  const left = [0, -1];
-  const right = [0, 1];
-
-  const rndSize = getRandomInt(3, 18);
-  const rndDir = getRandomInt(0, 3);
-  const axis = ["vertical", "horizontal"];
-  const vertical = ["top", "bottom"];
-  const horizontal = ["left", "right"];
-
-  let lengths = [];
-
-  let toggleAxis = axis[getRandomInt(0, 2)];
-
-  for (let i = 0; i < rndSize; i++) {
-    toggleAxis = toggleAxis === "vertical" ? "horizontal" : "vertical";
-    console.log(toggleAxis);
-    // lengths.push([dir, dirLength]);
-  }
-  console.log(lengths);
+  rndLineAtRndDir(xyGroup);
+  rndLineAtRndDir(xyGroup);
+  rndLineAtRndDir(xyGroup);
 
   return xyGroup;
+}
+
+function rndLineAtRndDir(xyGroup) {
+  let rndAxis = ["vertical", "horizontal"][getRandomInt(0, 2)];
+  let rndNum = getRandomInt(1, 8);
+
+  for (let i = 0; i < rndNum; i++) {
+    let lastSquare = [...xyGroup[xyGroup.length - 1]];
+    if (lastSquare?.length !== 2)
+      throw new Error("Generating new tetro, improper variable set.");
+
+    if (rndAxis === "vertical") {
+      lastSquare[0] += -1;
+    }
+    if (rndAxis === "horizontal") {
+      lastSquare[1] += -1;
+    }
+    xyGroup.push(lastSquare);
+  }
 }
 
 function getRandomInt(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min) + min);
+}
+
+function up(xy) {
+  return [xy[0] + -1, xy[1]];
 }
