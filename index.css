@@ -67,6 +67,7 @@ body {
 
 .frozen {
     border: 1px solid ghostwhite;
+    opacity: 1;
 }
 
 .btn {

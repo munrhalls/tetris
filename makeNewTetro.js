@@ -1,6 +1,18 @@
 const tetris = document.getElementById("tetris");
 const columns = parseInt(tetris.getAttribute("columns"));
-const colors = ["blue", "purple", "black"];
+const colors = [
+  "blue",
+  "purple",
+  "black",
+  "yellow",
+  "green",
+  "darkgrey",
+  "teal",
+  "darkblue",
+  "red",
+  "darkred",
+  "orange",
+];
 
 export default function makeNewTetro() {
   let xyGroup = [[0, Math.floor(columns / 2)]];
