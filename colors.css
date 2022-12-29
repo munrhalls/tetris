@@ -1,65 +1,65 @@
 .black {
     background: #000;
-    box-shadow: 0 0 1px 1px ghostwhite;
+    box-shadow: inset 0 0 1px 1px ghostwhite;
     opacity: 0.85;
 }
 
 .blue {
     background: blue;
-    box-shadow: 0 0 1px 1px ghostwhite;
+    box-shadow: inset 0 0 1px 1px ghostwhite;
     opacity: 0.85;
 }
 
 .purple {
     background: purple;
-    box-shadow: 0 0 1px 1px ghostwhite;
+    box-shadow: inset 0 0 1px 1px ghostwhite;
     opacity: 0.85;
 }
 
 .yellow {
     background: goldenrod;
-    box-shadow: 0 0 1px 1px ghostwhite;
+    box-shadow: inset 0 0 1px 1px ghostwhite;
     opacity: 0.85;
 }
 
 .green {
     background: green;
-    box-shadow: 0 0 1px 1px ghostwhite;
+    box-shadow: inset 0 0 1px 1px ghostwhite;
     opacity: 0.85;
 }
 
 .darkgrey {
     background: darkslategray;
-    box-shadow: 0 0 1px 1px ghostwhite;
+    box-shadow: inset 0 0 1px 1px ghostwhite;
     opacity: 0.85;
 }
 
 .teal {
     background: teal;
-    box-shadow: 0 0 1px 1px ghostwhite;
+    box-shadow: inset 0 0 1px 1px ghostwhite;
     opacity: 0.85;
 }
 
 .darkblue {
     background: darkblue;
-    box-shadow: 0 0 1px 1px ghostwhite;
+    box-shadow: inset 0 0 1px 1px ghostwhite;
     opacity: 0.85;
 }
 
 .darkred {
     background: darkred;
-    box-shadow: 0 0 1px 1px ghostwhite;
+    box-shadow: inset 0 0 1px 1px ghostwhite;
     opacity: 0.85;
 }
 
 .red {
     background: red;
-    box-shadow: 0 0 1px 1px ghostwhite;
+    box-shadow: inset 0 0 1px 1px ghostwhite;
     opacity: 0.85;
 }
 
 .orange {
     background: orangered;
-    box-shadow: 0 0 1px 1px ghostwhite;
+    box-shadow: inset 0 0 1px 1px ghostwhite;
     opacity: 0.85;
 }
