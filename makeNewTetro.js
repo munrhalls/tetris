@@ -7,26 +7,36 @@ export default function makeNewTetro() {
   rndLineAtRndDir(xyGroup);
   rndLineAtRndDir(xyGroup);
   rndLineAtRndDir(xyGroup);
+  rndLineAtRndDir(xyGroup);
 
   return xyGroup;
 }
 
 function rndLineAtRndDir(xyGroup) {
   let rndAxis = ["vertical", "horizontal"][getRandomInt(0, 2)];
-  let rndNum = getRandomInt(1, 8);
+  let rndNum = getRandomInt(1, 4);
 
   for (let i = 0; i < rndNum; i++) {
     let lastSquare = [...xyGroup[xyGroup.length - 1]];
+    let thickness = [0, 1, 2, 3, 4][getRandomInt(0, 5)];
+    let thickSquare;
+
     if (lastSquare?.length !== 2)
       throw new Error("Generating new tetro, improper variable set.");
 
     if (rndAxis === "vertical") {
       lastSquare[0] += -1;
+      for (let j = 0; j < thickness; j++) {
+        thickSquare = [...[...xyGroup[xyGroup.length - 1]]];
+        thickSquare[1] += -1;
+        xyGroup.push(thickSquare);
+      }
+      xyGroup.push(lastSquare);
     }
     if (rndAxis === "horizontal") {
       lastSquare[1] += -1;
+      xyGroup.push(lastSquare);
     }
-    xyGroup.push(lastSquare);
   }
 }
 
