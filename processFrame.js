@@ -26,6 +26,7 @@ initializeMovesInterface();
 
 function initializeMovesInterface() {
   window.addEventListener("keydown", function (e) {
+    if (!window.runGame) return;
     if (!xyGroup) return;
     if (e.code === "ArrowLeft") {
       if (isAtBoundLeft()) return;
@@ -49,6 +50,14 @@ function initializeMovesInterface() {
       unpaintTetro();
       moveTetroBottom();
       paintTetro();
+    }
+
+    if (e.code === "KeyA") {
+      console.log(e.code);
+    }
+
+    if (e.code === "KeyD") {
+      console.log(e.code);
     }
   });
 }
