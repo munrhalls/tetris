@@ -11,8 +11,19 @@ export default function processFrame() {
   if (isGameOver()) return localStorage.setItem("isGameOver", "true");
 
   if (!xyGroup) {
-    xyGroup = makeNewTetro();
-    console.log(xyGroup.color);
+    // xyGroup = makeNewTetro();
+    // TEMPORARILY, TESTING ROTATION
+    xyGroup = [
+      [10, 10],
+      [11, 10],
+      [12, 10],
+      [12, 11],
+      [12, 12],
+      [12, 13],
+      [13, 10],
+    ];
+
+    xyGroup.color = "blue";
   } else {
     if (isAtBoundBottom()) return freezeTetro();
     if (isAtFrozenTetroBottom()) return freezeTetro();
@@ -53,11 +64,15 @@ function initializeMovesInterface() {
     }
 
     if (e.code === "KeyA") {
+      unpaintTetro();
       rotateTetroCounterClockwise();
+      paintTetro();
     }
 
     if (e.code === "KeyD") {
+      unpaintTetro();
       rotateTetroClockwise();
+      paintTetro();
     }
   });
 }
@@ -151,11 +166,64 @@ function moveTetroBottom() {
   }
 }
 
-function rotateTetroCounterClockwise() {
-  console.log("rotate counter clockwise");
+function rotateTetro() {
+  // xyGroup = [
+  //   [10, 10],
+  //   [11, 10],
+  //   [12, 10],
+  //   [13, 10],
+  // ];
+  // sort group by y
+
+  const ySort = xyGroup.sort((a, b) => a[0] > b[0]);
+  // group[0][0] min / group[group length - 1][0]max
+  const yMin = ySort[0][0];
+  const yMax = ySort[ySort.length - 1][0];
+  // yMid = Math.ceil((y max - y min) / 2)
+  const fromBotToTop = Math.ceil((yMax - yMin) / 2);
+  const yMid = yMin + fromBotToTop;
+  // halfAbove = filter y < yMid
+  const halfAbove = ySort.filter((yx) => yx[0] < yMid);
+  // halfBelow = filter > yMid
+  const halfBelow = ySort.filter((yx) => yx[0] > yMid);
+  // so now I have two Y halves
+
+  // loop half above
+  for (let yx of halfAbove) {
+    // xyToMid = yMid - xy[0]
+    const xyToMid = yMid - yx[0];
+    // xy[0] = xy[0] + (xyToMid * 2)
+    yx[0] = yx[0] + xyToMid * 2;
+  }
+  // loop half below
+  for (let yx of halfBelow) {
+    // xyToMid = yMid - xy[0]
+    const xyToMid = yMid - yx[0];
+    // xy[0] = xy[0] + (xyToMid * 2)
+    yx[0] = yx[0] + xyToMid * 2;
+  }
+  xyGroup.color = "blue";
+  console.log(xyGroup);
+  // now every y, that's xy[0], except mid, is moved to opposite of mid, by distance to mid times two
+  // it's always based on max y, min y, mid ceil from that, two halves, reversing y's of these two halves, by using their relative positive/negative distance to mid to alter them
+  //
+
+  //whereami
 }
+
+function rotateTetroCounterClockwise() {
+  if (!xyGroup.rotate) xyGroup.rotate = 1;
+  xyGroup.rotate -= 1;
+  if (xyGroup.rotate < 1) xyGroup.rotate = 4;
+  rotateTetro();
+}
+
 function rotateTetroClockwise() {
   console.log("rotate clockwise");
+  if (!xyGroup.rotate) xyGroup.rotate = 1;
+  xyGroup.rotate += 1;
+  if (xyGroup.rotate > 4) xyGroup.rotate = 1;
+  rotateTetro();
 }
 function unpaintTetro() {
   for (let xy of xyGroup) {

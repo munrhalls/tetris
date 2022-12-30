@@ -45,5 +45,5 @@ function handleGameOver() {
 }
 function cancelAnimation() {
   clearInterval(runGame);
-  window.runGame = false;
+  // window.runGame = false;
 }
