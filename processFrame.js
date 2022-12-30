@@ -1,6 +1,6 @@
 import makeNewTetro from "./makeNewTetro.js";
-
 let xyGroup = null;
+
 let frozenTetroes = [];
 const tetris = document.getElementById("tetris");
 const rows = parseInt(tetris.getAttribute("rows"));
@@ -31,9 +31,14 @@ export default function processFrame() {
     moveTetroBottom();
     paintTetro();
   }
+  // tests
+  testFlipY();
 }
 
 initializeMovesInterface();
+
+const clone = (items) =>
+  items.map((item) => (Array.isArray(item) ? clone(item) : item));
 
 function initializeMovesInterface() {
   window.addEventListener("keydown", function (e) {
@@ -166,7 +171,24 @@ function moveTetroBottom() {
   }
 }
 
-function rotateTetro() {
+function testFlipY() {
+  let test_xyGroup = clone(xyGroup);
+  const ySort_before = test_xyGroup.sort((a, b) => a[0] > b[0]);
+
+  let yMin_before = ySort_before[0][0];
+
+  rotateTetro(test_xyGroup);
+  const ySort_after = test_xyGroup.sort((a, b) => a[0] > b[0]);
+
+  let yMin_after = ySort_after[0][0];
+
+  if (yMin_before !== yMin_after) {
+    console.log("Before: " + yMin_before + " After: " + yMin_after);
+    throw new Error("Flipping moves tetro forward.");
+  }
+}
+
+function rotateTetro(xyGroup) {
   // xyGroup = [
   //   [10, 10],
   //   [11, 10],
@@ -183,7 +205,7 @@ function rotateTetro() {
   const fromBotToTop = Math.ceil((yMax - yMin) / 2);
   const yMid = yMin + fromBotToTop;
   // halfAbove = filter y < yMid
-  const halfAbove = ySort.filter((yx) => yx[0] < yMid);
+  const halfAbove = ySort.filter((yx) => yx[0] <= yMid);
   // halfBelow = filter > yMid
   const halfBelow = ySort.filter((yx) => yx[0] > yMid);
   // so now I have two Y halves
@@ -215,7 +237,7 @@ function rotateTetroCounterClockwise() {
   if (!xyGroup.rotate) xyGroup.rotate = 1;
   xyGroup.rotate -= 1;
   if (xyGroup.rotate < 1) xyGroup.rotate = 4;
-  rotateTetro();
+  rotateTetro(xyGroup);
 }
 
 function rotateTetroClockwise() {
