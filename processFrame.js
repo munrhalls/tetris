@@ -203,14 +203,26 @@ function flipTetroY(xyGroup) {
   const height = max - min;
   const mid = min + height / 2;
 
-  let range = [];
-  for (let i = min; i <= max; i++) {
-    range.push({ lvl: i, reverse: max - i });
+  let belowMid = [];
+  let aboveMid = [];
+  for (let yx of xyGroup) {
+    if (yx[0] < mid) {
+      belowMid.push(yx);
+    }
+    if (yx[0] > mid) {
+      aboveMid.push(yx);
+    }
   }
-  for (let i = 0; i < xyGroup.length; i++) {
-    let y = xyGroup[i][0];
-    xyGroup[i][0] = i;
-    console.log(xyGroup);
+
+  for (let yx of belowMid) {
+    yx[0] = yx[0] + (mid - yx[0]) * 2;
+    console.log(yx[0]);
+  }
+  for (let yx of aboveMid) {
+    console.log(yx[0], "pre");
+    yx[0] = yx[0] + (mid - yx[0]) * 2;
+
+    console.log(yx[0], "after");
   }
 }
 
