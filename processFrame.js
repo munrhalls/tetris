@@ -203,20 +203,15 @@ function flipTetroY(xyGroup) {
   const height = max - min;
   const mid = min + height / 2;
 
-  const belowMid = sort.filter((xy) => {
-    return xy[0] < mid;
-  });
-
-  let belowMidRange = [];
-  for (let i = min; i <= belowMid[belowMid.length - 1]; i++) {
-    belowMidRange.push(i);
+  let range = [];
+  for (let i = min; i <= max; i++) {
+    range.push({ lvl: i, reverse: max - i });
   }
-  console.log(belowMidRange);
-  //how many different levels are there
-
-  const aboveMid = sort.filter((xy) => {
-    return xy[0] > mid;
-  });
+  for (let i = 0; i < xyGroup.length; i++) {
+    let y = xyGroup[i][0];
+    xyGroup[i][0] = i;
+    console.log(xyGroup);
+  }
 }
 
 function rotateTetroCounterClockwise() {
