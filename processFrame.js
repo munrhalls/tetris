@@ -254,10 +254,10 @@ function rotateTetroCounterClockwise(xyGroup) {
   let belowMid = [];
   let aboveMid = [];
   for (let yx of xyGroup) {
-    if (yx[0] < yMid) {
+    if (yx[0] > yMid) {
       belowMid.push(yx);
     }
-    if (yx[0] > yMid) {
+    if (yx[0] < yMid) {
       aboveMid.push(yx);
     }
   }
