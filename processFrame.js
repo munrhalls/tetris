@@ -25,7 +25,6 @@ export default function processFrame() {
       [19, 11],
       [20, 11],
     ];
-
     xyGroup.color = "blue";
   } else {
     if (isAtBoundBottom()) return freezeTetro();
@@ -37,7 +36,9 @@ export default function processFrame() {
 }
 
 // tests
-// testFlipY();
+for (let i = 0; i < 150; i++) {
+  testFlipY();
+}
 
 initializeMovesInterface();
 
@@ -80,13 +81,13 @@ function initializeMovesInterface() {
 
     if (e.code === "KeyA") {
       unpaintTetro();
-      rotateTetroCounterClockwise();
+      rotateTetroCounterClockwise(xyGroup);
       paintTetro();
     }
 
     if (e.code === "KeyD") {
       unpaintTetro();
-      rotateTetroClockwise();
+      rotateTetroClockwise(xyGroup);
       paintTetro();
     }
   });
@@ -188,12 +189,32 @@ function moveTetroBottom() {
 function testFlipY() {
   let test_xyGroup = makeNewTetro();
   const ySort_before = test_xyGroup.sort((a, b) => a[0] > b[0]);
-  let yMin_before = ySort_before[0][0];
+  let yMin_1 = ySort_before[0][0];
   const ySort_after = test_xyGroup.sort((a, b) => a[0] > b[0]);
-  let yMin_after = ySort_after[0][0];
-  if (yMin_before !== yMin_after) {
-    console.log("Before: " + yMin_before + " After: " + yMin_after);
+  let yMin_2 = ySort_after[0][0];
+  if (yMin_1 !== yMin_2) {
+    console.log("Before: " + yMin_1 + " After: " + yMin_2);
     throw new Error("Flipping moves tetro forward.");
+  }
+}
+function testRotateY() {
+  let test_xyGroup = makeNewTetro();
+  const ySort_before = test_xyGroup.sort((a, b) => a[0] > b[0]);
+  let yMin_1 = ySort_before[0][0];
+  const ySort_after = test_xyGroup.sort((a, b) => a[0] > b[0]);
+  let yMin_2 = ySort_after[0][0];
+  if (yMin_1 !== yMin_2) {
+    console.log("Before: " + yMin_1 + " After: " + yMin_2);
+    throw new Error("Flipping moves tetro forward.");
+  }
+
+  const xSort_before = test_xyGroup.sort((a, b) => a[1] > b[1]);
+  let xMin_1 = xSort_before[1][1];
+  const xSort_after = test_xyGroup.sort((a, b) => a[1] > b[1]);
+  let xMin_2 = xSort_after[1][1];
+  if (xMin_1 !== xMin_2) {
+    console.log("Before: " + xMin_1 + " After: " + xMin_2);
+    throw new Error("Rotating moves left or right.");
   }
 }
 function flipTetroY(xyGroup) {
@@ -203,42 +224,71 @@ function flipTetroY(xyGroup) {
   const height = max - min;
   const mid = min + height / 2;
 
+  let aboveMid = [];
+  let belowMid = [];
+  for (let yx of xyGroup) {
+    if (yx[0] < mid) {
+      aboveMid.push(yx);
+    }
+    if (yx[0] > mid) {
+      belowMid.push(yx);
+    }
+  }
+
+  for (let yx of aboveMid) {
+    yx[0] = yx[0] + (mid - yx[0]) * 2;
+    console.log(yx[0]);
+  }
+  for (let yx of belowMid) {
+    yx[0] = yx[0] + (mid - yx[0]) * 2;
+  }
+}
+
+function rotateTetroCounterClockwise(xyGroup) {
+  const ySort = xyGroup.sort((a, b) => a[0] > b[0]);
+  const yMin = ySort[0][0];
+  const yMax = ySort[ySort.length - 1][0];
+  const height = yMax - yMin;
+  const yMid = yMin + height / 2;
+
   let belowMid = [];
   let aboveMid = [];
   for (let yx of xyGroup) {
-    if (yx[0] < mid) {
+    if (yx[0] < yMid) {
       belowMid.push(yx);
     }
-    if (yx[0] > mid) {
+    if (yx[0] > yMid) {
       aboveMid.push(yx);
     }
   }
 
-  for (let yx of belowMid) {
-    yx[0] = yx[0] + (mid - yx[0]) * 2;
-    console.log(yx[0]);
-  }
+  const xSort = xyGroup.sort((a, b) => a[1] > b[1]);
+  const xMin = xSort[0][1];
+  const xMax = xSort[xSort.length - 1][1];
+  const width = xMax - xMin;
+  const xMid = xMin + width / 2;
+
   for (let yx of aboveMid) {
-    console.log(yx[0], "pre");
-    yx[0] = yx[0] + (mid - yx[0]) * 2;
-
-    console.log(yx[0], "after");
+    yx[0] = Math.floor(yMid);
+    // yx[0] + (mid - yx[0]) * 2;
   }
+
+  let leftOfMid = [];
+  let rightOfMid = [];
+  // for (let yx of xyGroup) {
+  //   if (yx[1] < xMid) {
+  //     leftOfMid.push(yx);
+  //   }
+  //   if (yx[1] > xMid) {
+  //     rightOfMid.push(yx);
+  //   }
+  // }
+  // rightOfMid[rightOfMid.length - 1][1] = 0;
+
+  xyGroup.color = "blue";
 }
 
-function rotateTetroCounterClockwise() {
-  if (!xyGroup.rotate) xyGroup.rotate = 1;
-  xyGroup.rotate -= 1;
-  if (xyGroup.rotate < 1) xyGroup.rotate = 4;
-}
-
-function rotateTetroClockwise() {
-  console.log("rotate clockwise");
-  if (!xyGroup.rotate) xyGroup.rotate = 1;
-  xyGroup.rotate += 1;
-  if (xyGroup.rotate > 4) xyGroup.rotate = 1;
-  rotateTetro();
-}
+function rotateTetroClockwise(xyGroup) {}
 function unpaintTetro() {
   for (let xy of xyGroup) {
     unpaintCell(xy);
