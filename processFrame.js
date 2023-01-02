@@ -206,16 +206,17 @@ function flipTetroY(xyGroup) {
   const belowMid = sort.filter((xy) => {
     return xy[0] < mid;
   });
+
+  let belowMidRange = [];
+  for (let i = min; i <= belowMid[belowMid.length - 1]; i++) {
+    belowMidRange.push(i);
+  }
+  console.log(belowMidRange);
+  //how many different levels are there
+
   const aboveMid = sort.filter((xy) => {
     return xy[0] > mid;
   });
-
-  for (let xy of belowMid) {
-    console.log(xy, "<mid", mid);
-  }
-  for (let xy of aboveMid) {
-    console.log(xy, ">mid", mid);
-  }
 }
 
 function rotateTetroCounterClockwise() {
