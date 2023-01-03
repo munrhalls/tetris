@@ -7,7 +7,6 @@ const rows = parseInt(tetris.getAttribute("rows"));
 const columns = parseInt(tetris.getAttribute("columns"));
 
 export default function processFrame() {
-  console.log("Game runs");
   if (isGameOver()) return localStorage.setItem("isGameOver", "true");
 
   if (!xyGroup) {
@@ -182,7 +181,6 @@ function testFlipY() {
   const ySort_after = test_xyGroup.sort((a, b) => a[0] > b[0]);
   let yMin_2 = ySort_after[0][0];
   if (yMin_1 !== yMin_2) {
-    console.log("Before: " + yMin_1 + " After: " + yMin_2);
     throw new Error("Flipping moves tetro forward.");
   }
 }
@@ -193,7 +191,6 @@ function testRotateY() {
   const ySort_after = test_xyGroup.sort((a, b) => a[0] > b[0]);
   let yMin_2 = ySort_after[0][0];
   if (yMin_1 !== yMin_2) {
-    console.log("Before: " + yMin_1 + " After: " + yMin_2);
     throw new Error("Flipping moves tetro forward.");
   }
 
@@ -202,7 +199,6 @@ function testRotateY() {
   const xSort_after = test_xyGroup.sort((a, b) => a[1] > b[1]);
   let xMin_2 = xSort_after[1][1];
   if (xMin_1 !== xMin_2) {
-    console.log("Before: " + xMin_1 + " After: " + xMin_2);
     throw new Error("Rotating moves left or right.");
   }
 }
@@ -236,24 +232,44 @@ function rotateTetroCounterClockwise(xyGroup) {
   xyGroup = xyGroup.sort((a, b) => a[0] > b[0]);
 
   const allx = xyGroup.map((yx) => yx[1]).sort((a, b) => a > b);
+  const xmin = allx[0];
   const xmid = allx[0] + (allx[allx.length - 1] - allx[0]) / 2;
-  const ally = xyGroup.map((yx) => yx[0]).sort((a, b) => a > b);
-  const ymid = ally[0] + (ally[ally.length - 1] - ally[0]) / 2;
+  const xmax = allx[allx.length - 1];
+  console.log(xmin, xmid, xmax);
 
-  let prev;
-  let rows = [];
-  ally.forEach((y) => {
-    let row = xyGroup.filter((yx) => yx[0] === y);
-    if (y !== prev) {
-      rows.push(row);
-    }
-    prev = y;
+  const ally = xyGroup.map((yx) => yx[0]).sort((a, b) => a > b);
+  const ymin = ally[0];
+  const ymid = ally[0] + (ally[ally.length - 1] - ally[0]) / 2;
+  const ymax = ally[ally.length - 1];
+  console.log(ymin, ymid, ymax);
+
+  let half_top = xyGroup.filter((square) => {
+    return square[0] <= ymid;
   });
-  console.log(rows);
-  xyGroup = rows;
-  xyGroup.forEach((row, index) => {
-    row[0][1] = 3 + index;
+  let half_bot = xyGroup.filter((square) => square[0] > ymid);
+
+  half_top.forEach((square) => {
+    const yDistanceRelativeToTopBorder = square[0] - ymin;
+    const xDistanceRelativeToRightBorder = xmax - square[1];
+    console.log(
+      "top",
+      yDistanceRelativeToTopBorder,
+      xDistanceRelativeToLeftBorder
+    );
+    const new_miny = xmin;
+    const new_minx = ymax;
   });
+
+  half_bot.forEach((square) => {
+    const yDistanceRelativeToBotBorder = ymax - square[0];
+    const xDistanceRelativeToRightBorder = xmax - square[1];
+    console.log(
+      "bot",
+      yDistanceRelativeToTopBorder,
+      xDistanceRelativeToRightBorder
+    );
+  });
+
   xyGroup.color = "blue";
 }
 

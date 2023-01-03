@@ -19,25 +19,36 @@ for (let i = 0; i < belowMid.length; i++) {
   belowMid[i][1] = moveXTo;
 }
 
-
-
-
 function getRows(xyGroup) {
-    const allx = xyGroup.map((yx) => yx[1]).sort((a, b) => a > b);
-    const xmid = allx[0] + (allx[allx.length - 1] - allx[0]) / 2;
-    const ally = xyGroup.map((yx) => yx[0]).sort((a, b) => a > b);
-    const ymid = ally[0] + (ally[ally.length - 1] - ally[0]) / 2;
-  
-    console.log("ymid", ymid, "xmid", xmid);
-    
-    let prev;
-    let rows = [];
-    ally.forEach((y) => {
-      let row = xyGroup.filter((yx) => yx[0] === y);
-      if (y !== prev) {
-        rows.push(row);
-      }
-      prev = y;
-    });
-    return rows;
+  const allx = xyGroup.map((yx) => yx[1]).sort((a, b) => a > b);
+  const xmid = allx[0] + (allx[allx.length - 1] - allx[0]) / 2;
+  const ally = xyGroup.map((yx) => yx[0]).sort((a, b) => a > b);
+  const ymid = ally[0] + (ally[ally.length - 1] - ally[0]) / 2;
+
+  console.log("ymid", ymid, "xmid", xmid);
+
+  let prev;
+  let rows = [];
+  ally.forEach((y) => {
+    let row = xyGroup.filter((yx) => yx[0] === y);
+    if (y !== prev) {
+      rows.push(row);
+    }
+    prev = y;
+  });
+  return rows;
+}
+
+let prev;
+let rows = [];
+ally.forEach((y) => {
+  let row = xyGroup.filter((yx) => yx[0] === y);
+  if (y !== prev) {
+    rows.push(row);
   }
+  prev = y;
+});
+xyGroup = rows;
+xyGroup.forEach((row) => {
+  row.forEach((square) => {});
+});
