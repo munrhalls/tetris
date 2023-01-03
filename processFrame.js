@@ -11,20 +11,13 @@ export default function processFrame() {
   if (isGameOver()) return localStorage.setItem("isGameOver", "true");
 
   if (!xyGroup) {
-    // xyGroup = makeNewTetro();
+    xyGroup = makeNewTetro();
     // TEMPORARILY, TESTING ROTATION
-    xyGroup = [
-      [12, 10],
-      [13, 10],
-      [14, 10],
-      [14, 11],
-      [15, 11],
-      [16, 11],
-      [17, 11],
-      [18, 11],
-      [19, 11],
-      [20, 11],
-    ];
+    // xyGroup = [
+    //   [12, 10],
+    //   [12, 11],
+    //   [12, 12],
+    // ];
     xyGroup.color = "blue";
   } else {
     if (isAtBoundBottom()) return freezeTetro();
@@ -158,10 +151,6 @@ function isGameOver() {
   for (let frozenTetro of frozenTetroes) {
     for (let xy of frozenTetro) {
       if (parseInt(xy[0]) < 1) {
-        console.log(
-          frozenTetroes,
-          "frozenTetroes, @isGameOver function, inside parseInt(xy[0]) < 1 if check"
-        );
         isGameOver = true;
         break;
       }
@@ -237,7 +226,6 @@ function flipTetroY(xyGroup) {
 
   for (let yx of aboveMid) {
     yx[0] = yx[0] + (mid - yx[0]) * 2;
-    console.log(yx[0]);
   }
   for (let yx of belowMid) {
     yx[0] = yx[0] + (mid - yx[0]) * 2;
@@ -245,46 +233,27 @@ function flipTetroY(xyGroup) {
 }
 
 function rotateTetroCounterClockwise(xyGroup) {
-  const ySort = xyGroup.sort((a, b) => a[0] > b[0]);
-  const yMin = ySort[0][0];
-  const yMax = ySort[ySort.length - 1][0];
-  const height = yMax - yMin;
-  const yMid = yMin + height / 2;
+  xyGroup = xyGroup.sort((a, b) => a[0] > b[0]);
 
-  let belowMid = [];
-  let aboveMid = [];
-  for (let yx of xyGroup) {
-    if (yx[0] > yMid) {
-      belowMid.push(yx);
+  const allx = xyGroup.map((yx) => yx[1]).sort((a, b) => a > b);
+  const xmid = allx[0] + (allx[allx.length - 1] - allx[0]) / 2;
+  const ally = xyGroup.map((yx) => yx[0]).sort((a, b) => a > b);
+  const ymid = ally[0] + (ally[ally.length - 1] - ally[0]) / 2;
+
+  let prev;
+  let rows = [];
+  ally.forEach((y) => {
+    let row = xyGroup.filter((yx) => yx[0] === y);
+    if (y !== prev) {
+      rows.push(row);
     }
-    if (yx[0] < yMid) {
-      aboveMid.push(yx);
-    }
-  }
-
-  const xSort = xyGroup.sort((a, b) => a[1] > b[1]);
-  const xMin = xSort[0][1];
-  const xMax = xSort[xSort.length - 1][1];
-  const width = xMax - xMin;
-  const xMid = xMin + width / 2;
-
-  for (let yx of aboveMid) {
-    yx[0] = Math.floor(yMid);
-    // yx[0] + (mid - yx[0]) * 2;
-  }
-
-  let leftOfMid = [];
-  let rightOfMid = [];
-  // for (let yx of xyGroup) {
-  //   if (yx[1] < xMid) {
-  //     leftOfMid.push(yx);
-  //   }
-  //   if (yx[1] > xMid) {
-  //     rightOfMid.push(yx);
-  //   }
-  // }
-  // rightOfMid[rightOfMid.length - 1][1] = 0;
-
+    prev = y;
+  });
+  console.log(rows);
+  xyGroup = rows;
+  xyGroup.forEach((row, index) => {
+    row[0][1] = 3 + index;
+  });
   xyGroup.color = "blue";
 }
 
@@ -296,6 +265,9 @@ function unpaintTetro() {
 }
 function unpaintCell(xy) {
   if (xy[0] < 0) return;
+  document.getElementById(`cellXY-${xy[0]}-${xy[1]}`).style.innerText = ``;
+  document.getElementById(`cellXY-${xy[0]}-${xy[1]}`).style.fontSize = `0px`;
+
   document
     .getElementById(`cellXY-${xy[0]}-${xy[1]}`)
     .classList.remove(xyGroup.color);
@@ -310,4 +282,8 @@ function paintCell(xy) {
   document
     .getElementById(`cellXY-${xy[0]}-${xy[1]}`)
     .classList.add(xyGroup.color);
+  document.getElementById(
+    `cellXY-${xy[0]}-${xy[1]}`
+  ).innerText = `Y:${xy[0]} X:${xy[1]}`;
+  document.getElementById(`cellXY-${xy[0]}-${xy[1]}`).style.fontSize = "7px";
 }
