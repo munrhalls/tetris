@@ -243,29 +243,36 @@ function rotateTetroCounterClockwise(xyGroup) {
   const ymax = ally[ally.length - 1];
   console.log(ymin, ymid, ymax);
 
+  const axis_y = Math.abs(ymax) - Math.abs(ymin);
+  const axis_x = Math.abs(xmax) - Math.abs(xmin);
+  const larger_axis = axis_y > axis_x ? axis_y : axis_x;
+  const larger_axis_1stHalf = Math.ceil(larger_axis/2)
+  const larger_axis_2ndHalf = Math.floor(larger_axis/2)
+
+
   let half_top = xyGroup.filter((square) => {
     return square[0] <= ymid;
   });
   let half_bot = xyGroup.filter((square) => square[0] > ymid);
 
   half_top.forEach((square) => {
+
     const yDistanceRelativeToTopBorder = square[0] - ymin;
     const xDistanceRelativeToRightBorder = xmax - square[1];
     console.log(
       "top",
       yDistanceRelativeToTopBorder,
-      xDistanceRelativeToLeftBorder
+      xDistanceRelativeToRightBorder
     );
-    const new_miny = xmin;
-    const new_minx = ymax;
   });
 
   half_bot.forEach((square) => {
+    
     const yDistanceRelativeToBotBorder = ymax - square[0];
     const xDistanceRelativeToRightBorder = xmax - square[1];
     console.log(
       "bot",
-      yDistanceRelativeToTopBorder,
+      yDistanceRelativeToBotBorder,
       xDistanceRelativeToRightBorder
     );
   });

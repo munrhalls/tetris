@@ -1,6 +1,9 @@
 import makeBoard from "./makeBoard.js";
 import requestAnimFrame from "./animateFrame.js";
 import processFrame from "./processFrame.js";
+import test_rotation from "./test.rotation.js";
+
+test_rotation();
 
 document.addEventListener("DOMContentLoaded", initializeGame);
 let runGame = false;
