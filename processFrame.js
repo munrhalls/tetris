@@ -287,20 +287,21 @@ function rotateTetroClockwise(xyGroup) {
   const axis_y = Math.abs(ymax) - Math.abs(ymin);
   const axis_x = Math.abs(xmax) - Math.abs(xmin);
   const larger_axis = axis_y >= axis_x ? axis_y : axis_x;
-  const larger_axis_1stHalf = Math.ceil(larger_axis / 2);
+  const larger_axis_1stHalf = Math.floor(larger_axis / 2);
   const larger_axis_2ndHalf = Math.floor(larger_axis / 2);
+  console.log(larger_axis_1stHalf);
 
   const squareTop = Math.ceil(ymid - larger_axis_1stHalf);
+  console.log(squareTop);
   const squareLeft = Math.ceil(xmid - larger_axis_1stHalf);
   const squareBot = Math.floor(ymid + larger_axis_2ndHalf);
-  const squareRight = Math.ceil(xmid + larger_axis_2ndHalf);
-  console.log(squareTop, squareLeft, squareBot, squareRight);
+  const squareRight = Math.floor(xmid + larger_axis_2ndHalf);
 
   xyGroup.forEach((square) => {
-    const xRelativeToLeftBorder = square[1] - squareLeft;
+    const xRelativeToRightBorder = squareRight - square[1];
     const yRelativeToTopBorder = square[0] - squareTop;
-    square[0] = squareTop + xRelativeToLeftBorder;
-    square[1] = squareLeft + yRelativeToTopBorder;
+    square[0] = squareBot - xRelativeToRightBorder;
+    square[1] = squareRight - yRelativeToTopBorder;
   });
 
   xyGroup.color = "blue";
