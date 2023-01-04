@@ -248,9 +248,35 @@ function rotateTetroCounterClockwise(xyGroup) {
   const larger_axis_1stHalf = Math.floor(larger_axis / 2);
   const larger_axis_2ndHalf = Math.floor(larger_axis / 2);
 
-  const squareTop = Math.ceil(ymid - larger_axis_1stHalf);
-  const squareLeft = Math.ceil(xmid - larger_axis_1stHalf);
-  const squareRight = Math.floor(xmid + larger_axis_2ndHalf);
+  let squareTop = Math.ceil(ymid - larger_axis_1stHalf);
+  let squareLeft = Math.ceil(xmid - larger_axis_1stHalf);
+  let squareRight = Math.floor(xmid + larger_axis_2ndHalf);
+
+  if (squareLeft < 0) {
+    for (let i = 0; i < Math.abs(squareLeft); i++) {
+      moveTetroRight();
+    }
+    xyGroup = xyGroup.sort((a, b) => a[0] > b[0]);
+    const allx = xyGroup.map((yx) => yx[1]).sort((a, b) => a > b);
+    const xmin = allx[0];
+    const xmid = allx[0] + (allx[allx.length - 1] - allx[0]) / 2;
+    const xmax = allx[allx.length - 1];
+
+    const ally = xyGroup.map((yx) => yx[0]).sort((a, b) => a > b);
+    const ymin = ally[0];
+    const ymid = ally[0] + (ally[ally.length - 1] - ally[0]) / 2;
+    const ymax = ally[ally.length - 1];
+
+    const axis_y = Math.abs(ymax) - Math.abs(ymin);
+    const axis_x = Math.abs(xmax) - Math.abs(xmin);
+
+    const larger_axis = axis_y >= axis_x ? axis_y : axis_x;
+    const larger_axis_1stHalf = Math.floor(larger_axis / 2);
+    const larger_axis_2ndHalf = Math.floor(larger_axis / 2);
+    squareTop = Math.ceil(ymid - larger_axis_1stHalf);
+    squareLeft = Math.ceil(xmid - larger_axis_1stHalf);
+    squareRight = Math.floor(xmid + larger_axis_2ndHalf);
+  }
 
   for (let square of xyGroup) {
     const xRelativeToRightBorder = squareRight - square[1];
