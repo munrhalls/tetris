@@ -42,27 +42,13 @@ function initializeMovesInterface() {
     if (!window.runGame) return;
     if (!xyGroup) return;
     if (e.code === "ArrowLeft") {
-      if (isAtBoundLeft()) return;
-      if (isAtFrozenTetroLeft()) return freezeTetro();
-      unpaintTetro();
-      moveTetroLeft();
-      paintTetro();
+      handleMoveLeft();
     }
     if (e.code === "ArrowRight") {
-      if (isAtBoundRight()) return;
-      if (isAtFrozenTetroRight()) return freezeTetro();
-
-      unpaintTetro();
-      moveTetroRight();
-      paintTetro();
+      handleMoveRight();
     }
     if (e.code === "ArrowDown") {
-      if (isAtBoundBottom()) return freezeTetro();
-      if (isAtFrozenTetroBottom()) return freezeTetro();
-
-      unpaintTetro();
-      moveTetroBottom();
-      paintTetro();
+      handleMoveBot();
     }
 
     if (e.code === "KeyW") {
@@ -172,6 +158,29 @@ function moveTetroBottom() {
   for (let xy of xyGroup) {
     xy[0] = xy[0] + 1;
   }
+}
+function handleMoveLeft() {
+  if (isAtBoundLeft()) return;
+  if (isAtFrozenTetroLeft()) return freezeTetro();
+  unpaintTetro();
+  moveTetroLeft();
+  paintTetro();
+}
+function handleMoveRight() {
+  if (isAtBoundRight()) return;
+  if (isAtFrozenTetroRight()) return freezeTetro();
+
+  unpaintTetro();
+  moveTetroRight();
+  paintTetro();
+}
+function handleMoveBot() {
+  if (isAtBoundBottom()) return freezeTetro();
+  if (isAtFrozenTetroBottom()) return freezeTetro();
+
+  unpaintTetro();
+  moveTetroBottom();
+  paintTetro();
 }
 
 function testFlipY() {
