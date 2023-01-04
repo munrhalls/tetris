@@ -245,19 +245,23 @@ function rotateTetroCounterClockwise(xyGroup) {
 
   const axis_y = Math.abs(ymax) - Math.abs(ymin);
   const axis_x = Math.abs(xmax) - Math.abs(xmin);
-  const larger_axis = axis_y > axis_x ? axis_y : axis_x;
-  const larger_axis_1stHalf = Math.ceil(larger_axis / 2);
+  const larger_axis = axis_y >= axis_x ? axis_y : axis_x;
+  const larger_axis_1stHalf = Math.floor(larger_axis / 2);
   const larger_axis_2ndHalf = Math.floor(larger_axis / 2);
+  console.log(larger_axis_1stHalf);
 
   const squareTop = Math.ceil(ymid - larger_axis_1stHalf);
+  console.log(squareTop);
   const squareLeft = Math.ceil(xmid - larger_axis_1stHalf);
-  const squareBot = Math.ceil(ymid + larger_axis_2ndHalf);
-  const squareRight = Math.ceil(xmid + larger_axis_2ndHalf);
-  console.log(squareTop, squareLeft, squareBot, squareRight);
+  const squareBot = Math.floor(ymid + larger_axis_2ndHalf);
+  const squareRight = Math.floor(xmid + larger_axis_2ndHalf);
 
+  console.log(squareTop, squareLeft, squareBot, squareRight);
+  console.log("sq top", squareTop);
   xyGroup.forEach((square) => {
     const xRelativeToRightBorder = squareRight - square[1];
     const yRelativeToTopBorder = square[0] - squareTop;
+
     square[0] = squareTop + xRelativeToRightBorder;
     square[1] = squareLeft + yRelativeToTopBorder;
   });
@@ -265,7 +269,42 @@ function rotateTetroCounterClockwise(xyGroup) {
   xyGroup.color = "blue";
 }
 
-function rotateTetroClockwise(xyGroup) {}
+function rotateTetroClockwise(xyGroup) {
+  xyGroup = xyGroup.sort((a, b) => a[0] > b[0]);
+
+  const allx = xyGroup.map((yx) => yx[1]).sort((a, b) => a > b);
+  const xmin = allx[0];
+  const xmid = allx[0] + (allx[allx.length - 1] - allx[0]) / 2;
+  const xmax = allx[allx.length - 1];
+  console.log(xmin, xmid, xmax);
+
+  const ally = xyGroup.map((yx) => yx[0]).sort((a, b) => a > b);
+  const ymin = ally[0];
+  const ymid = ally[0] + (ally[ally.length - 1] - ally[0]) / 2;
+  const ymax = ally[ally.length - 1];
+  console.log(ymin, ymid, ymax);
+
+  const axis_y = Math.abs(ymax) - Math.abs(ymin);
+  const axis_x = Math.abs(xmax) - Math.abs(xmin);
+  const larger_axis = axis_y >= axis_x ? axis_y : axis_x;
+  const larger_axis_1stHalf = Math.ceil(larger_axis / 2);
+  const larger_axis_2ndHalf = Math.floor(larger_axis / 2);
+
+  const squareTop = Math.ceil(ymid - larger_axis_1stHalf);
+  const squareLeft = Math.ceil(xmid - larger_axis_1stHalf);
+  const squareBot = Math.floor(ymid + larger_axis_2ndHalf);
+  const squareRight = Math.ceil(xmid + larger_axis_2ndHalf);
+  console.log(squareTop, squareLeft, squareBot, squareRight);
+
+  xyGroup.forEach((square) => {
+    const xRelativeToLeftBorder = square[1] - squareLeft;
+    const yRelativeToTopBorder = square[0] - squareTop;
+    square[0] = squareTop + xRelativeToLeftBorder;
+    square[1] = squareLeft + yRelativeToTopBorder;
+  });
+
+  xyGroup.color = "blue";
+}
 function unpaintTetro() {
   for (let xy of xyGroup) {
     unpaintCell(xy);
