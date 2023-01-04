@@ -246,35 +246,20 @@ function rotateTetroCounterClockwise(xyGroup) {
   const axis_y = Math.abs(ymax) - Math.abs(ymin);
   const axis_x = Math.abs(xmax) - Math.abs(xmin);
   const larger_axis = axis_y > axis_x ? axis_y : axis_x;
-  const larger_axis_1stHalf = Math.ceil(larger_axis/2)
-  const larger_axis_2ndHalf = Math.floor(larger_axis/2)
+  const larger_axis_1stHalf = Math.ceil(larger_axis / 2);
+  const larger_axis_2ndHalf = Math.floor(larger_axis / 2);
 
+  const squareTop = Math.ceil(ymid - larger_axis_1stHalf);
+  const squareLeft = Math.ceil(xmid - larger_axis_1stHalf);
+  const squareBot = Math.ceil(ymid + larger_axis_2ndHalf);
+  const squareRight = Math.ceil(xmid + larger_axis_2ndHalf);
+  console.log(squareTop, squareLeft, squareBot, squareRight);
 
-  let half_top = xyGroup.filter((square) => {
-    return square[0] <= ymid;
-  });
-  let half_bot = xyGroup.filter((square) => square[0] > ymid);
-
-  half_top.forEach((square) => {
-
-    const yDistanceRelativeToTopBorder = square[0] - ymin;
-    const xDistanceRelativeToRightBorder = xmax - square[1];
-    console.log(
-      "top",
-      yDistanceRelativeToTopBorder,
-      xDistanceRelativeToRightBorder
-    );
-  });
-
-  half_bot.forEach((square) => {
-    
-    const yDistanceRelativeToBotBorder = ymax - square[0];
-    const xDistanceRelativeToRightBorder = xmax - square[1];
-    console.log(
-      "bot",
-      yDistanceRelativeToBotBorder,
-      xDistanceRelativeToRightBorder
-    );
+  xyGroup.forEach((square) => {
+    const xRelativeToRightBorder = squareRight - square[1];
+    const yRelativeToTopBorder = square[0] - squareTop;
+    square[0] = squareTop + xRelativeToRightBorder;
+    square[1] = squareLeft + yRelativeToTopBorder;
   });
 
   xyGroup.color = "blue";
