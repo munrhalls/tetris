@@ -11,16 +11,10 @@ export default function processFrame() {
 
   if (!xyGroup) {
     xyGroup = makeNewTetro();
-    // TEMPORARILY, TESTING ROTATION
-    // xyGroup = [
-    //   [12, 10],
-    //   [12, 11],
-    //   [12, 12],
-    // ];
-    xyGroup.color = "blue";
   } else {
     if (isAtBoundBottom()) return freezeTetro();
     if (isAtFrozenTetroBottom()) return freezeTetro();
+
     unpaintTetro();
     moveTetroBottom();
     paintTetro();
@@ -42,13 +36,27 @@ function initializeMovesInterface() {
     if (!window.runGame) return;
     if (!xyGroup) return;
     if (e.code === "ArrowLeft") {
-      handleMoveLeft();
+      if (isAtBoundLeft()) return;
+      if (isAtFrozenTetroLeft()) return freezeTetro();
+
+      unpaintTetro();
+      moveTetroLeft();
+      paintTetro();
     }
     if (e.code === "ArrowRight") {
-      handleMoveRight();
+      if (isAtBoundRight()) return;
+      if (isAtFrozenTetroRight()) return freezeTetro();
+      unpaintTetro();
+      moveTetroRight();
+      paintTetro();
     }
     if (e.code === "ArrowDown") {
-      handleMoveBot();
+      if (isAtBoundBottom()) return freezeTetro();
+      if (isAtFrozenTetroBottom()) return freezeTetro();
+
+      unpaintTetro();
+      moveTetroBottom();
+      paintTetro();
     }
 
     if (e.code === "KeyW") {
@@ -59,13 +67,13 @@ function initializeMovesInterface() {
 
     if (e.code === "KeyA") {
       unpaintTetro();
-      rotateTetroCounterClockwise(xyGroup);
+      rotateTetroCounterClockwise();
       paintTetro();
     }
 
     if (e.code === "KeyD") {
       unpaintTetro();
-      rotateTetroClockwise(xyGroup);
+      rotateTetroClockwise();
       paintTetro();
     }
   });
@@ -159,29 +167,6 @@ function moveTetroBottom() {
     xy[0] = xy[0] + 1;
   }
 }
-function handleMoveLeft() {
-  if (isAtBoundLeft()) return;
-  if (isAtFrozenTetroLeft()) return freezeTetro();
-  unpaintTetro();
-  moveTetroLeft();
-  paintTetro();
-}
-function handleMoveRight() {
-  if (isAtBoundRight()) return;
-  if (isAtFrozenTetroRight()) return freezeTetro();
-
-  unpaintTetro();
-  moveTetroRight();
-  paintTetro();
-}
-function handleMoveBot() {
-  if (isAtBoundBottom()) return freezeTetro();
-  if (isAtFrozenTetroBottom()) return freezeTetro();
-
-  unpaintTetro();
-  moveTetroBottom();
-  paintTetro();
-}
 
 function testFlipY() {
   let test_xyGroup = makeNewTetro();
@@ -237,68 +222,81 @@ function flipTetroY(xyGroup) {
   }
 }
 
-function rotateTetroCounterClockwise(xyGroup) {
+function calcVirtualSquare() {
   xyGroup = xyGroup.sort((a, b) => a[0] > b[0]);
 
-  const allx = xyGroup.map((yx) => yx[1]).sort((a, b) => a > b);
-  const xmin = allx[0];
-  const xmid = allx[0] + (allx[allx.length - 1] - allx[0]) / 2;
-  const xmax = allx[allx.length - 1];
+  let allx = xyGroup.map((yx) => yx[1]).sort((a, b) => a > b);
+  let xmin = allx[0];
+  let xmid = allx[0] + (allx[allx.length - 1] - allx[0]) / 2;
+  let xmax = allx[allx.length - 1];
 
-  const ally = xyGroup.map((yx) => yx[0]).sort((a, b) => a > b);
-  const ymin = ally[0];
-  const ymid = ally[0] + (ally[ally.length - 1] - ally[0]) / 2;
-  const ymax = ally[ally.length - 1];
+  let ally = xyGroup.map((yx) => yx[0]).sort((a, b) => a > b);
+  let ymin = ally[0];
+  let ymid = ally[0] + (ally[ally.length - 1] - ally[0]) / 2;
+  let ymax = ally[ally.length - 1];
 
-  const axis_y = Math.abs(ymax) - Math.abs(ymin);
-  const axis_x = Math.abs(xmax) - Math.abs(xmin);
+  let axis_y = Math.abs(ymax) - Math.abs(ymin);
+  let axis_x = Math.abs(xmax) - Math.abs(xmin);
 
-  const larger_axis = axis_y >= axis_x ? axis_y : axis_x;
-  const larger_axis_1stHalf = Math.floor(larger_axis / 2);
-  const larger_axis_2ndHalf = Math.floor(larger_axis / 2);
+  let larger_axis = axis_y >= axis_x ? axis_y : axis_x;
+  let larger_axis_1stHalf = Math.floor(larger_axis / 2);
+  let larger_axis_2ndHalf = Math.floor(larger_axis / 2);
 
-  let squareTop = Math.ceil(ymid - larger_axis_1stHalf);
-  let squareLeft = Math.ceil(xmid - larger_axis_1stHalf);
-  let squareRight = Math.floor(xmid + larger_axis_2ndHalf);
+  const squareTop = Math.ceil(ymid - larger_axis_1stHalf);
+  const squareBot = Math.floor(ymid + larger_axis_2ndHalf);
+  const squareLeft = Math.ceil(xmid - larger_axis_1stHalf);
+  const squareRight = Math.floor(xmid + larger_axis_2ndHalf);
 
-  if (squareLeft < 0) {
-    for (let i = 0; i < Math.abs(squareLeft); i++) {
-      moveTetroRight();
-    }
-    xyGroup = xyGroup.sort((a, b) => a[0] > b[0]);
-    const allx = xyGroup.map((yx) => yx[1]).sort((a, b) => a > b);
-    const xmin = allx[0];
-    const xmid = allx[0] + (allx[allx.length - 1] - allx[0]) / 2;
-    const xmax = allx[allx.length - 1];
-
-    const ally = xyGroup.map((yx) => yx[0]).sort((a, b) => a > b);
-    const ymin = ally[0];
-    const ymid = ally[0] + (ally[ally.length - 1] - ally[0]) / 2;
-    const ymax = ally[ally.length - 1];
-
-    const axis_y = Math.abs(ymax) - Math.abs(ymin);
-    const axis_x = Math.abs(xmax) - Math.abs(xmin);
-
-    const larger_axis = axis_y >= axis_x ? axis_y : axis_x;
-    const larger_axis_1stHalf = Math.floor(larger_axis / 2);
-    const larger_axis_2ndHalf = Math.floor(larger_axis / 2);
-    squareTop = Math.ceil(ymid - larger_axis_1stHalf);
-    squareLeft = Math.ceil(xmid - larger_axis_1stHalf);
-    squareRight = Math.floor(xmid + larger_axis_2ndHalf);
-  }
-
-  for (let square of xyGroup) {
-    const xRelativeToRightBorder = squareRight - square[1];
-    const yRelativeToTopBorder = square[0] - squareTop;
-
-    square[0] = squareTop + xRelativeToRightBorder;
-    square[1] = squareLeft + yRelativeToTopBorder;
-  }
-
-  xyGroup.color = "blue";
+  return {
+    top: squareTop,
+    bot: squareBot,
+    left: squareLeft,
+    right: squareRight,
+  };
 }
 
-function rotateTetroClockwise(xyGroup) {
+function handleVirtualSquareOffsets(square) {
+  let fitSquareInBounds = square;
+  if (square.left <= 0) {
+    const offset = Math.abs(square.left);
+    for (let i = 0; i < offset + 1; i++) {
+      if (isAtBoundRight()) return;
+      if (isAtFrozenTetroRight()) return freezeTetro();
+      moveTetroRight();
+    }
+    fitSquareInBounds = calcVirtualSquare();
+  }
+  if (square.right >= columns) {
+    const offset = square.right - columns;
+    for (let i = 0; i < offset + 1; i++) {
+      if (isAtBoundLeft()) return;
+      if (isAtFrozenTetroLeft()) return freezeTetro();
+      moveTetroLeft();
+    }
+    fitSquareInBounds = calcVirtualSquare();
+  }
+  return fitSquareInBounds;
+}
+
+function getVirtualSquare() {
+  const uncheckedSquare = calcVirtualSquare();
+  const checkedSquare = handleVirtualSquareOffsets(uncheckedSquare);
+  return checkedSquare;
+}
+
+function rotateTetroCounterClockwise() {
+  let virtualSquare = getVirtualSquare();
+
+  for (let square of xyGroup) {
+    const xRelativeToRightBorder = virtualSquare.right - square[1];
+    const yRelativeToTopBorder = square[0] - virtualSquare.top;
+
+    square[0] = virtualSquare.top + xRelativeToRightBorder;
+    square[1] = virtualSquare.left + yRelativeToTopBorder;
+  }
+}
+
+function rotateTetroClockwise() {
   xyGroup = xyGroup.sort((a, b) => a[0] > b[0]);
 
   const allx = xyGroup.map((yx) => yx[1]).sort((a, b) => a > b);
@@ -327,8 +325,6 @@ function rotateTetroClockwise(xyGroup) {
     square[0] = squareBot - xRelativeToRightBorder;
     square[1] = squareRight - yRelativeToTopBorder;
   }
-
-  xyGroup.color = "blue";
 }
 function unpaintTetro() {
   for (let xy of xyGroup) {
