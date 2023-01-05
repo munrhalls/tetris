@@ -57,7 +57,7 @@ function initializeMovesInterface() {
 
     if (e.code === "KeyW") {
       unpaintTetro();
-      flipTetroY(xyGroup);
+      xyGroup = rotator.flipTetroY(xyGroup);
       paintTetro();
     }
 
@@ -66,7 +66,8 @@ function initializeMovesInterface() {
       if (isAtFrozenTetroBottom()) return freezeTetro();
 
       unpaintTetro();
-      rotateTetroCounterClockwise();
+      xyGroup = rotator.rotateTetroCounterClockwise(xyGroup);
+      if (xyGroup.freeze) return freezeTetro();
       paintTetro();
     }
 
@@ -75,7 +76,8 @@ function initializeMovesInterface() {
       if (isAtFrozenTetroBottom()) return freezeTetro();
 
       unpaintTetro();
-      rotateTetroClockwise();
+      xyGroup = rotator.rotateTetroClockwise(xyGroup);
+      if (xyGroup.freeze) return freezeTetro();
       paintTetro();
     }
   });
@@ -128,16 +130,6 @@ function isAtFrozenTetroBottom() {
     const cell = document.getElementById(
       `cellXY-${parseInt(xy[0] + 1)}-${xy[1]}`
     );
-    if ([...cell.classList].includes("frozen")) return true;
-  }
-  return false;
-}
-function isCrossingFrozenTetro(group) {
-  for (let xy of group) {
-    if (xy[0] < 1) return;
-    if (xy[1] < 0) throw new Error(`Cell outside board: x is ${xy[1]}`);
-    if (xy[1] >= columns) throw new Error(`Cell outside board: x is ${xy[1]}`);
-    const cell = document.getElementById(`cellXY-${xy[0]}-${xy[1]}`);
     if ([...cell.classList].includes("frozen")) return true;
   }
   return false;
