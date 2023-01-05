@@ -137,17 +137,14 @@ function isAtFrozenTetroBottom() {
   return false;
 }
 function isCrossingFrozenTetro(group) {
-  let isCrossing = false;
   for (let xy of group) {
     if (xy[0] < 1) return;
     if (xy[1] < 0) throw new Error(`Cell outside board: x is ${xy[1]}`);
     if (xy[1] >= columns) throw new Error(`Cell outside board: x is ${xy[1]}`);
-    const cell = document.getElementById(`cellXY-${parseInt(xy[0])}-${xy[1]}`);
-    if ([...cell.classList].includes("frozen")) {
-      isCrossing = true;
-    }
+    const cell = document.getElementById(`cellXY-${xy[0]}-${xy[1]}`);
+    if ([...cell.classList].includes("frozen")) return true;
   }
-  return isCrossing;
+  return false;
 }
 
 function freezeTetro() {
@@ -206,6 +203,7 @@ function testFlipY() {
     throw new Error("Flipping moves tetro forward.");
   }
 }
+
 function testRotateY() {
   let test_xyGroup = makeNewTetro();
   const ySort_before = test_xyGroup.sort((a, b) => a[0] > b[0]);
@@ -224,6 +222,7 @@ function testRotateY() {
     throw new Error("Rotating moves left or right.");
   }
 }
+
 function flipTetroY(xyGroup) {
   const sort = xyGroup.sort((a, b) => a[0] > b[0]);
   const min = sort[0][0];
@@ -249,7 +248,6 @@ function flipTetroY(xyGroup) {
     yx[0] = yx[0] + (mid - yx[0]) * 2;
   }
 }
-
 function calcVirtualSquare() {
   xyGroup = xyGroup.sort((a, b) => a[0] > b[0]);
 
@@ -283,7 +281,6 @@ function calcVirtualSquare() {
     freeze: false,
   };
 }
-
 function handleVirtualSquareChecks(square) {
   let fitSquareInBounds = square;
   if (square.left <= 0) {
@@ -311,7 +308,6 @@ function handleVirtualSquareChecks(square) {
 
   return fitSquareInBounds;
 }
-
 function getVirtualSquare() {
   const uncheckedSquare = calcVirtualSquare();
   const checkedSquare = handleVirtualSquareChecks(uncheckedSquare);
@@ -321,7 +317,6 @@ function handleRotationChecks(uncheckedRotation) {
   if (isCrossingFrozenTetro(uncheckedRotation)) return false;
   return true;
 }
-
 function rotateTetroCounterClockwise() {
   const virtualSquare = getVirtualSquare();
   let rotationGroup = xyGroup.map((square) => square.map((coord) => coord));
@@ -337,18 +332,22 @@ function rotateTetroCounterClockwise() {
   if (pass) xyGroup = rotationGroup;
   if (pass && virtualSquare.freeze === true) freezeTetro();
 }
-
 function rotateTetroClockwise() {
   let virtualSquare = getVirtualSquare();
+  let rotationGroup = xyGroup.map((square) => square.map((coord) => coord));
+  rotationGroup.color = xyGroup.color;
 
-  for (let square of xyGroup) {
+  for (let square of rotationGroup) {
     const xRelativeToRightBorder = virtualSquare.right - square[1];
     const yRelativeToTopBorder = square[0] - virtualSquare.top;
     square[0] = virtualSquare.bot - xRelativeToRightBorder;
     square[1] = virtualSquare.right - yRelativeToTopBorder;
   }
-  if (virtualSquare.freeze === true) freezeTetro();
+  const pass = handleRotationChecks(rotationGroup);
+  if (pass) xyGroup = rotationGroup;
+  if (pass && virtualSquare.freeze === true) freezeTetro();
 }
+
 function unpaintTetro() {
   for (let xy of xyGroup) {
     unpaintCell(xy);
