@@ -2,11 +2,12 @@ import makeBoard from "./doers/makeBoard.js";
 import requestAnimFrame from "./doers/animateFrame.js";
 import processFrame from "./doers/processFrame.js";
 import test_rotation from "./tests/test.rotation.js";
+import { runner } from "./gameHandlers/runner.js";
 
 test_rotation();
 
 document.addEventListener("DOMContentLoaded", initializeGame);
-let runGame = false;
+// let runGame = false;
 let frequency = 500;
 
 async function initializeGame() {
@@ -23,7 +24,7 @@ async function makeInterface() {
   const pauseBtn = document.getElementById("pauseBtn");
 
   startBtn.onclick = function () {
-    cancelAnimation();
+    runner.cancelAnimation();
   };
 
   pauseBtn.onclick = function () {
@@ -32,8 +33,9 @@ async function makeInterface() {
 }
 
 async function loopShiftingFrame(frequency) {
-  runGame = setInterval(function () {
-    if (localStorage.getItem("isGameOver") === "true") return handleGameOver();
+  runner.runGame = setInterval(function () {
+    if (localStorage.getItem("isGameOver") === "true")
+      return runner.handleGameOver();
     requestAnimFrame(processFrame);
   }, frequency);
   window.runGame = true;
@@ -41,12 +43,4 @@ async function loopShiftingFrame(frequency) {
     throw new Error("Animation failed to start or be initialized properly.");
 }
 
-function handleGameOver() {
-  document.getElementById("tetris").style.display = "none";
-  document.getElementById("gameOver").style.display = "block";
-  cancelAnimation();
-}
-function cancelAnimation() {
-  clearInterval(runGame);
-  // window.runGame = false;
-}
+// runner.cancelAnimation();
