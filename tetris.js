@@ -1,7 +1,7 @@
 import makeBoard from "./doers/makeBoard.js";
 import requestAnimFrame from "./doers/animateFrame.js";
 import processFrame from "./doers/processFrame.js";
-import test_rotation from "./test.rotation.js";
+import test_rotation from "./tests/test.rotation.js";
 
 test_rotation();
 
