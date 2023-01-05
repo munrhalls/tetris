@@ -1,7 +1,7 @@
 const columns = parseInt(tetris.getAttribute("columns"));
 const rows = parseInt(tetris.getAttribute("rows"));
 import { calculator } from "./calculator.js";
-import makeNewTetro from "../makeNewTetro.js";
+import makeNewTetro from "./../doers/makeNewTetro.js";
 
 export const rotator = {
   xyGroup: null,
