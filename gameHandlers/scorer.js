@@ -1,5 +1,13 @@
 export const scorer = {
   score: 0,
+  xyGroup: null,
+
+  popFrozenLine: function (line) {
+    for (let cell of line) {
+      cell.classList.remove("frozen");
+      cell.classList.remove(this.xyGroup.color);
+    }
+  },
   getLineClears: function () {
     let lineClearsList = [];
 
@@ -17,21 +25,33 @@ export const scorer = {
       }
 
       if (isLineBreak) {
-        line.num = lineClearsList.indexOf(line);
+        line.num = rows.indexOf(row);
         lineClearsList.push(line);
       }
     }
-
     return lineClearsList;
   },
   handleLineClears: function handleLineClears() {
     let lineClearsList = this.getLineClears();
     console.log(lineClearsList);
     let accumulator = 0;
-    let isNeighbour = false;
 
     for (let i = 0; i < lineClearsList.length; i++) {
-      console.log(lineClearsList[i]);
+      let line = lineClearsList[i];
+      let prev;
+      let next;
+
+      if (lineClearsList[i + 1]) next = lineClearsList[i + 1].num;
+      if (i > 0) prev = lineClearsList[i - 1].num;
+
+      const isNeighbour = prev === line.num - 1 || next === line.num + 1;
+
+      if (isNeighbour) {
+        accumulator++;
+      }
+      if (!isNeighbour) {
+        accumulator = 0;
+      }
     }
   },
   isNonZeroClears: function isNonZeroClears() {
@@ -56,7 +76,8 @@ export const scorer = {
     }
     return isOverZero;
   },
-  handleScoring: function () {
+  handleScoring: function (xyGroup) {
+    this.xyGroup = xyGroup;
     const displayer = document.getElementById("scoreDisplayer");
     if (this.isNonZeroClears()) this.handleLineClears();
     displayer.innerText = `${this.score}`;
@@ -65,6 +86,7 @@ export const scorer = {
 
 function setUpScorerTests() {
   const rndNums = [4, 5, 6, 8, 9, 12];
+  console.log(rndNums, "neighbours: ", "4, 5, 6///8, 9");
   const testRows = [...document.getElementsByClassName("row")];
   rndNums.forEach((num) => {
     let line = testRows[num].children;

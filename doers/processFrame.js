@@ -13,8 +13,7 @@ const columns = parseInt(tetris.getAttribute("columns"));
 
 export default function processFrame() {
   if (isGameOver()) return localStorage.setItem("isGameOver", "true");
-  scorer.handleScoring();
-
+  
   if (!xyGroup) {
     xyGroup = makeNewTetro();
   } else {
@@ -28,6 +27,7 @@ export default function processFrame() {
     xyGroup = mover.moveTetroBottom(xyGroup);
     paintTetro();
   }
+  scorer.handleScoring(xyGroup);
 }
 
 initializeMovesInterface();
