@@ -3,7 +3,7 @@ import { checker } from "./../movers/checker.js";
 import { mover } from "./../movers/mover.js";
 import { rotator } from "./../movers/rotator.js";
 import { freezer } from "./../freezer/freezer.js";
-import { scorer } from "./scorer.js";
+import { scorer } from "../gameHandlers/scorer.js";
 
 let xyGroup = null;
 
