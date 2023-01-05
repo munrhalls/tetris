@@ -3,6 +3,8 @@ import { checker } from "./../movers/checker.js";
 import { mover } from "./../movers/mover.js";
 import { rotator } from "./../movers/rotator.js";
 import { freezer } from "./../freezer/freezer.js";
+import { scorer } from "./scorer.js";
+
 let xyGroup = null;
 
 const tetris = document.getElementById("tetris");
@@ -11,7 +13,7 @@ const columns = parseInt(tetris.getAttribute("columns"));
 
 export default function processFrame() {
   if (isGameOver()) return localStorage.setItem("isGameOver", "true");
-
+  if (scorer.isScore) scorer.handleScoring();
   if (!xyGroup) {
     xyGroup = makeNewTetro();
   } else {
