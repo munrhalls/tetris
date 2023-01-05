@@ -55,13 +55,17 @@ export const scorer = {
         accumulator.push(line);
       }
       if (!isNeighbour) {
-        scoreMultiplier = accumulator.length + 1;
+        if (accumulator.length > 0) {
+          scoreMultiplier = accumulator.length + 1;
 
-        for (let withNeighbourLine of accumulator) {
-          this.popFrozenLine(withNeighbourLine);
+          for (let withNeighbourLine of accumulator) {
+            this.popFrozenLine(withNeighbourLine);
+          }
+          this.score = this.score + columns * scoreMultiplier;
+          accumulator = [];
+        } else {
+          this.popFrozenLine(line);
         }
-        this.score = this.score + columns * scoreMultiplier;
-        accumulator = [];
       }
     }
   },
