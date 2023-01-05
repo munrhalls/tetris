@@ -10,7 +10,7 @@ export const rotator = {
       xy[0] = xy[0] - 1;
     }
   },
-  testFlipY: function flipTetroY(xyGroup) {
+  flipTetroY: function flipTetroY(xyGroup) {
     this.xyGroup = xyGroup;
     const sort = this.xyGroup.sort((a, b) => a[0] > b[0]);
     const min = sort[0][0];
@@ -35,6 +35,8 @@ export const rotator = {
     for (let yx of belowMid) {
       yx[0] = yx[0] + (mid - yx[0]) * 2;
     }
+
+    return this.xyGroup;
   },
   calcVirtualSquare: function calcVirtualSquare() {
     this.xyGroup.sort((a, b) => a[0] > b[0]);
