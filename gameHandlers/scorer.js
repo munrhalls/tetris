@@ -1,19 +1,23 @@
 export const scorer = {
   score: 0,
-  checkForAnyLinerClear: function checkForAnyLinerClear() {
+  isNonZeroClears: function isNonZeroClears() {
     let isOverZero = false;
-
     const rows = [...document.getElementsByClassName("row")];
 
     for (let row of rows) {
       const line = [...row.children];
       let isLineBreak = true;
-      for (let cell of line) {
-        if (![...cell.classList].includes("frozen"))
-          return (isLineBreak = false);
-      }
 
-      if (isLineBreak) return (isOverZero = true);
+      for (let cell of line) {
+        if (![...cell.classList].includes("frozen")) {
+          isLineBreak = false;
+          break;
+        }
+      }
+      if (isLineBreak) {
+        isOverZero = true;
+        break;
+      }
     }
 
     return isOverZero;
@@ -40,20 +44,17 @@ export const scorer = {
     let lineClears = this.getLineClears();
     console.log(lineClears);
   },
-  updateScore: function () {
-    this.handleLineClears();
-    return this.score;
-  },
   isScore: function isScore() {
-    const isScore = this.checkForAnyLinerClear();
+    const isScore = this.isNonZeroClears();
+    console.log("this.isNonZeroClears ->", isScore);
     if (isScore) {
-      this.updateScore();
+      this.handleLineClears();
     }
     return isScore;
   },
   handleScoring: function () {
     const displayer = document.getElementById("scoreDisplayer");
-    if (this.isScore()) this.score += 1;
+    if (this.isScore()) this.handleLineClears();
     displayer.innerText = `${this.score}`;
     console.log("handleScoring", this.score);
   },
