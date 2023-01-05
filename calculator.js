@@ -1,5 +1,6 @@
 const columns = parseInt(tetris.getAttribute("columns"));
 const rows = parseInt(tetris.getAttribute("rows"));
+import { mover } from "./mover.js";
 
 export const calculator = {
   xyGroup: null,
@@ -47,14 +48,14 @@ export const calculator = {
     if (square.left <= 0) {
       const offset = Math.abs(square.left);
       for (let i = 0; i < offset + 1; i++) {
-        moveTetroRight();
+        this.xyGroup = mover.moveTetroRight(this.xyGroup);
       }
       fitSquareInBounds = this.calcVirtualSquare();
     }
     if (square.right >= columns - 1) {
       const offset = square.right - columns;
       for (let i = 0; i < offset + 2; i++) {
-        moveTetroLeft();
+        this.xyGroup = mover.moveTetroLeft(this.xyGroup);
       }
       fitSquareInBounds = this.calcVirtualSquare();
     }

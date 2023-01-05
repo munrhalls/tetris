@@ -1,4 +1,5 @@
 import makeNewTetro from "./makeNewTetro.js";
+import { mover } from "./mover.js";
 import { rotator } from "./rotator.js";
 let xyGroup = null;
 
@@ -17,7 +18,7 @@ export default function processFrame() {
     if (isAtFrozenTetroBottom()) return freezeTetro();
 
     unpaintTetro();
-    moveTetroBottom();
+    xyGroup = mover.moveTetroBottom(xyGroup);
     paintTetro();
   }
 }
@@ -36,14 +37,14 @@ function initializeMovesInterface() {
       if (isAtFrozenTetroLeft()) return freezeTetro();
 
       unpaintTetro();
-      moveTetroLeft();
+      xyGroup = mover.moveTetroLeft(xyGroup);
       paintTetro();
     }
     if (e.code === "ArrowRight") {
       if (isAtBoundRight()) return;
       if (isAtFrozenTetroRight()) return freezeTetro();
       unpaintTetro();
-      moveTetroRight();
+      xyGroup = mover.moveTetroRight(xyGroup);
       paintTetro();
     }
     if (e.code === "ArrowDown") {
@@ -51,7 +52,7 @@ function initializeMovesInterface() {
       if (isAtFrozenTetroBottom()) return freezeTetro();
 
       unpaintTetro();
-      moveTetroBottom();
+      xyGroup = mover.moveTetroBottom(xyGroup);
       paintTetro();
     }
 
@@ -157,22 +158,6 @@ function isGameOver() {
     }
   }
   return isGameOver;
-}
-
-function moveTetroLeft() {
-  for (let xy of xyGroup) {
-    xy[1] = xy[1] - 1;
-  }
-}
-function moveTetroRight() {
-  for (let xy of xyGroup) {
-    xy[1] = xy[1] + 1;
-  }
-}
-function moveTetroBottom() {
-  for (let xy of xyGroup) {
-    xy[0] = xy[0] + 1;
-  }
 }
 
 function unpaintTetro() {

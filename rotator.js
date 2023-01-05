@@ -5,11 +5,7 @@ import makeNewTetro from "./makeNewTetro.js";
 
 export const rotator = {
   xyGroup: null,
-  moveTetroTop: function moveTetroTop(xyGroup) {
-    for (let xy of xyGroup) {
-      xy[0] = xy[0] - 1;
-    }
-  },
+
   flipTetroY: function flipTetroY(xyGroup) {
     this.xyGroup = xyGroup;
     const sort = this.xyGroup.sort((a, b) => a[0] > b[0]);
