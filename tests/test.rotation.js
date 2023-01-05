@@ -4,7 +4,7 @@ export default function test_rotation() {
   for (let i = 0; i < 50; i++) {}
 }
 
-function flipTetroY(xyGroup) {
+function flipTetro(xyGroup) {
   const sort = xyGroup.sort((a, b) => a[0] > b[0]);
   const min = sort[0][0];
   const max = sort[sort.length - 1][0];
@@ -173,4 +173,36 @@ function getRandomInt(min, max) {
 
 function up(xy) {
   return [xy[0] + -1, xy[1]];
+}
+
+// for (let i = 0; i < 150; i++) {
+//   testFlipY();
+// }
+function testFlipY() {
+  let test_xyGroup = makeNewTetro();
+  const ySort_before = test_xyGroup.sort((a, b) => a[0] > b[0]);
+  let yMin_1 = ySort_before[0][0];
+  const ySort_after = test_xyGroup.sort((a, b) => a[0] > b[0]);
+  let yMin_2 = ySort_after[0][0];
+  if (yMin_1 !== yMin_2) {
+    throw new Error("Flipping moves tetro forward.");
+  }
+}
+function testRotateY() {
+  let test_xyGroup = makeNewTetro();
+  const ySort_before = test_xyGroup.sort((a, b) => a[0] > b[0]);
+  let yMin_1 = ySort_before[0][0];
+  const ySort_after = test_xyGroup.sort((a, b) => a[0] > b[0]);
+  let yMin_2 = ySort_after[0][0];
+  if (yMin_1 !== yMin_2) {
+    throw new Error("Flipping moves tetro forward.");
+  }
+
+  const xSort_before = test_xyGroup.sort((a, b) => a[1] > b[1]);
+  let xMin_1 = xSort_before[1][1];
+  const xSort_after = test_xyGroup.sort((a, b) => a[1] > b[1]);
+  let xMin_2 = xSort_after[1][1];
+  if (xMin_1 !== xMin_2) {
+    throw new Error("Rotating moves left or right.");
+  }
 }

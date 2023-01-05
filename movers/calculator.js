@@ -1,6 +1,7 @@
 const columns = parseInt(tetris.getAttribute("columns"));
 const rows = parseInt(tetris.getAttribute("rows"));
 import { mover } from "./mover.js";
+import { freezer } from "../freezer/freezer.js";
 
 export const calculator = {
   xyGroup: null,
@@ -70,19 +71,8 @@ export const calculator = {
 
     return fitSquareInBounds;
   },
-  isCrossingFrozenTetro: function isCrossingFrozenTetro(group) {
-    for (let xy of group) {
-      if (xy[0] < 1) return;
-      if (xy[1] < 0) throw new Error(`Cell outside board: x is ${xy[1]}`);
-      if (xy[1] >= columns)
-        throw new Error(`Cell outside board: x is ${xy[1]}`);
-      const cell = document.getElementById(`cellXY-${xy[0]}-${xy[1]}`);
-      if ([...cell.classList].includes("frozen")) return true;
-    }
-    return false;
-  },
   handleRotationChecks: function handleRotationChecks(uncheckedRotation) {
-    if (this.isCrossingFrozenTetro(uncheckedRotation)) return false;
+    if (freezer.isCrossingFrozenTetro(uncheckedRotation)) return false;
     return true;
   },
 };

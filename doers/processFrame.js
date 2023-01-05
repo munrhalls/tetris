@@ -69,7 +69,7 @@ function initializeMovesInterface() {
 
     if (e.code === "KeyW") {
       unpaintTetro();
-      xyGroup = rotator.flipTetroY(xyGroup);
+      xyGroup = rotator.flipTetro(xyGroup);
       paintTetro();
     }
 
