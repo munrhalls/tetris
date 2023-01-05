@@ -1,3 +1,6 @@
+const rows = parseInt(tetris.getAttribute("columns"));
+const columns = parseInt(tetris.getAttribute("columns"));
+
 export const scorer = {
   score: 0,
   xyGroup: null,
@@ -5,6 +8,7 @@ export const scorer = {
   popFrozenLine: function (line) {
     for (let cell of line) {
       cell.classList.remove("frozen");
+      console.log(this.xyGroup.color);
       cell.classList.remove(this.xyGroup.color);
     }
   },
@@ -32,9 +36,10 @@ export const scorer = {
     return lineClearsList;
   },
   handleLineClears: function handleLineClears() {
+    let scoreMultiplier = 1;
     let lineClearsList = this.getLineClears();
     console.log(lineClearsList);
-    let accumulator = 0;
+    let accumulator = [];
 
     for (let i = 0; i < lineClearsList.length; i++) {
       let line = lineClearsList[i];
@@ -47,10 +52,16 @@ export const scorer = {
       const isNeighbour = prev === line.num - 1 || next === line.num + 1;
 
       if (isNeighbour) {
-        accumulator++;
+        accumulator.push(line);
       }
       if (!isNeighbour) {
-        accumulator = 0;
+        scoreMultiplier = accumulator.length + 1;
+
+        for (let withNeighbourLine of accumulator) {
+          this.popFrozenLine(withNeighbourLine);
+        }
+        this.score = this.score + columns * scoreMultiplier;
+        accumulator = [];
       }
     }
   },
@@ -78,6 +89,9 @@ export const scorer = {
   },
   handleScoring: function (xyGroup) {
     this.xyGroup = xyGroup;
+    // TEST
+    xyGroup.color = "orange";
+    // TEST
     const displayer = document.getElementById("scoreDisplayer");
     if (this.isNonZeroClears()) this.handleLineClears();
     displayer.innerText = `${this.score}`;
