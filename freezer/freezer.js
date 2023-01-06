@@ -49,32 +49,91 @@ export const freezer = {
     return false;
   },
   freezeTetro: function freezeTetro(xyGroup) {
-    this.frozenTetroes.push(xyGroup);
     for (let xy of xyGroup) {
       if (xy[0] < 0) return;
       const cell = document.getElementById(`cellXY-${xy[0]}-${xy[1]}`);
       cell.classList.add("frozen");
+      cell.classList.add("black");
     }
-    this.handleFrozenLinesUpdate(xyGroup);
+    this.frozenTetroes.push(xyGroup);
+    this.handleFrozenLines(xyGroup);
 
     xyGroup = null;
     return xyGroup;
   },
-  handleFrozenLinesUpdate: function handleFrozenLinesUpdate(xyGroup) {
-    let rows = this.frozenLines;
-    for (let square of xyGroup) {
-      let row = rows.find((row) => square[0] === row.num);
-      if (!row) {
-        rows.push({ num: square[0], frozenCells: [] });
-        row = rows.find((row) => square[0] === row.num);
-      }
-      row.frozenCells.push(square[1]);
-      this.checkFrozenLineFull(row);
-    }
+  handleFrozenLines: function handleFrozenLines(xyGroup) {
+    this.updateFrozenLines(xyGroup);
+    this.handleLineClears();
   },
-  checkFrozenLineFull: function checkFrozenLineFull(row) {
-    if (row.frozenCells.length === rows - 1) {
-      console.log("freeze frozen cells");
+  updateFrozenLines: function updateFrozenLines(xyGroup) {
+    for (let square of xyGroup) {
+      let currentLine = this.frozenLines.find((line) => square[0] === line.num);
+      if (!currentLine) {
+        this.frozenLines.push({ num: square[0], frozenCells: [] });
+        currentLine = this.frozenLines[this.frozenLines.length - 1];
+      }
+      currentLine.frozenCells.push(square[1]);
+    }
+    console.log(this.frozenLines);
+  },
+  handleLineClears: function handleLineClears() {
+    let fullLines = this.frozenLines.filter(
+      (line) => line.frozenCells.length === columns
+    );
+
+    if (!fullLines.length) return;
+    fullLines = fullLines.sort((a, b) => a.num > b.num);
+
+    let neighboursCounting = [];
+    for (let i = 0; i < fullLines.length; i++) {
+      const current = fullLines[i];
+      // console.log(current);
     }
   },
 };
+
+setTimeout(() => {
+  let mockxyGroup = [];
+  for (let i = 0; i < 16; i++) {
+    mockxyGroup.push([20, i]);
+  }
+  mockxyGroup[15][0] = 20;
+  freezer.freezeTetro(mockxyGroup);
+
+  mockxyGroup = [];
+  for (let i = 16; i < 22; i++) {
+    mockxyGroup.push([20, i]);
+  }
+  mockxyGroup[3][0] = 20;
+  freezer.freezeTetro(mockxyGroup);
+
+  mockxyGroup = [];
+  for (let i = 0; i < 22; i++) {
+    mockxyGroup.push([21, i]);
+  }
+  freezer.freezeTetro(mockxyGroup);
+
+  mockxyGroup = [];
+  for (let i = 0; i < 22; i++) {
+    mockxyGroup.push([22, i]);
+  }
+  freezer.freezeTetro(mockxyGroup);
+
+  mockxyGroup = [];
+  for (let i = 0; i < 22; i++) {
+    mockxyGroup.push([22, i]);
+  }
+  freezer.freezeTetro(mockxyGroup);
+
+  mockxyGroup = [];
+  for (let i = 0; i < 22; i++) {
+    mockxyGroup.push([24, i]);
+  }
+  freezer.freezeTetro(mockxyGroup);
+
+  mockxyGroup = [];
+  for (let i = 0; i < 22; i++) {
+    mockxyGroup.push([26, i]);
+  }
+  freezer.freezeTetro(mockxyGroup);
+}, 500);

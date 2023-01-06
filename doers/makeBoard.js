@@ -28,18 +28,5 @@ export default async function makeBoard() {
       }
       tetris.appendChild(row);
     }
-
-    // setTimeout(() => {}, 500);
-    function TEST_ADD_FROZEN_TO_ROW() {
-      const rows = document.getElementsByClassName("row");
-
-      const row = [...rows][20];
-      let cells = [...row.children];
-      cells.forEach((cell) => {
-        cell.classList.add("frozen");
-        cell.classList.add("orange");
-      });
-    }
-    TEST_ADD_FROZEN_TO_ROW();
   }, 100);
 }
