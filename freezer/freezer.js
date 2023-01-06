@@ -3,6 +3,7 @@ const rows = parseInt(tetris.getAttribute("rows"));
 
 export const freezer = {
   frozenTetroes: [],
+  frozenLines: [],
   isAtFrozenTetroLeft: function isAtFrozenTetroLeft(xyGroup) {
     for (let xy of xyGroup) {
       if (xy[0] < 0) return;
@@ -54,8 +55,26 @@ export const freezer = {
       const cell = document.getElementById(`cellXY-${xy[0]}-${xy[1]}`);
       cell.classList.add("frozen");
     }
+    this.handleFrozenLinesUpdate(xyGroup);
 
     xyGroup = null;
     return xyGroup;
+  },
+  handleFrozenLinesUpdate: function handleFrozenLinesUpdate(xyGroup) {
+    let rows = this.frozenLines;
+    for (let square of xyGroup) {
+      let row = rows.find((row) => square[0] === row.num);
+      if (!row) {
+        rows.push({ num: square[0], frozenCells: [] });
+        row = rows.find((row) => square[0] === row.num);
+      }
+      row.frozenCells.push(square[1]);
+      this.checkFrozenLineFull(row);
+    }
+  },
+  checkFrozenLineFull: function checkFrozenLineFull(row) {
+    if (row.frozenCells.length === rows - 1) {
+      console.log("freeze frozen cells");
+    }
   },
 };

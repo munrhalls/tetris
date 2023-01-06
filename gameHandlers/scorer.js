@@ -54,6 +54,7 @@ export const scorer = {
       if (isNeighbour) {
         accumulator.push(line);
       }
+      
       if (!isNeighbour) {
         if (accumulator.length > 0) {
           scoreMultiplier = accumulator.length + 1;
