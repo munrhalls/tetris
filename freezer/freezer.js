@@ -75,7 +75,7 @@ export const freezer = {
       currentLine.frozenCells.push(square[1]);
     }
 
-    if (this.frozenLines.find((line) => line.num > columns)) {
+    if (this.frozenLines.find((line) => line.frozenCells.length > columns)) {
       throw new Error(
         "More than one frozen tetrominoe occupies the same cell."
       );
@@ -85,7 +85,7 @@ export const freezer = {
     let fullLines = this.frozenLines.filter((line) => {
       return line.frozenCells.length === columns;
     });
-
+    console.log(fullLines);
     if (fullLines.length) {
       fullLines = fullLines.sort((a, b) => a.num > b.num);
 
@@ -97,6 +97,7 @@ export const freezer = {
     }
   },
 };
+
 setTimeout(() => {
   let mockxyGroup = [];
   for (let i = 0; i < 16; i++) {
@@ -128,6 +129,13 @@ setTimeout(() => {
   freezer.freezeTetro(mockxyGroup);
 }, 700);
 
+setTimeout(() => {
+  let mockxyGroup = [];
+  for (let i = 0; i < 22; i++) {
+    mockxyGroup.push([27, i]);
+  }
+  freezer.freezeTetro(mockxyGroup);
+}, 800);
 // setTimeout(() => {}, 1000);
 // setTimeout(() => {}, 1000);
 // setTimeout(() => {}, 1000);
