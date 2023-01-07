@@ -61,18 +61,14 @@ export const freezer = {
       if (xy[0] < 0) return;
       this.freezeCell(xy);
     }
-    this.updateFrozenTetroes(xyGroup);
     this.updateFrozenLines(xyGroup);
-    this.handleFrozenLines(xyGroup);
+    this.handleLineClears();
+    this.updateFrozenTetroes(xyGroup);
     this.resetTetro(xyGroup);
     return xyGroup;
   },
   updateFrozenTetroes: function updateFrozenTetroes(xyGroup) {
     this.frozenTetroes.push(xyGroup);
-  },
-  handleFrozenLines: function handleFrozenLines(xyGroup) {
-    this.updateFrozenLines(xyGroup);
-    this.handleLineClears();
   },
   getCurrentFrozenLine: function getCurrentFrozenLine(row) {
     return this.frozenLines.find((line) => row === line.num);
@@ -88,11 +84,15 @@ export const freezer = {
   },
   updateFrozenLines: function updateFrozenLines(xyGroup) {
     for (let square of xyGroup) {
-      let currentLine = this.getCurrentFrozenLine(square[0]);
-      if (!currentLine) {
+      let currentLine;
+
+      if (!this.getCurrentFrozenLine(square[0])?.length) {
         this.newFrozenLine(square[0]);
         currentLine = this.frozenLines[this.frozenLines.length - 1];
+      } else {
+        currentLine = this.getCurrentFrozenLine(square[0]);
       }
+
       this.updateFrozenCell(currentLine, square);
     }
   },
@@ -104,23 +104,24 @@ export const freezer = {
     }
   },
   getFullyFrozenLines: function () {
-    return this.frozenLines.filter((line) => {
+    const lines = this.frozenLines.filter((line) => {
       return line.frozenCells.length === columns;
     });
+    return lines;
   },
   sortFullyFrozenLines: function (lines) {
     return lines.sort((a, b) => a.num > b.num);
   },
   handleLineClears: function handleLineClears() {
-    let fullyFrozenLines = this.getFullyFrozenLines();
-    if (fullyFrozenLines) {
-      fullyFrozenLines = this.sortFullyFrozenLines(fullyFrozenLines);
+    if (this.getFullyFrozenLines()?.length) {
+      let fullyFrozenLines = this.sortFullyFrozenLines(fullyFrozenLines);
       const markedFullyFrozenLines = this.countNeighbourhood(fullyFrozenLines);
     }
   },
   countNeighbourhood: function countNeighbourhood(lines) {
     let neighboursCounting = [];
-    console.log("lines");
+    console.log(lines);
+
     for (let i = 1; i < lines.length; i++) {
       const current = lines[i];
       const prev = lines[i - 1];
