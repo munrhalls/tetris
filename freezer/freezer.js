@@ -119,59 +119,46 @@ export const freezer = {
   handleLineClears: function handleLineClears() {
     let fullyFrozenLines = this.getFullyFrozenLines();
     if (fullyFrozenLines.length) {
-      console.log(fullyFrozenLines);
       fullyFrozenLines = this.sortFullyFrozenLines(fullyFrozenLines);
-      const markedFullyFrozenLines = this.countNeighbourhood(fullyFrozenLines);
+      const markedFullyFrozenLines = this.countNeighbourLines(fullyFrozenLines);
+      console.log(markedFullyFrozenLines);
     }
   },
-  countNeighbourhood: function countNeighbourhood(lines) {
-    let neighboursCounting = [];
+  countNeighbourLines: function countNeighbourhood(lines) {
+    let neighbours = [];
 
-    for (let i = 1; i < lines.length; i++) {
+    for (let i = 1; i <= lines.length; i++) {
       const current = lines[i];
       const prev = lines[i - 1];
+
+      if (current - prev === 1) {
+        neighbours.push(current);
+      } else if (neighbours.length) {
+        this.markMultipleNeighbours(neighbours);
+        neighbours = [];
+      } else {
+        current.neighboursCount = 1;
+      }
     }
+    return lines;
+  },
+  markMultipleNeighbours: function (neighbours) {
+    neighbours.forEach((line) => (line.neighbours = neighbours.length));
+    return neighbours;
   },
 };
 
 setTimeout(() => {
   let mockxyGroup = [];
-  for (let i = 0; i < 16; i++) {
+  for (let i = 0; i < 22; i++) {
     mockxyGroup.push([20, i]);
+    mockxyGroup.push([21, i]);
+    mockxyGroup.push([22, i]);
+
+    mockxyGroup.push([24, i]);
+  }
+  for (let i = 5; i < 16; i++) {
+    mockxyGroup.push([17, i]);
   }
   freezer.freezeTetro(mockxyGroup);
 }, 300);
-
-setTimeout(() => {
-  let mockxyGroup = [];
-  for (let i = 0; i < 22; i++) {
-    mockxyGroup.push([21, i]);
-  }
-  freezer.freezeTetro(mockxyGroup);
-}, 400);
-setTimeout(() => {
-  let mockxyGroup = [];
-  for (let i = 0; i < 22; i++) {
-    mockxyGroup.push([22, i]);
-  }
-  freezer.freezeTetro(mockxyGroup);
-}, 500);
-
-setTimeout(() => {
-  let mockxyGroup = [];
-  for (let i = 0; i < 21; i++) {
-    mockxyGroup.push([16, i]);
-  }
-  freezer.freezeTetro(mockxyGroup);
-}, 700);
-
-setTimeout(() => {
-  let mockxyGroup = [];
-  for (let i = 0; i < 22; i++) {
-    mockxyGroup.push([27, i]);
-  }
-  freezer.freezeTetro(mockxyGroup);
-}, 800);
-// setTimeout(() => {}, 1000);
-// setTimeout(() => {}, 1000);
-// setTimeout(() => {}, 1000);
