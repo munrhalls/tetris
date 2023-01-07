@@ -71,29 +71,32 @@ export const freezer = {
     this.frozenTetroes.push(xyGroup);
   },
   getCurrentFrozenLine: function getCurrentFrozenLine(row) {
-    return this.frozenLines.find((line) => row === line.num);
+    return this.frozenLines.find((line) => row === line.frozenRow);
   },
   updateFrozenLine: function updateFrozenLine(square) {
     this.frozenLines.push({ num: square[0], frozenCells: [] });
   },
-  updateFrozenCell: function updateFrozenCell(currentLine, square) {
-    currentLine.frozenCells.push(square[1]);
+  updateFrozenCell: function updateFrozenCell(currentLine, cellNumber) {
+    currentLine.frozenCells.push(cellNumber);
   },
-  newFrozenLine: function newFrozenLine(row) {
-    this.frozenLines.push({ num: row, frozenCells: [] });
+  makeNewFrozenLine: function makeNewFrozenLine(num) {
+    this.frozenLines.push({ frozenRow: num, frozenCells: [] });
   },
   updateFrozenLines: function updateFrozenLines(xyGroup) {
+    // debug3 - frozen lines is totally wrong, is it here?
     for (let square of xyGroup) {
-      let currentLine;
+      const rowNumber = square[0];
+      const cellNumber = square[1];
+      let currentLine = this.getCurrentFrozenLine(rowNumber);
 
-      if (!this.getCurrentFrozenLine(square[0])?.length) {
-        this.newFrozenLine(square[0]);
+      if (!currentLine) {
+        this.makeNewFrozenLine(rowNumber);
         currentLine = this.frozenLines[this.frozenLines.length - 1];
       } else {
-        currentLine = this.getCurrentFrozenLine(square[0]);
+        currentLine = this.getCurrentFrozenLine(rowNumber);
       }
 
-      this.updateFrozenCell(currentLine, square);
+      this.updateFrozenCell(currentLine, cellNumber);
     }
   },
   testNoFrozenOverlap: function testNoFrozenOverlap() {
@@ -104,6 +107,7 @@ export const freezer = {
     }
   },
   getFullyFrozenLines: function () {
+    //debug2 - frozen lines is completely wrong
     const lines = this.frozenLines.filter((line) => {
       return line.frozenCells.length === columns;
     });
@@ -113,19 +117,19 @@ export const freezer = {
     return lines.sort((a, b) => a.num > b.num);
   },
   handleLineClears: function handleLineClears() {
-    if (this.getFullyFrozenLines()?.length) {
-      let fullyFrozenLines = this.sortFullyFrozenLines(fullyFrozenLines);
+    let fullyFrozenLines = this.getFullyFrozenLines();
+    if (fullyFrozenLines.length) {
+      console.log(fullyFrozenLines);
+      fullyFrozenLines = this.sortFullyFrozenLines(fullyFrozenLines);
       const markedFullyFrozenLines = this.countNeighbourhood(fullyFrozenLines);
     }
   },
   countNeighbourhood: function countNeighbourhood(lines) {
     let neighboursCounting = [];
-    console.log(lines);
 
     for (let i = 1; i < lines.length; i++) {
       const current = lines[i];
       const prev = lines[i - 1];
-      console.log(prev);
     }
   },
 };
