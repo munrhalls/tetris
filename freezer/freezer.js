@@ -48,52 +48,83 @@ export const freezer = {
     }
     return false;
   },
+  resetTetro: function resetTetro(xyGroup) {
+    xyGroup = null;
+  },
+  freezeCell: function freezeCell(xy) {
+    const cell = document.getElementById(`cellXY-${xy[0]}-${xy[1]}`);
+    cell.classList.add("frozen");
+    cell.classList.add("black");
+  },
   freezeTetro: function freezeTetro(xyGroup) {
     for (let xy of xyGroup) {
       if (xy[0] < 0) return;
-      const cell = document.getElementById(`cellXY-${xy[0]}-${xy[1]}`);
-      cell.classList.add("frozen");
-      cell.classList.add("black");
+      this.freezeCell(xy);
     }
-    this.frozenTetroes.push(xyGroup);
+    this.updateFrozenTetroes(xyGroup);
+    this.updateFrozenLines(xyGroup);
     this.handleFrozenLines(xyGroup);
-
-    xyGroup = null;
+    this.resetTetro(xyGroup);
     return xyGroup;
+  },
+  updateFrozenTetroes: function updateFrozenTetroes(xyGroup) {
+    this.frozenTetroes.push(xyGroup);
   },
   handleFrozenLines: function handleFrozenLines(xyGroup) {
     this.updateFrozenLines(xyGroup);
     this.handleLineClears();
   },
+  getCurrentFrozenLine: function getCurrentFrozenLine(row) {
+    return this.frozenLines.find((line) => row === line.num);
+  },
+  updateFrozenLine: function updateFrozenLine(square) {
+    this.frozenLines.push({ num: square[0], frozenCells: [] });
+  },
+  updateFrozenCell: function updateFrozenCell(currentLine, square) {
+    currentLine.frozenCells.push(square[1]);
+  },
+  newFrozenLine: function newFrozenLine(row) {
+    this.frozenLines.push({ num: row, frozenCells: [] });
+  },
   updateFrozenLines: function updateFrozenLines(xyGroup) {
     for (let square of xyGroup) {
-      let currentLine = this.frozenLines.find((line) => square[0] === line.num);
+      let currentLine = this.getCurrentFrozenLine(square[0]);
       if (!currentLine) {
-        this.frozenLines.push({ num: square[0], frozenCells: [] });
+        this.newFrozenLine(square[0]);
         currentLine = this.frozenLines[this.frozenLines.length - 1];
       }
-      currentLine.frozenCells.push(square[1]);
+      this.updateFrozenCell(currentLine, square);
     }
-
+  },
+  testNoFrozenOverlap: function testNoFrozenOverlap() {
     if (this.frozenLines.find((line) => line.frozenCells.length > columns)) {
       throw new Error(
         "More than one frozen tetrominoe occupies the same cell."
       );
     }
   },
-  handleLineClears: function handleLineClears() {
-    let fullLines = this.frozenLines.filter((line) => {
+  getFullyFrozenLines: function () {
+    return this.frozenLines.filter((line) => {
       return line.frozenCells.length === columns;
     });
-    console.log(fullLines);
-    if (fullLines.length) {
-      fullLines = fullLines.sort((a, b) => a.num > b.num);
-
-      let neighboursCounting = [];
-      for (let i = 1; i < fullLines.length; i++) {
-        const current = fullLines[i];
-        const prev = fullLines[i - 1];
-      }
+  },
+  sortFullyFrozenLines: function (lines) {
+    return lines.sort((a, b) => a.num > b.num);
+  },
+  handleLineClears: function handleLineClears() {
+    let fullyFrozenLines = this.getFullyFrozenLines();
+    if (fullyFrozenLines) {
+      fullyFrozenLines = this.sortFullyFrozenLines(fullyFrozenLines);
+      const markedFullyFrozenLines = this.countNeighbourhood(fullyFrozenLines);
+    }
+  },
+  countNeighbourhood: function countNeighbourhood(lines) {
+    let neighboursCounting = [];
+    console.log("lines");
+    for (let i = 1; i < lines.length; i++) {
+      const current = lines[i];
+      const prev = lines[i - 1];
+      console.log(prev);
     }
   },
 };
