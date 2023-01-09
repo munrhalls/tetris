@@ -1,7 +1,7 @@
 const columns = parseInt(tetris.getAttribute("columns"));
 const rows = parseInt(tetris.getAttribute("rows"));
 import { mover } from "./mover.js";
-import { freezer } from "../freezer/freezer.js";
+import { frozenChecker } from "../freezer/frozenChecker.js";
 
 export const calculator = {
   xyGroup: null,
@@ -72,7 +72,7 @@ export const calculator = {
     return fitSquareInBounds;
   },
   handleRotationChecks: function handleRotationChecks(uncheckedRotation) {
-    if (freezer.isCrossingFrozenTetro(uncheckedRotation)) return false;
+    if (frozenChecker.isCrossingFrozenTetro(uncheckedRotation)) return false;
     return true;
   },
 };

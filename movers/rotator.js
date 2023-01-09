@@ -2,6 +2,7 @@ const columns = parseInt(tetris.getAttribute("columns"));
 const rows = parseInt(tetris.getAttribute("rows"));
 import { calculator } from "./calculator.js";
 import { freezer } from "../freezer/freezer.js";
+import { frozenChecker } from "../freezer/frozenChecker.js";
 
 export const rotator = {
   xyGroup: null,
@@ -37,7 +38,7 @@ export const rotator = {
       yx[0] = yx[0] + (mid - yx[0]) * 2;
     }
 
-    if (freezer.isCrossingFrozenTetro(flippingGroup)) return this.xyGroup;
+    if (frozenChecker.isCrossingFrozenTetro(flippingGroup)) return this.xyGroup;
     return flippingGroup;
   },
   rotateTetroCounterClockwise: function rotateTetroCounterClockwise(xyGroup) {
