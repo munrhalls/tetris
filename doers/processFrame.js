@@ -2,7 +2,7 @@ import makeNewTetro from "./makeNewTetro.js";
 import { checker } from "./../movers/checker.js";
 import { mover } from "./../movers/mover.js";
 import { rotator } from "./../movers/rotator.js";
-import { freezer } from "./../freezer/freezer.js";
+import { freezeTetro } from "../freezer/freezeTetro.js";
 import { frozenChecker } from "../freezer/frozenChecker.js";
 // import { scorer } from "../gameHandlers/scorer.js";
 
@@ -19,10 +19,10 @@ export default function processFrame() {
     xyGroup = makeNewTetro();
   } else {
     if (checker.isAtBoundBottom(xyGroup))
-      return (xyGroup = freezer.freezeTetro(xyGroup));
+      return (xyGroup = freezeTetro.freezeTetro(xyGroup));
 
     if (frozenChecker.isAtFrozenTetroBottom(xyGroup))
-      return (xyGroup = freezer.freezeTetro(xyGroup));
+      return (xyGroup = freezeTetro.freezeTetro(xyGroup));
 
     unpaintTetro();
     xyGroup = mover.moveTetroBottom(xyGroup);
@@ -42,7 +42,7 @@ function initializeMovesInterface() {
     if (e.code === "ArrowLeft") {
       if (checker.isAtBoundLeft(xyGroup)) return;
       if (frozenChecker.isAtFrozenTetroLeft(xyGroup))
-        return (xyGroup = freezer.freezeTetro(xyGroup));
+        return (xyGroup = freezeTetro.freezeTetro(xyGroup));
 
       unpaintTetro();
       xyGroup = mover.moveTetroLeft(xyGroup);
@@ -51,7 +51,7 @@ function initializeMovesInterface() {
     if (e.code === "ArrowRight") {
       if (checker.isAtBoundRight(xyGroup)) return;
       if (frozenChecker.isAtFrozenTetroRight(xyGroup)) {
-        freezer.freezeTetro(xyGroup);
+        freezeTetro.freezeTetro(xyGroup);
         xyGroup = null;
         return;
       }
@@ -61,9 +61,9 @@ function initializeMovesInterface() {
     }
     if (e.code === "ArrowDown") {
       if (checker.isAtBoundBottom(xyGroup))
-        return (xyGroup = freezer.freezeTetro(xyGroup));
+        return (xyGroup = freezeTetro.freezeTetro(xyGroup));
       if (frozenChecker.isAtFrozenTetroBottom(xyGroup))
-        return (xyGroup = freezer.freezeTetro(xyGroup));
+        return (xyGroup = freezeTetro.freezeTetro(xyGroup));
 
       unpaintTetro();
       xyGroup = mover.moveTetroBottom(xyGroup);
@@ -78,25 +78,25 @@ function initializeMovesInterface() {
 
     if (e.code === "KeyA") {
       if (checker.isAtBoundBottom(xyGroup))
-        return (xyGroup = freezer.freezeTetro(xyGroup));
+        return (xyGroup = freezeTetro.freezeTetro(xyGroup));
       if (frozenChecker.isAtFrozenTetroBottom(xyGroup))
-        return (xyGroup = freezer.freezeTetro(xyGroup));
+        return (xyGroup = freezeTetro.freezeTetro(xyGroup));
 
       unpaintTetro();
       xyGroup = rotator.rotateTetroCounterClockwise(xyGroup);
-      if (xyGroup.freeze) return (xyGroup = freezer.freezeTetro(xyGroup));
+      if (xyGroup.freeze) return (xyGroup = freezeTetro.freezeTetro(xyGroup));
       paintTetro();
     }
 
     if (e.code === "KeyD") {
       if (checker.isAtBoundBottom(xyGroup))
-        return (xyGroup = freezer.freezeTetro(xyGroup));
+        return (xyGroup = freezeTetro.freezeTetro(xyGroup));
       if (frozenChecker.isAtFrozenTetroBottom(xyGroup))
-        return (xyGroup = freezer.freezeTetro(xyGroup));
+        return (xyGroup = freezeTetro.freezeTetro(xyGroup));
 
       unpaintTetro();
       xyGroup = rotator.rotateTetroClockwise(xyGroup);
-      if (xyGroup.freeze) return (xyGroup = freezer.freezeTetro(xyGroup));
+      if (xyGroup.freeze) return (xyGroup = freezeTetro.freezeTetro(xyGroup));
       paintTetro();
     }
   });
@@ -104,7 +104,7 @@ function initializeMovesInterface() {
 
 function isGameOver() {
   let isGameOver = false;
-  for (let frozenTetro of freezer.frozenTetroes) {
+  for (let frozenTetro of freezeTetro.frozenTetroes) {
     for (let xy of frozenTetro) {
       if (parseInt(xy[0]) < 1) {
         isGameOver = true;

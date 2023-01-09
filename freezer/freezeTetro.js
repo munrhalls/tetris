@@ -3,9 +3,8 @@ const rows = parseInt(tetris.getAttribute("rows"));
 import { frozenLines } from "./frozenLines.js";
 import { lineClears } from "./lineClears.js";
 
-export const freezer = {
+export const freezeTetro = {
   frozenTetroes: [],
-
   resetTetro: function resetTetro(xyGroup) {
     xyGroup = null;
   },
@@ -28,7 +27,6 @@ export const freezer = {
   updateFrozenTetroes: function updateFrozenTetroes(xyGroup) {
     this.frozenTetroes.push(xyGroup);
   },
-
   testNoFrozenOverlap: function testNoFrozenOverlap() {
     if (this.frozenLines.find((line) => line.frozenCells.length > columns)) {
       throw new Error(
@@ -50,5 +48,5 @@ setTimeout(() => {
   for (let i = 5; i < 16; i++) {
     mockxyGroup.push([17, i]);
   }
-  freezer.freezeTetro(mockxyGroup);
+  freezeTetro.freezeTetro(mockxyGroup);
 }, 300);
