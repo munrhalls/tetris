@@ -3,6 +3,7 @@ import { checker } from "./../movers/checker.js";
 import { mover } from "./../movers/mover.js";
 import { rotator } from "./../movers/rotator.js";
 import { freezer } from "./../freezer/freezer.js";
+import { frozenChecker } from "../freezer/frozenChecker.js";
 // import { scorer } from "../gameHandlers/scorer.js";
 
 let xyGroup = null;
@@ -13,14 +14,14 @@ const columns = parseInt(tetris.getAttribute("columns"));
 
 export default function processFrame() {
   if (isGameOver()) return localStorage.setItem("isGameOver", "true");
-  
+
   if (!xyGroup) {
     xyGroup = makeNewTetro();
   } else {
     if (checker.isAtBoundBottom(xyGroup))
       return (xyGroup = freezer.freezeTetro(xyGroup));
 
-    if (freezer.isAtFrozenTetroBottom(xyGroup))
+    if (frozenChecker.isAtFrozenTetroBottom(xyGroup))
       return (xyGroup = freezer.freezeTetro(xyGroup));
 
     unpaintTetro();
@@ -40,7 +41,7 @@ function initializeMovesInterface() {
     if (!xyGroup) return;
     if (e.code === "ArrowLeft") {
       if (checker.isAtBoundLeft(xyGroup)) return;
-      if (freezer.isAtFrozenTetroLeft(xyGroup))
+      if (frozenChecker.isAtFrozenTetroLeft(xyGroup))
         return (xyGroup = freezer.freezeTetro(xyGroup));
 
       unpaintTetro();
@@ -49,7 +50,7 @@ function initializeMovesInterface() {
     }
     if (e.code === "ArrowRight") {
       if (checker.isAtBoundRight(xyGroup)) return;
-      if (freezer.isAtFrozenTetroRight(xyGroup)) {
+      if (frozenChecker.isAtFrozenTetroRight(xyGroup)) {
         freezer.freezeTetro(xyGroup);
         xyGroup = null;
         return;
@@ -61,7 +62,7 @@ function initializeMovesInterface() {
     if (e.code === "ArrowDown") {
       if (checker.isAtBoundBottom(xyGroup))
         return (xyGroup = freezer.freezeTetro(xyGroup));
-      if (freezer.isAtFrozenTetroBottom(xyGroup))
+      if (frozenChecker.isAtFrozenTetroBottom(xyGroup))
         return (xyGroup = freezer.freezeTetro(xyGroup));
 
       unpaintTetro();
@@ -78,7 +79,7 @@ function initializeMovesInterface() {
     if (e.code === "KeyA") {
       if (checker.isAtBoundBottom(xyGroup))
         return (xyGroup = freezer.freezeTetro(xyGroup));
-      if (freezer.isAtFrozenTetroBottom(xyGroup))
+      if (frozenChecker.isAtFrozenTetroBottom(xyGroup))
         return (xyGroup = freezer.freezeTetro(xyGroup));
 
       unpaintTetro();
@@ -90,7 +91,7 @@ function initializeMovesInterface() {
     if (e.code === "KeyD") {
       if (checker.isAtBoundBottom(xyGroup))
         return (xyGroup = freezer.freezeTetro(xyGroup));
-      if (freezer.isAtFrozenTetroBottom(xyGroup))
+      if (frozenChecker.isAtFrozenTetroBottom(xyGroup))
         return (xyGroup = freezer.freezeTetro(xyGroup));
 
       unpaintTetro();

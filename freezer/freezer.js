@@ -124,29 +124,19 @@ export const freezer = {
       console.log(markedFullyFrozenLines);
     }
   },
-  countNeighbourLines: function countNeighbourhood(lines) {
-    let neighbours = [];
-
-    for (let i = 1; i <= lines.length; i++) {
-      const current = lines[i];
-      const prev = lines[i - 1];
-
-      if (current - prev === 1) {
-        neighbours.push(current);
-      } else if (neighbours.length) {
-        this.markMultipleNeighbours(neighbours);
-        neighbours = [];
-      } else {
-        current.neighboursCount = 1;
-      }
-    }
-    return lines;
+  countNeighbourLines: function countNeighbourLines(lines) {
+    let neighbours = lines.forEach((line) => {
+      let neighbours = [];
+    });
+    console.log(neighbours);
   },
   markMultipleNeighbours: function (neighbours) {
     neighbours.forEach((line) => (line.neighbours = neighbours.length));
-    return neighbours;
   },
 };
+
+
+
 
 setTimeout(() => {
   let mockxyGroup = [];
