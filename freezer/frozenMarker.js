@@ -3,23 +3,28 @@ const rows = parseInt(tetris.getAttribute("rows"));
 import { frozenTracker } from "./frozenTracker.js";
 
 export const frozenMarker = {
-  getFullyFrozenLines: function () {
-    const lines = frozenTracker.frozenLines.filter((line) => {
-      return line.frozenCells.length === columns;
-    });
-    return lines;
-  },
-  sortFullyFrozenLines: function (lines) {
-    return lines.sort((a, b) => a.num > b.num);
-  },
-  handleLineClears: function handleLineClears() {
-    let fullyFrozenLines = this.getFullyFrozenLines();
-    if (fullyFrozenLines.length) {
-      fullyFrozenLines = this.sortFullyFrozenLines(fullyFrozenLines);
-      const markedFullyFrozenLines = this.markGroupedLines(fullyFrozenLines);
+  markedLines: [],
+  initializeMarks: function (lines) {
+    this.markedLines = lines;
+    for (let line of lines) {
+      if (!line.hasOwnProperty("isFullyFrozen")) line.isFullyFrozen = false;
+      if (!line.hasOwnProperty("groupCount")) line.groupCount = 1;
     }
   },
-  markGroupedLines: function markGroupedLines(lines) {
+  markLines: function markLines(lines) {
+    this.initializeMarks(lines);
+    this.markFullyFrozenLines();
+    this.markGroupCounts();
+    console.log(this.markedLines);
+    return this.markedLines;
+  },
+  markFullyFrozenLines: function markFullyFrozenLines() {
+    let fullyFrozen = this.markedLines.forEach((line) => {
+      if (line.frozenCells.length === columns) line.isFullyFrozen = true;
+    });
+  },
+  markGroupCounts: function markGroupCounts() {
+    let lines = this.markedLines.filter((line) => line.isFullyFrozen === true);
     lines.sort((a, b) => a.frozenRow > b.frozenRow);
     let groupsList = [];
     let group = [];
@@ -45,21 +50,19 @@ export const frozenMarker = {
 
       if (group.length) {
         for (let item of group) {
-          item.grouped = group.length;
+          item.groupCount = group.length;
         }
         group = [];
       }
-      if (!group.length) line.grouped = 1;
+      if (!group.length) line.groupCount = 1;
     }
-    console.log(lines);
-  },
-  markMultipleNeighbours: function (neighbours) {
-    neighbours.forEach((line) => (line.neighbours = neighbours.length));
   },
 };
 
 // tetroFreezer
 // frozenChecker
 // frozenMarker
+/// marks lines, properties
+// returns lines, all marked
 // frozenClearer
 // frozenTracker

@@ -3,8 +3,7 @@ const rows = parseInt(tetris.getAttribute("rows"));
 
 export const frozenTracker = {
   frozenLines: [],
-  handleFrozenLines: function handleFrozenLines(xyGroup) {
-    // debug3 - frozen lines is totally wrong, is it here?
+  updateFrozenLines: function updateFrozenLines(xyGroup) {
     for (let square of xyGroup) {
       const rowNumber = square[0];
       const cellNumber = square[1];
@@ -19,6 +18,7 @@ export const frozenTracker = {
 
       this.updateFrozenCell(currentLine, cellNumber);
     }
+    return this.frozenLines;
   },
   getCurrentFrozenLine: function getCurrentFrozenLine(row) {
     return this.frozenLines.find((line) => row === line.frozenRow);
@@ -31,5 +31,8 @@ export const frozenTracker = {
   },
   makeNewFrozenLine: function makeNewFrozenLine(num) {
     this.frozenLines.push({ frozenRow: num, frozenCells: [] });
+  },
+  updateAfterClear: function updateAfterClear(lines) {
+    this.frozenLines = lines;
   },
 };
