@@ -19,11 +19,13 @@ export default function processFrame() {
     xyGroup = makeNewTetro();
   } else {
     if (checker.isAtBoundBottom(xyGroup)) {
-      return (xyGroup = tetroFreezer.freezeTetro(xyGroup));
+      tetroFreezer.freezeTetro(xyGroup);
+      return (xyGroup = null);
     }
 
     if (frozenChecker.isAtFrozenTetroBottom(xyGroup)) {
-      return (xyGroup = tetroFreezer.freezeTetro(xyGroup));
+      tetroFreezer.freezeTetro(xyGroup);
+      return (xyGroup = null);
     }
 
     unpaintTetro();
@@ -44,7 +46,8 @@ function initializeMovesInterface() {
     if (e.code === "ArrowLeft") {
       if (checker.isAtBoundLeft(xyGroup)) return;
       if (frozenChecker.isAtFrozenTetroLeft(xyGroup)) {
-        return (xyGroup = tetroFreezer.freezeTetro(xyGroup));
+        tetroFreezer.freezeTetro(xyGroup);
+        return (xyGroup = null);
       }
 
       unpaintTetro();
@@ -64,10 +67,12 @@ function initializeMovesInterface() {
     }
     if (e.code === "ArrowDown") {
       if (checker.isAtBoundBottom(xyGroup)) {
-        return (xyGroup = tetroFreezer.freezeTetro(xyGroup));
+        tetroFreezer.freezeTetro(xyGroup);
+        return (xyGroup = null);
       }
       if (frozenChecker.isAtFrozenTetroBottom(xyGroup)) {
-        return (xyGroup = tetroFreezer.freezeTetro(xyGroup));
+        tetroFreezer.freezeTetro(xyGroup);
+        return (xyGroup = null);
       }
 
       unpaintTetro();
@@ -83,32 +88,38 @@ function initializeMovesInterface() {
 
     if (e.code === "KeyA") {
       if (checker.isAtBoundBottom(xyGroup)) {
-        return (xyGroup = tetroFreezer.freezeTetro(xyGroup));
+        tetroFreezer.freezeTetro(xyGroup);
+        return (xyGroup = null);
       }
       if (frozenChecker.isAtFrozenTetroBottom(xyGroup)) {
-        return (xyGroup = tetroFreezer.freezeTetro(xyGroup));
+        tetroFreezer.freezeTetro(xyGroup);
+        return (xyGroup = null);
       }
 
       unpaintTetro();
       xyGroup = rotator.rotateTetroCounterClockwise(xyGroup);
       if (xyGroup.freeze) {
-        return (xyGroup = tetroFreezer.freezeTetro(xyGroup));
+        tetroFreezer.freezeTetro(xyGroup);
+        return (xyGroup = null);
       }
       paintTetro();
     }
 
     if (e.code === "KeyD") {
       if (checker.isAtBoundBottom(xyGroup)) {
-        return (xyGroup = tetroFreezer.freezeTetro(xyGroup));
+        tetroFreezer.freezeTetro(xyGroup);
+        return (xyGroup = null);
       }
       if (frozenChecker.isAtFrozenTetroBottom(xyGroup)) {
-        return (xyGroup = tetroFreezer.freezeTetro(xyGroup));
+        tetroFreezer.freezeTetro(xyGroup);
+        return (xyGroup = null);
       }
 
       unpaintTetro();
       xyGroup = rotator.rotateTetroClockwise(xyGroup);
       if (xyGroup.freeze) {
-        return (xyGroup = tetroFreezer.freezeTetro(xyGroup));
+        tetroFreezer.freezeTetro(xyGroup);
+        return (xyGroup = null);
       }
       paintTetro();
     }
