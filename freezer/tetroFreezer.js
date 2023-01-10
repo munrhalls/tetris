@@ -1,9 +1,9 @@
 const columns = parseInt(tetris.getAttribute("columns"));
 const rows = parseInt(tetris.getAttribute("rows"));
-import { frozenLines } from "./frozenLines.js";
-import { lineClears } from "./lineClears.js";
+import { frozenTracker } from "./frozenTracker.js";
+import { frozenMarker } from "./frozenMarker.js";
 
-export const freezeTetro = {
+export const tetroFreezer = {
   frozenTetroes: [],
   resetTetro: function resetTetro(xyGroup) {
     xyGroup = null;
@@ -18,8 +18,8 @@ export const freezeTetro = {
       if (xy[0] < 0) return;
       this.freezeCell(xy);
     }
-    frozenLines.handleFrozenLines(xyGroup);
-    lineClears.handleLineClears();
+    frozenTracker.handleFrozenLines(xyGroup);
+    frozenMarker.handleLineClears();
     this.updateFrozenTetroes(xyGroup);
     this.resetTetro(xyGroup);
     return xyGroup;
@@ -48,5 +48,5 @@ setTimeout(() => {
   for (let i = 5; i < 16; i++) {
     mockxyGroup.push([17, i]);
   }
-  freezeTetro.freezeTetro(mockxyGroup);
+  tetroFreezer.freezeTetro(mockxyGroup);
 }, 300);

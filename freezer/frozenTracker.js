@@ -1,7 +1,7 @@
 const columns = parseInt(tetris.getAttribute("columns"));
 const rows = parseInt(tetris.getAttribute("rows"));
 
-export const frozenLines = {
+export const frozenTracker = {
   frozenLines: [],
   handleFrozenLines: function handleFrozenLines(xyGroup) {
     // debug3 - frozen lines is totally wrong, is it here?
