@@ -14,25 +14,22 @@ async function initializeGame() {
 
   await makeBoard();
   await makeInterface();
-  await loopShiftingFrame(frequency);
+  await repaintLoop(frequency);
 }
 
 async function makeInterface() {
   const startBtn = document.getElementById("startBtn");
   const pauseBtn = document.getElementById("pauseBtn");
-
   startBtn.onclick = function () {
     runner.cancelAnimation();
   };
-
   pauseBtn.onclick = function () {
     console.log("pause");
   };
-
   moverInterface();
 }
 
-async function loopShiftingFrame(frequency) {
+async function repaintLoop(frequency) {
   runner.runGame = setInterval(function () {
     if (localStorage.getItem("isGameOver") === "true")
       return runner.handleGameOver();
