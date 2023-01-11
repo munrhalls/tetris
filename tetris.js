@@ -4,12 +4,15 @@ import processFrame from "./doers/processFrame.js";
 import { runner } from "./handlers/runner.js";
 import moverInterface from "./movers/moverInterface.js";
 
+const tetris = document.getElementById("tetris");
+const gameOver = document.getElementById("gameOver");
+
 document.addEventListener("DOMContentLoaded", initializeGame);
 let frequency = 500;
 
 async function initializeGame() {
-  document.getElementById("tetris").style.display = "block";
-  document.getElementById("gameOver").style.display = "none";
+  tetris.style.display = "block";
+  gameOver.style.display = "none";
   localStorage.setItem("isGameOver", "false");
 
   await makeBoard();
@@ -37,8 +40,4 @@ async function repaintLoop(frequency) {
   }, frequency);
 
   window.runGame = true;
-  if (!runGame)
-    throw new Error("Animation failed to start or be initialized properly.");
 }
-
-// runner.cancelAnimation();
