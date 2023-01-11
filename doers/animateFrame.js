@@ -11,9 +11,4 @@ window.requestAnimFrame = (function () {
   );
 })();
 
-if (!requestAnimFrame)
-  throw new Error(
-    "Window requestAnimationFrame method did not initialize properly."
-  );
-
 export default requestAnimFrame;

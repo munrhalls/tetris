@@ -1,6 +1,5 @@
 const columns = parseInt(tetris.getAttribute("columns"));
 const rows = parseInt(tetris.getAttribute("rows"));
-import { frozenTracker } from "./frozenTracker.js";
 
 export const frozenMarker = {
   markedLines: [],
@@ -11,11 +10,10 @@ export const frozenMarker = {
       if (!line.hasOwnProperty("groupCount")) line.groupCount = 1;
     }
   },
-  markLines: function markLines(lines) {
+  getMarkedLines: function getMarkedLines(lines) {
     this.initializeMarks(lines);
     this.markFullyFrozenLines();
     this.markGroupCounts();
-    console.log(this.markedLines);
     return this.markedLines;
   },
   markFullyFrozenLines: function markFullyFrozenLines() {
@@ -58,11 +56,3 @@ export const frozenMarker = {
     }
   },
 };
-
-// tetroFreezer
-// frozenChecker
-// frozenMarker
-/// marks lines, properties
-// returns lines, all marked
-// frozenClearer
-// frozenTracker

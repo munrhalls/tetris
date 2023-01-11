@@ -2,7 +2,7 @@ import makeBoard from "./doers/makeBoard.js";
 import requestAnimFrame from "./doers/animateFrame.js";
 import processFrame from "./doers/processFrame.js";
 import test_rotation from "./tests/test.rotation.js";
-import { runner } from "./gameHandlers/runner.js";
+import { runner } from "./handlers/runner.js";
 
 test_rotation();
 

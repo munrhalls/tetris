@@ -28,11 +28,11 @@ export default function makeNewTetro() {
 
 function rndLineAtRndDir(xyGroup) {
   let rndAxis = ["vertical", "horizontal"][getRandomInt(0, 2)];
-  let rndNum = getRandomInt(1, 4);
+  let rndNum = getRandomInt(1, 2);
 
   for (let i = 0; i < rndNum; i++) {
     let lastSquare = [...xyGroup[xyGroup.length - 1]];
-    let thickness = [0, 1, 2, 3, 4][getRandomInt(0, 5)];
+    let thickness = [0, 1, 2, 3][getRandomInt(0, 4)];
     let thickSquare;
 
     if (lastSquare?.length !== 2)

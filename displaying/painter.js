@@ -1,14 +1,17 @@
+const columns = parseInt(tetris.getAttribute("columns"));
+const rows = parseInt(tetris.getAttribute("rows"));
+
 export const painter = {
   unpaintCell: function unpaintCell(xy) {
     if (xy[0] < 0) return;
     if (xy[1] < 0) return;
     if (xy[1] > columns) return;
-    document.getElementById(`cellXY-${xy[0]}-${xy[1]}`).style.innerText = ``;
-    document.getElementById(`cellXY-${xy[0]}-${xy[1]}`).style.fontSize = `0px`;
+    console.log(xy);
+    let cell = document.getElementById(`cellXY-${xy[0]}-${xy[1]}`);
+    cell.style.innerText = ``;
+    cell.style.fontSize = `0px`;
 
-    document
-      .getElementById(`cellXY-${xy[0]}-${xy[1]}`)
-      .classList.remove(xyGroup.color);
+    cell.classList.remove(xyGroup.color);
   },
   paintCell: function paintCell(xy) {
     if (xy[0] < 0) return;
