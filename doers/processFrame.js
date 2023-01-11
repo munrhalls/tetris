@@ -4,7 +4,6 @@ import { mover } from "./../movers/mover.js";
 import { rotator } from "./../movers/rotator.js";
 import { tetroFreezer } from "../freezer/tetroFreezer.js";
 import { frozenChecker } from "../freezer/frozenChecker.js";
-// import { scorer } from "../gameHandlers/scorer.js";
 
 let xyGroup = null;
 
@@ -22,12 +21,10 @@ export default function processFrame() {
       tetroFreezer.freezeTetro(xyGroup);
       return (xyGroup = null);
     }
-
     if (frozenChecker.isAtFrozenTetroBottom(xyGroup)) {
       tetroFreezer.freezeTetro(xyGroup);
       return (xyGroup = null);
     }
-
     unpaintTetro();
     xyGroup = mover.moveTetroBottom(xyGroup);
     paintTetro();
@@ -36,24 +33,22 @@ export default function processFrame() {
 
 initializeMovesInterface();
 
-const clone = (items) =>
-  items.map((item) => (Array.isArray(item) ? clone(item) : item));
-
 function initializeMovesInterface() {
   window.addEventListener("keydown", function (e) {
     if (!window.runGame) return;
     if (!xyGroup) return;
+
     if (e.code === "ArrowLeft") {
       if (checker.isAtBoundLeft(xyGroup)) return;
       if (frozenChecker.isAtFrozenTetroLeft(xyGroup)) {
         tetroFreezer.freezeTetro(xyGroup);
         return (xyGroup = null);
       }
-
       unpaintTetro();
       xyGroup = mover.moveTetroLeft(xyGroup);
       paintTetro();
     }
+
     if (e.code === "ArrowRight") {
       if (checker.isAtBoundRight(xyGroup)) return;
       if (frozenChecker.isAtFrozenTetroRight(xyGroup)) {
@@ -65,6 +60,7 @@ function initializeMovesInterface() {
       xyGroup = mover.moveTetroRight(xyGroup);
       paintTetro();
     }
+
     if (e.code === "ArrowDown") {
       if (checker.isAtBoundBottom(xyGroup)) {
         tetroFreezer.freezeTetro(xyGroup);
@@ -74,7 +70,6 @@ function initializeMovesInterface() {
         tetroFreezer.freezeTetro(xyGroup);
         return (xyGroup = null);
       }
-
       unpaintTetro();
       xyGroup = mover.moveTetroBottom(xyGroup);
       paintTetro();
@@ -95,7 +90,6 @@ function initializeMovesInterface() {
         tetroFreezer.freezeTetro(xyGroup);
         return (xyGroup = null);
       }
-
       unpaintTetro();
       xyGroup = rotator.rotateTetroCounterClockwise(xyGroup);
       if (xyGroup.freeze) {
@@ -114,7 +108,6 @@ function initializeMovesInterface() {
         tetroFreezer.freezeTetro(xyGroup);
         return (xyGroup = null);
       }
-
       unpaintTetro();
       xyGroup = rotator.rotateTetroClockwise(xyGroup);
       if (xyGroup.freeze) {
@@ -154,12 +147,12 @@ function unpaintCell(xy) {
   if (xy[0] < 0) return;
   if (xy[1] < 0) return;
   if (xy[1] > columns) return;
-  document.getElementById(`cellXY-${xy[0]}-${xy[1]}`).style.innerText = ``;
-  document.getElementById(`cellXY-${xy[0]}-${xy[1]}`).style.fontSize = `0px`;
 
-  document
-    .getElementById(`cellXY-${xy[0]}-${xy[1]}`)
-    .classList.remove(xyGroup.color);
+  let cell = document.getElementById(`cellXY-${xy[0]}-${xy[1]}`);
+  cell.style.innerText = ``;
+  cell.style.fontSize = `0px`;
+  cell.classList.remove("color");
+  cell.classList.remove(xyGroup.color);
 }
 function paintCell(xy) {
   if (xy[0] < 0) return;

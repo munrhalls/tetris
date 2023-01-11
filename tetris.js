@@ -1,19 +1,16 @@
 import makeBoard from "./doers/makeBoard.js";
 import requestAnimFrame from "./doers/animateFrame.js";
 import processFrame from "./doers/processFrame.js";
-import test_rotation from "./tests/test.rotation.js";
 import { runner } from "./handlers/runner.js";
 
-test_rotation();
-
 document.addEventListener("DOMContentLoaded", initializeGame);
-// let runGame = false;
 let frequency = 500;
 
 async function initializeGame() {
   document.getElementById("tetris").style.display = "block";
   document.getElementById("gameOver").style.display = "none";
   localStorage.setItem("isGameOver", "false");
+
   await makeBoard();
   await makeInterface();
   await loopShiftingFrame(frequency);
