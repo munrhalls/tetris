@@ -24,7 +24,6 @@ export default async function makeBoard() {
         cell.style.width = `${standardSquare}px`;
         cell.classList.add(`cell`);
         cell.id = `cellXY-${x}-${y}`;
-        // T E S T
         row.appendChild(cell);
       }
       tetris.appendChild(row);
