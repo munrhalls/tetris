@@ -47,6 +47,7 @@ function rndLineAtRndDir(xyGroup) {
       }
       xyGroup.push(lastSquare);
     }
+
     if (rndAxis === "horizontal") {
       lastSquare[1] += -1;
       xyGroup.push(lastSquare);
