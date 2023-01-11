@@ -168,11 +168,10 @@ function paintCell(xy) {
   if (xy[1] > columns)
     throw new Error(`Square out of board in paint cell with ${xy[1]}.`);
 
-  document
-    .getElementById(`cellXY-${xy[0]}-${xy[1]}`)
-    .classList.add(xyGroup.color);
-  document.getElementById(
-    `cellXY-${xy[0]}-${xy[1]}`
-  ).innerText = `Y:${xy[0]} X:${xy[1]}`;
-  document.getElementById(`cellXY-${xy[0]}-${xy[1]}`).style.fontSize = "7px";
+  let cell = document.getElementById(`cellXY-${xy[0]}-${xy[1]}`);
+
+  cell.classList.add("color");
+  cell.classList.add(xyGroup.color);
+  cell.innerText = `Y:${xy[0]} X:${xy[1]}`;
+  cell.style.fontSize = "7px";
 }
