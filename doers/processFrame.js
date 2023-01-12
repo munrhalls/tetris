@@ -1,10 +1,9 @@
-import makeNewTetro from "./makeNewTetro.js";
+import makeNewTetro from "../building/makeNewTetro.js";
 import { checker } from "./../movers/checker.js";
 import { mover } from "./../movers/mover.js";
 import { rotator } from "./../movers/rotator.js";
 import { tetroFreezer } from "../freezer/tetroFreezer.js";
 import { frozenChecker } from "../freezer/frozenChecker.js";
-import { moverInterface } from "./../movers/moverInterface.js";
 import { painter } from "../displaying/painter.js";
 
 let xyGroup = null;
@@ -32,8 +31,6 @@ export default function processFrame() {
     painter.paintTetro(xyGroup);
   }
 }
-
-moverInterface(xyGroup);
 
 function isGameOver() {
   let isGameOver = false;

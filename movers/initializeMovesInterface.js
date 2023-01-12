@@ -1,14 +1,14 @@
-import { checker } from "./../movers/checker.js";
-import { mover } from "./../movers/mover.js";
-import { rotator } from "./../movers/rotator.js";
+import { checker } from "./checker.js";
+import { mover } from "./mover.js";
+import { rotator } from "./rotator.js";
 import { tetroFreezer } from "../freezer/tetroFreezer.js";
 import { frozenChecker } from "../freezer/frozenChecker.js";
 
-export const moverInterface = function (xyGroup) {
+export const initializeMovesInterface = function (xyGroup) {
   window.addEventListener("keydown", function (e) {
     if (!window.runGame) return;
     if (!xyGroup) return;
-
+    // LEFT
     if (e.code === "ArrowLeft") {
       if (checker.isAtBoundLeft(xyGroup)) return;
       if (frozenChecker.isAtFrozenTetroLeft(xyGroup)) {
@@ -19,7 +19,7 @@ export const moverInterface = function (xyGroup) {
       xyGroup = mover.moveTetroLeft(xyGroup);
       paintTetro();
     }
-
+    // RIGHT
     if (e.code === "ArrowRight") {
       if (checker.isAtBoundRight(xyGroup)) return;
       if (frozenChecker.isAtFrozenTetroRight(xyGroup)) {
@@ -31,7 +31,7 @@ export const moverInterface = function (xyGroup) {
       xyGroup = mover.moveTetroRight(xyGroup);
       paintTetro();
     }
-
+    // DOWN
     if (e.code === "ArrowDown") {
       if (checker.isAtBoundBottom(xyGroup)) {
         tetroFreezer.freezeTetro(xyGroup);
@@ -45,13 +45,13 @@ export const moverInterface = function (xyGroup) {
       xyGroup = mover.moveTetroBottom(xyGroup);
       paintTetro();
     }
-
+    // FLIP
     if (e.code === "KeyW") {
       unpaintTetro();
       xyGroup = rotator.flipTetro(xyGroup);
       paintTetro();
     }
-
+    // ROTATE COUNTERCLOCKWISE
     if (e.code === "KeyA") {
       if (checker.isAtBoundBottom(xyGroup)) {
         tetroFreezer.freezeTetro(xyGroup);
@@ -69,7 +69,7 @@ export const moverInterface = function (xyGroup) {
       }
       paintTetro();
     }
-
+    // ROTATE CLOCKWISE
     if (e.code === "KeyD") {
       if (checker.isAtBoundBottom(xyGroup)) {
         tetroFreezer.freezeTetro(xyGroup);

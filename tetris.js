@@ -1,5 +1,5 @@
 import runner from "./handlers/runner.js";
-import makeBoard from "./doers/makeBoard.js";
+import makeBoard from "./building/makeBoard.js";
 import requestAnimFrame from "./doers/animateFrame.js";
 import processFrame from "./doers/processFrame.js";
 const tetris = document.getElementById("tetris");
