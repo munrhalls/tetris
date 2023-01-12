@@ -28,6 +28,7 @@ export default function makeBoard() {
     }
     tetris.appendChild(row);
   }
+
   const domRows = document.getElementsByClassName("row");
   domRows[0].classList.add("first");
   domRows[domRows.length - 1].classList.add("last");

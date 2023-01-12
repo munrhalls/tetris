@@ -1,10 +1,10 @@
-import { checker } from "../processing/checker.js";
-import { mover } from "../moving/mover.js";
-import { rotator } from "../moving/rotator.js";
-import { tetroFreezer } from "../freezing/tetroFreezer.js";
-import { frozenChecker } from "../processing/frozenChecker.js";
+import { checker } from "../3_processing/checker.js";
+import { mover } from "../3_processing/mover.js";
+import { rotator } from "../3_processing/rotator.js";
+import { tetroFreezer } from "../4_displaying/tetroFreezer.js";
+import { frozenChecker } from "../3_processing/frozenChecker.js";
 
-export const makeMovesInterface = function () {
+export default function makeMovesInterface() {
   window.addEventListener("keydown", function (e) {
     if (!window.runGame) return;
     if (!xyGroup) return;
@@ -88,4 +88,4 @@ export const makeMovesInterface = function () {
       paintTetro();
     }
   });
-};
+}
