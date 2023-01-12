@@ -1,7 +1,15 @@
 const columns = parseInt(tetris.getAttribute("columns"));
 const rows = parseInt(tetris.getAttribute("rows"));
 
-export const checker = {
+const checker = {
+  checkGameOver: function checkGameOver() {
+    const firstRow = document.getElementsByClassName("row first")[0];
+    for (let cell of [...firstRow.children]) {
+      if ([...cell.classList].includes("frozen")) {
+        return this.handleGameOver();
+      }
+    }
+  },
   isAtBoundLeft: function isAtBoundLeft(xyGroup) {
     for (let xy of xyGroup) {
       if (xy[1] - 1 < 0) return true;
@@ -21,3 +29,5 @@ export const checker = {
     return false;
   },
 };
+
+export default checker;

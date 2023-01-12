@@ -10,7 +10,7 @@ let frequency = 50;
 function makeGame() {
   makeBoard();
   makeGameInterface();
-  // makeMovesInterface();
+  makeMovesInterface();
   runner.runGame(frequency);
 }
 

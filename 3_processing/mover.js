@@ -9,6 +9,7 @@ export const mover = {
     return xyGroup;
   },
   moveTetroLeft: function moveTetroLeft(xyGroup) {
+    console.log(xyGroup);
     for (let xy of xyGroup) {
       xy[1] = xy[1] - 1;
     }

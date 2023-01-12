@@ -1,91 +1,99 @@
-import { checker } from "../3_processing/checker.js";
+import runner from "../2_running/runner.js";
+import checker from "../3_processing/checker.js";
 import { mover } from "../3_processing/mover.js";
 import { rotator } from "../3_processing/rotator.js";
-import { tetroFreezer } from "../4_displaying/tetroFreezer.js";
+import processor from "../3_processing/processor.js";
 import { frozenChecker } from "../3_processing/frozenChecker.js";
+import { tetroFreezer } from "../4_displaying/tetroFreezer.js";
+import { painter } from "../4_displaying/painter.js";
 
 export default function makeMovesInterface() {
   window.addEventListener("keydown", function (e) {
-    if (!window.runGame) return;
-    if (!xyGroup) return;
+    if (!runner.runGame) return;
+    // if (!processor.xyGroup) return;
+    console.log("????");
     // LEFT
     if (e.code === "ArrowLeft") {
-      if (checker.isAtBoundLeft(xyGroup)) return;
-      if (frozenChecker.isAtFrozenTetroLeft(xyGroup)) {
-        tetroFreezer.freezeTetro(xyGroup);
-        return (xyGroup = null);
+      console.log("????");
+      if (checker.isAtBoundLeft(processor.xyGroup)) return;
+      if (frozenChecker.isAtFrozenTetroLeft(processor.xyGroup)) {
+        tetroFreezer.freezeTetro(processor.xyGroup);
+        return (processor.xyGroup = null);
       }
-      unpaintTetro();
-      xyGroup = mover.moveTetroLeft(xyGroup);
-      paintTetro();
+
+      painter.unpaintTetro(processor.xyGroup);
+      processor.xyGroup = mover.moveTetroLeft(processor.xyGroup);
+      painter.paintTetro(processor.xyGroup);
     }
     // RIGHT
     if (e.code === "ArrowRight") {
-      if (checker.isAtBoundRight(xyGroup)) return;
-      if (frozenChecker.isAtFrozenTetroRight(xyGroup)) {
-        tetroFreezer.freezeTetro(xyGroup);
-        xyGroup = null;
+      if (checker.isAtBoundRight(processor.xyGroup)) return;
+      if (frozenChecker.isAtFrozenTetroRight(processor.xyGroup)) {
+        tetroFreezer.freezeTetro(processor.xyGroup);
+        processor.xyGroup = null;
         return;
       }
-      unpaintTetro();
-      xyGroup = mover.moveTetroRight(xyGroup);
-      paintTetro();
+      painter.unpaintTetro(processor.xyGroup);
+      processor.xyGroup = mover.moveTetroRight(processor.xyGroup);
+      painter.paintTetro(processor.xyGroup);
     }
     // DOWN
     if (e.code === "ArrowDown") {
-      if (checker.isAtBoundBottom(xyGroup)) {
-        tetroFreezer.freezeTetro(xyGroup);
-        return (xyGroup = null);
+      if (checker.isAtBoundBottom(processor.xyGroup)) {
+        tetroFreezer.freezeTetro(processor.xyGroup);
+        return (processor.xyGroup = null);
       }
-      if (frozenChecker.isAtFrozenTetroBottom(xyGroup)) {
-        tetroFreezer.freezeTetro(xyGroup);
-        return (xyGroup = null);
+      if (frozenChecker.isAtFrozenTetroBottom(processor.xyGroup)) {
+        tetroFreezer.freezeTetro(processor.xyGroup);
+        return (processor.xyGroup = null);
       }
-      unpaintTetro();
-      xyGroup = mover.moveTetroBottom(xyGroup);
-      paintTetro();
+      painter.unpaintTetro(processor.xyGroup);
+      processor.xyGroup = mover.moveTetroBottom(processor.xyGroup);
+      painter.paintTetro(processor.xyGroup);
     }
     // FLIP
     if (e.code === "KeyW") {
-      unpaintTetro();
-      xyGroup = rotator.flipTetro(xyGroup);
-      paintTetro();
+      painter.unpaintTetro(processor.xyGroup);
+      processor.xyGroup = rotator.flipTetro(processor.xyGroup);
+      painter.paintTetro(processor.xyGroup);
     }
     // ROTATE COUNTERCLOCKWISE
     if (e.code === "KeyA") {
-      if (checker.isAtBoundBottom(xyGroup)) {
-        tetroFreezer.freezeTetro(xyGroup);
-        return (xyGroup = null);
+      if (checker.isAtBoundBottom(processor.xyGroup)) {
+        tetroFreezer.freezeTetro(processor.xyGroup);
+        return (processor.xyGroup = null);
       }
-      if (frozenChecker.isAtFrozenTetroBottom(xyGroup)) {
-        tetroFreezer.freezeTetro(xyGroup);
-        return (xyGroup = null);
+      if (frozenChecker.isAtFrozenTetroBottom(processor.xyGroup)) {
+        tetroFreezer.freezeTetro(processor.xyGroup);
+        return (processor.xyGroup = null);
       }
-      unpaintTetro();
-      xyGroup = rotator.rotateTetroCounterClockwise(xyGroup);
-      if (xyGroup.freeze) {
-        tetroFreezer.freezeTetro(xyGroup);
-        return (xyGroup = null);
+      painter.unpaintTetro(processor.xyGroup);
+      processor.xyGroup = rotator.rotateTetroCounterClockwise(
+        processor.xyGroup
+      );
+      if (processor.xyGroup.freeze) {
+        tetroFreezer.freezeTetro(processor.xyGroup);
+        return (processor.xyGroup = null);
       }
-      paintTetro();
+      painter.paintTetro(processor.xyGroup);
     }
     // ROTATE CLOCKWISE
     if (e.code === "KeyD") {
-      if (checker.isAtBoundBottom(xyGroup)) {
-        tetroFreezer.freezeTetro(xyGroup);
-        return (xyGroup = null);
+      if (checker.isAtBoundBottom(processor.xyGroup)) {
+        tetroFreezer.freezeTetro(processor.xyGroup);
+        return (processor.xyGroup = null);
       }
-      if (frozenChecker.isAtFrozenTetroBottom(xyGroup)) {
-        tetroFreezer.freezeTetro(xyGroup);
-        return (xyGroup = null);
+      if (frozenChecker.isAtFrozenTetroBottom(processor.xyGroup)) {
+        tetroFreezer.freezeTetro(processor.xyGroup);
+        return (processor.xyGroup = null);
       }
-      unpaintTetro();
-      xyGroup = rotator.rotateTetroClockwise(xyGroup);
-      if (xyGroup.freeze) {
-        tetroFreezer.freezeTetro(xyGroup);
-        return (xyGroup = null);
+      painter.unpaintTetro(processor.xyGroup);
+      processor.xyGroup = rotator.rotateTetroClockwise(processor.xyGroup);
+      if (processor.xyGroup.freeze) {
+        tetroFreezer.freezeTetro(processor.xyGroup);
+        return (processor.xyGroup = null);
       }
-      paintTetro();
+      painter.paintTetro(processor.xyGroup);
     }
   });
 }
