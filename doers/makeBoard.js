@@ -9,6 +9,7 @@ tetris.setAttribute("rows", `${rows}`);
 tetris.setAttribute("columns", `${columns}`);
 
 export default async function makeBoard() {
+  console.log("make board");
   setTimeout(() => {
     for (let x = 0; x < rows; x++) {
       grid.push([]);

@@ -1,4 +1,4 @@
-export const runner = {
+const runner = {
   runGame: false,
   handleGameOver: function handleGameOver() {
     document.getElementById("tetris").style.display = "none";
@@ -7,6 +7,7 @@ export const runner = {
   },
   cancelAnimation: function cancelAnimation() {
     clearInterval(this.runGame);
-    // window.runGame = false;
   },
 };
+
+export default runner;

@@ -4,7 +4,7 @@ import { rotator } from "./../movers/rotator.js";
 import { tetroFreezer } from "../freezer/tetroFreezer.js";
 import { frozenChecker } from "../freezer/frozenChecker.js";
 
-export default function moverInterface(xyGroup) {
+export const moverInterface = function (xyGroup) {
   window.addEventListener("keydown", function (e) {
     if (!window.runGame) return;
     if (!xyGroup) return;
@@ -88,4 +88,4 @@ export default function moverInterface(xyGroup) {
       paintTetro();
     }
   });
-}
+};

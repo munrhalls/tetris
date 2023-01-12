@@ -17,6 +17,7 @@ body {
 }
 
 #tetris {
+    
     position: relative;
     margin: auto;
     border: 3px solid black;
