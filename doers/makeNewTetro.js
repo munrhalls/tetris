@@ -16,13 +16,16 @@ const colors = [
 
 export default function makeNewTetro() {
   let xyGroup = [[0, Math.floor(columns / 2)]];
+
+  rndLineAtRndDir(xyGroup);
+  rndLineAtRndDir(xyGroup);
+  rndLineAtRndDir(xyGroup);
+  rndLineAtRndDir(xyGroup);
+
   xyGroup.color = colors[getRandomInt(0, colors.length)];
-
-  rndLineAtRndDir(xyGroup);
-  rndLineAtRndDir(xyGroup);
-  rndLineAtRndDir(xyGroup);
-  rndLineAtRndDir(xyGroup);
-
+  for (let xy of xyGroup) {
+    xy.color = xyGroup.color;
+  }
   return xyGroup;
 }
 
