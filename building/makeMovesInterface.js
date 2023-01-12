@@ -1,10 +1,10 @@
-import { checker } from "./checker.js";
-import { mover } from "./mover.js";
-import { rotator } from "./rotator.js";
+import { checker } from "../processing/checker.js";
+import { mover } from "../moving/mover.js";
+import { rotator } from "../moving/rotator.js";
 import { tetroFreezer } from "../freezing/tetroFreezer.js";
 import { frozenChecker } from "../processing/frozenChecker.js";
 
-export const initializeMovesInterface = function () {
+export const makeMovesInterface = function () {
   window.addEventListener("keydown", function (e) {
     if (!window.runGame) return;
     if (!xyGroup) return;

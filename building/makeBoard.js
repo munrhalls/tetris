@@ -8,7 +8,7 @@ localStorage.setItem("isGameOver", "false");
 tetris.setAttribute("rows", `${rows}`);
 tetris.setAttribute("columns", `${columns}`);
 
-export default async function makeBoard() {
+export default function makeBoard() {
   console.log("make board");
   for (let x = 0; x < rows; x++) {
     grid.push([]);
