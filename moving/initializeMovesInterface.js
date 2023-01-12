@@ -1,8 +1,8 @@
 import { checker } from "./checker.js";
 import { mover } from "./mover.js";
 import { rotator } from "./rotator.js";
-import { tetroFreezer } from "../freezer/tetroFreezer.js";
-import { frozenChecker } from "../freezer/frozenChecker.js";
+import { tetroFreezer } from "../freezing/tetroFreezer.js";
+import { frozenChecker } from "../freezing/frozenChecker.js";
 
 export const initializeMovesInterface = function (xyGroup) {
   window.addEventListener("keydown", function (e) {

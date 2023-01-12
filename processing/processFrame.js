@@ -1,9 +1,9 @@
 import makeNewTetro from "../building/makeNewTetro.js";
-import { checker } from "./../movers/checker.js";
-import { mover } from "./../movers/mover.js";
-import { rotator } from "./../movers/rotator.js";
-import { tetroFreezer } from "../freezer/tetroFreezer.js";
-import { frozenChecker } from "../freezer/frozenChecker.js";
+import { checker } from "../moving/checker.js";
+import { mover } from "../moving/mover.js";
+import { rotator } from "../moving/rotator.js";
+import { tetroFreezer } from "../freezing/tetroFreezer.js";
+import { frozenChecker } from "../freezing/frozenChecker.js";
 import { painter } from "../displaying/painter.js";
 
 let xyGroup = null;
