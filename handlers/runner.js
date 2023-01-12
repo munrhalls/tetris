@@ -15,12 +15,10 @@ const runner = {
   },
   isGameOver: function isGameOver() {
     let isGameOver = false;
-    for (let frozenTetro of tetroFreezer.frozenTetroes) {
-      for (let xy of frozenTetro) {
-        if (parseInt(xy[0]) < 1) {
-          isGameOver = true;
-          break;
-        }
+    const firstRow = document.getElementsByClassName("row first")[0];
+    for (let cell of [...firstRow.children]) {
+      if ([...cell.classList].includes("frozen")) {
+        return this.handleGameOver();
       }
     }
     return isGameOver;

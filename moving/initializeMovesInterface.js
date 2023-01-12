@@ -2,7 +2,7 @@ import { checker } from "./checker.js";
 import { mover } from "./mover.js";
 import { rotator } from "./rotator.js";
 import { tetroFreezer } from "../freezing/tetroFreezer.js";
-import { frozenChecker } from "../freezing/frozenChecker.js";
+import { frozenChecker } from "../processing/frozenChecker.js";
 
 export const initializeMovesInterface = function () {
   window.addEventListener("keydown", function (e) {

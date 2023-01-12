@@ -2,7 +2,7 @@ const columns = parseInt(tetris.getAttribute("columns"));
 const rows = parseInt(tetris.getAttribute("rows"));
 import { calculator } from "./calculator.js";
 import { tetroFreezer } from "../freezing/tetroFreezer.js";
-import { frozenChecker } from "../freezing/frozenChecker.js";
+import { frozenChecker } from "../processing/frozenChecker.js";
 
 export const rotator = {
   xyGroup: null,

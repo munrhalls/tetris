@@ -1,7 +1,7 @@
 const columns = parseInt(tetris.getAttribute("columns"));
 const rows = parseInt(tetris.getAttribute("rows"));
 import { mover } from "./mover.js";
-import { frozenChecker } from "../freezing/frozenChecker.js";
+import { frozenChecker } from "../processing/frozenChecker.js";
 
 export const calculator = {
   xyGroup: null,
