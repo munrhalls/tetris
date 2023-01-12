@@ -16,7 +16,6 @@ initializeMovesInterface();
 
 export default function repaintFrame() {
   runner.checkGameOver();
-  if (!runner.runGame) return;
 
   if (!xyGroup) {
     xyGroup = makeNewTetro();
