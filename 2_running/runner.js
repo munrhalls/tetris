@@ -1,5 +1,5 @@
-import requestAnimFrame from "./../displaying/animateFrame.js";
-import repaintFrame from "./../displaying/repaintFrame.js";
+import requestAnimFrame from "./../4_displaying/animateFrame.js";
+import repaintFrame from "./../4_displaying/repaintFrame.js";
 
 const runner = {
   game: false,

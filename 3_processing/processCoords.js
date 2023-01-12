@@ -1,7 +1,7 @@
 import { mover } from "./mover.js";
 import { checker } from "./checker.js";
 import { frozenChecker } from "./frozenChecker.js";
-import { painter } from "../displaying/painter.js";
+import { painter } from "../4_displaying/painter.js";
 import { tetroFreezer } from "../4_displaying/tetroFreezer.js";
 import makeNewTetro from "../1_building/makeNewTetro.js";
 

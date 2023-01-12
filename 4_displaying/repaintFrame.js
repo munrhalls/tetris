@@ -1,4 +1,4 @@
-import runner from "../handlers/runner.js";
+import runner from "../2_running/runner.js";
 import processCoords from "../3_processing/processCoords.js";
 
 let xyGroup = null;

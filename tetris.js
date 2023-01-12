@@ -1,6 +1,6 @@
-import makeBoard from "./building/makeBoard.js";
-import makeGameInterface from "./building/makeGameInterface.js";
-import runner from "./handlers/runner.js";
+import makeBoard from "./1_building/makeBoard.js";
+import makeGameInterface from "./1_building/makeGameInterface.js";
+import runner from "./2_running/runner.js";
 
 const tetris = document.getElementById("tetris");
 const gameOver = document.getElementById("gameOver");
