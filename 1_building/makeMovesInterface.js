@@ -75,6 +75,7 @@ export default function makeMovesInterface() {
         tetroFreezer.freezeTetro(processor.xyGroup);
         return (processor.xyGroup = null);
       }
+
       painter.paintTetro(processor.xyGroup);
     }
     // ROTATE CLOCKWISE

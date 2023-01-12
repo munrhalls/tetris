@@ -1,18 +1,16 @@
 const columns = parseInt(tetris.getAttribute("columns"));
 const rows = parseInt(tetris.getAttribute("rows"));
 import { calculator } from "./calculator.js";
-import { tetroFreezer } from "../4_displaying/tetroFreezer.js";
+import processor from "./processor.js";
 import { frozenChecker } from "../3_processing/frozenChecker.js";
+import { tetroFreezer } from "../4_displaying/tetroFreezer.js";
 
 export const rotator = {
-  xyGroup: null,
-
   flipTetro: function flipTetro(xyGroup) {
-    this.xyGroup = xyGroup;
-    let flippingGroup = this.xyGroup.map((square) =>
+    let flippingGroup = processor.xyGroup.map((square) =>
       square.map((coord) => coord)
     );
-    flippingGroup.color = this.xyGroup.color;
+    flippingGroup.color = processor.xyGroup.color;
 
     const sort = flippingGroup.sort((a, b) => a[0] > b[0]);
     const min = sort[0][0];
@@ -38,17 +36,17 @@ export const rotator = {
       yx[0] = yx[0] + (mid - yx[0]) * 2;
     }
 
-    if (frozenChecker.isCrossingFrozenTetro(flippingGroup)) return this.xyGroup;
+    if (frozenChecker.isCrossingFrozenTetro(flippingGroup))
+      return processor.xyGroup;
     return flippingGroup;
   },
   rotateTetroCounterClockwise: function rotateTetroCounterClockwise(xyGroup) {
-    this.xyGroup = xyGroup;
     const virtualSquare = calculator.getVirtualSquare(xyGroup);
-    this.xyGroup.freeze = false;
-    let rotationGroup = this.xyGroup.map((square) =>
+    processor.xyGroup.freeze = false;
+    let rotationGroup = processor.xyGroup.map((square) =>
       square.map((coord) => coord)
     );
-    rotationGroup.color = this.xyGroup.color;
+    rotationGroup.color = processor.xyGroup.color;
 
     for (let square of rotationGroup) {
       const xRelativeToRightBorder = virtualSquare.right - square[1];
@@ -57,18 +55,18 @@ export const rotator = {
       square[1] = virtualSquare.left + yRelativeToTopBorder;
     }
     const pass = calculator.handleRotationChecks(rotationGroup);
-    if (pass) this.xyGroup = rotationGroup;
-    if (pass && virtualSquare.freeze === true) this.xyGroup.freeze = true;
-    return this.xyGroup;
+    if (pass) processor.xyGroup = rotationGroup;
+    if (pass && virtualSquare.freeze === true) processor.xyGroup.freeze = true;
+    return processor.xyGroup;
   },
   rotateTetroClockwise: function rotateTetroClockwise(xyGroup) {
-    this.xyGroup = xyGroup;
     let virtualSquare = calculator.getVirtualSquare(xyGroup);
-    this.xyGroup.freeze = false;
-    let rotationGroup = this.xyGroup.map((square) =>
-      square.map((coord) => coord)
-    );
-    rotationGroup.color = this.xyGroup.color;
+    processor.xyGroup.freeze = false;
+    let rotationGroup = [
+      ...processor.xyGroup.map((square) => [...square.map((coord) => coord)]),
+    ];
+
+    // rotationGroup.color = processor.xyGroup.color;
 
     for (let square of rotationGroup) {
       const xRelativeToRightBorder = virtualSquare.right - square[1];
@@ -77,8 +75,18 @@ export const rotator = {
       square[1] = virtualSquare.right - yRelativeToTopBorder;
     }
     const pass = calculator.handleRotationChecks(rotationGroup);
-    if (pass) this.xyGroup = rotationGroup;
-    if (pass && virtualSquare.freeze === true) this.xyGroup.freeze = true;
-    return this.xyGroup;
+
+    if (pass) {
+      let color = processor.xyGroup.color;
+      processor.xyGroup = rotationGroup;
+      processor.xyGroup.color = color;
+      for (let xy of processor.xyGroup) {
+        xy.color = color;
+      }
+    }
+
+    if (pass && virtualSquare.freeze === true) processor.xyGroup.freeze = true;
+
+    return processor.xyGroup;
   },
 };
