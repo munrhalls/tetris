@@ -4,7 +4,7 @@ import { rotator } from "./rotator.js";
 import { tetroFreezer } from "../freezing/tetroFreezer.js";
 import { frozenChecker } from "../freezing/frozenChecker.js";
 
-export const initializeMovesInterface = function (xyGroup) {
+export const initializeMovesInterface = function () {
   window.addEventListener("keydown", function (e) {
     if (!window.runGame) return;
     if (!xyGroup) return;

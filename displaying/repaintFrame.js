@@ -1,17 +1,17 @@
 import makeNewTetro from "../building/makeNewTetro.js";
 import { checker } from "../moving/checker.js";
+import { initializeMovesInterface } from "../moving/initializeMovesInterface.js";
 import { mover } from "../moving/mover.js";
 import { rotator } from "../moving/rotator.js";
 import { tetroFreezer } from "../freezing/tetroFreezer.js";
 import { frozenChecker } from "../freezing/frozenChecker.js";
-import { painter } from "../displaying/painter.js";
-
-let xyGroup = null;
+import { painter } from "./painter.js";
 const tetris = document.getElementById("tetris");
 const rows = parseInt(tetris.getAttribute("rows"));
 const columns = parseInt(tetris.getAttribute("columns"));
+let xyGroup = null;
 
-export default function processFrame() {
+export default function repaintFrame() {
   if (isGameOver()) return localStorage.setItem("isGameOver", "true");
 
   if (!xyGroup) {
