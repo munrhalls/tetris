@@ -55,7 +55,19 @@ export const rotator = {
       const xRelativeToRightBorder = virtualSquare.right - square[1];
       const yRelativeToTopBorder = square[0] - virtualSquare.top;
       square[0] = virtualSquare.top + xRelativeToRightBorder;
+      console.log(
+        "virtualSquare.top:",
+        virtualSquare.top,
+        "minus 'yRelativeToTopBorder:'",
+        yRelativeToTopBorder
+      );
       square[1] = virtualSquare.left + yRelativeToTopBorder;
+      console.log(
+        "virtualSquare.top:",
+        virtualSquare.top,
+        "minus 'yRelativeToTopBorder:'",
+        yRelativeToTopBorder
+      );
       square.color = rotationGroup.color;
     }
     const pass = calculator.handleRotationChecks(rotationGroup);
@@ -89,3 +101,49 @@ export const rotator = {
     return rotationGroup;
   },
 };
+
+// rotating back and forth, not causing the square to move
+// max - min -> both axis -> store larger one
+// sort -> max - min, divide by 2, + min = mid
+// do for y and x
+// now, y mid + half larger axis, - half larger axis
+// same for x, x mid + half larger axis, x mid - half larger axis
+// got virtual square
+
+// rotate left, get the virtual square right, left, top
+// loop all squares
+// x distance to right border = virt square right - x
+// y distance to top border = y - virt square top
+// now, y = virtual square left + x distance to right border
+// now, x = virtual square top + y distance to top border
+
+// problem
+// x mid can be even or uneven
+// y mid can be even or uneven
+// same with half larger axis
+
+//trace:
+
+// rotation counter clockwise passses through
+// start, press a -> get max min's, get larger axis, get mids, get virtual square
+// let's say it's 13 - 8 x -> 5 -> 7.5 x mid
+// 12 - 9 y -> 3 -> 10.5 y mid
+// larger axis, it's x and it's 5, half of larger axis is 2.5
+// virtual square is:
+// top is y mid 10.5 - 2.5, that's 8
+// bot is y mid 10.5 + 2.5 that's 13
+// left is x mid 7.5 - 2.5 that's 5
+// right is x mid 7.5 + 2.5 that's 10
+
+// [10, 9], [10, 10], [11, 10], [12, 10], [12, 11]
+
+// now, looping all squares
+// x distance to right border = virt right (10) - x 9  = 1
+// y distance to top border = y (9) - virt square top (8) = 1
+// y = virt left (5) + x distance to right border (2) = 7
+// x = virt top (8) + 1 = 9
+
+// now, cases:
+// rotate same direction (counter clockwise)
+//
+// rotation clockwise passes through
