@@ -38,14 +38,17 @@ export const rotator = {
 
     if (frozenChecker.isCrossingFrozenTetro(flippingGroup))
       return processor.xyGroup;
+    for (let yx of flippingGroup) {
+      yx.color = flippingGroup.color;
+    }
     return flippingGroup;
   },
   rotateTetroCounterClockwise: function rotateTetroCounterClockwise(xyGroup) {
     const virtualSquare = calculator.getVirtualSquare(xyGroup);
     processor.xyGroup.freeze = false;
-    let rotationGroup = processor.xyGroup.map((square) =>
-      square.map((coord) => coord)
-    );
+    let rotationGroup = [
+      ...processor.xyGroup.map((square) => [...square.map((coord) => coord)]),
+    ];
     rotationGroup.color = processor.xyGroup.color;
 
     for (let square of rotationGroup) {
@@ -53,11 +56,12 @@ export const rotator = {
       const yRelativeToTopBorder = square[0] - virtualSquare.top;
       square[0] = virtualSquare.top + xRelativeToRightBorder;
       square[1] = virtualSquare.left + yRelativeToTopBorder;
+      square.color = rotationGroup.color;
     }
     const pass = calculator.handleRotationChecks(rotationGroup);
-    if (pass) processor.xyGroup = rotationGroup;
-    if (pass && virtualSquare.freeze === true) processor.xyGroup.freeze = true;
-    return processor.xyGroup;
+    if (!pass) return processor.xyGroup;
+    if (pass && virtualSquare.freeze === true) rotationGroup.freeze = true;
+    return rotationGroup;
   },
   rotateTetroClockwise: function rotateTetroClockwise(xyGroup) {
     let virtualSquare = calculator.getVirtualSquare(xyGroup);
@@ -65,28 +69,23 @@ export const rotator = {
     let rotationGroup = [
       ...processor.xyGroup.map((square) => [...square.map((coord) => coord)]),
     ];
-
-    // rotationGroup.color = processor.xyGroup.color;
-
+    rotationGroup.color = processor.xyGroup.color;
     for (let square of rotationGroup) {
-      const xRelativeToRightBorder = virtualSquare.right - square[1];
+      const xRelativeToLeftBorder = square[1] - virtualSquare.left;
       const yRelativeToTopBorder = square[0] - virtualSquare.top;
-      square[0] = virtualSquare.bot - xRelativeToRightBorder;
+      square[0] = virtualSquare.top + xRelativeToLeftBorder;
       square[1] = virtualSquare.right - yRelativeToTopBorder;
+      console.log(
+        "virtualSquare.right:",
+        virtualSquare.right,
+        "minus 'yRelativeToTopBorder:'",
+        yRelativeToTopBorder
+      );
+      square.color = rotationGroup.color;
     }
     const pass = calculator.handleRotationChecks(rotationGroup);
-
-    if (pass) {
-      let color = processor.xyGroup.color;
-      processor.xyGroup = rotationGroup;
-      processor.xyGroup.color = color;
-      for (let xy of processor.xyGroup) {
-        xy.color = color;
-      }
-    }
-
-    if (pass && virtualSquare.freeze === true) processor.xyGroup.freeze = true;
-
-    return processor.xyGroup;
+    if (!pass) return processor.xyGroup;
+    if (pass && virtualSquare.freeze === true) rotationGroup.freeze = true;
+    return rotationGroup;
   },
 };

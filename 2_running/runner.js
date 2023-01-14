@@ -1,5 +1,6 @@
 import requestAnimFrame from "./../4_displaying/animateFrame.js";
 import repaintFrame from "./../4_displaying/repaintFrame.js";
+import checker from "./../3_processing/checker.js";
 
 const runner = {
   game: false,
@@ -15,14 +16,6 @@ const runner = {
   },
   stopGame: function stopGame() {
     clearInterval(this.game);
-  },
-  checkGameOver: function checkGameOver() {
-    const firstRow = document.getElementsByClassName("row first")[0];
-    for (let cell of [...firstRow.children]) {
-      if ([...cell.classList].includes("frozen")) {
-        return this.handleGameOver();
-      }
-    }
   },
   handleGameOver: function handleGameOver() {
     this.isOver = true;

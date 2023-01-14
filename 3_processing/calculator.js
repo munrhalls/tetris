@@ -18,23 +18,24 @@ export const calculator = {
     let xmin = allx[0];
     let xmid = allx[0] + (allx[allx.length - 1] - allx[0]) / 2;
     let xmax = allx[allx.length - 1];
-
+    console.log("xmid ", xmid);
     let ally = this.xyGroup.map((yx) => yx[0]).sort((a, b) => a > b);
     let ymin = ally[0];
     let ymid = ally[0] + (ally[ally.length - 1] - ally[0]) / 2;
+    console.log("ymid ", ymid);
     let ymax = ally[ally.length - 1];
-
     let axis_y = Math.abs(ymax) - Math.abs(ymin);
     let axis_x = Math.abs(xmax) - Math.abs(xmin);
 
     let larger_axis = axis_y >= axis_x ? axis_y : axis_x;
-    let larger_axis_1stHalf = Math.floor(larger_axis / 2);
-    let larger_axis_2ndHalf = Math.floor(larger_axis / 2);
+    let larger_axis_1stHalf = Math.ceil(larger_axis / 2);
+    let larger_axis_2ndHalf = Math.ceil(larger_axis / 2);
+    console.log(larger_axis_1stHalf);
 
-    const squareTop = Math.ceil(ymid - larger_axis_1stHalf);
-    const squareBot = Math.floor(ymid + larger_axis_2ndHalf);
-    const squareLeft = Math.ceil(xmid - larger_axis_1stHalf);
-    const squareRight = Math.floor(xmid + larger_axis_2ndHalf);
+    let squareTop = Math.ceil(ymid - larger_axis_1stHalf);
+    let squareBot = Math.floor(ymid + larger_axis_2ndHalf);
+    let squareLeft = Math.ceil(xmid - larger_axis_1stHalf);
+    let squareRight = Math.floor(xmid + larger_axis_2ndHalf);
 
     return {
       top: squareTop,

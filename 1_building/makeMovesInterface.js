@@ -10,8 +10,7 @@ import { painter } from "../4_displaying/painter.js";
 export default function makeMovesInterface() {
   window.addEventListener("keydown", function (e) {
     if (!runner.runGame) return;
-    // if (!processor.xyGroup) return;
-    console.log("????");
+    if (!processor.xyGroup) return;
     // LEFT
     if (e.code === "ArrowLeft") {
       console.log("????");
