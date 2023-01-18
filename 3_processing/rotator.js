@@ -234,12 +234,16 @@ export const rotator = {
     return xyGroup;
   },
   rotateTetroClockwise: function rotateTetroClockwise(xyGroup) {
-    if (!xyGroup.r) xyGroup.r = 1;
-
-    for (let square of xyGroup) {
-      square.color = "transparent";
+    if (!xyGroup.r) xyGroup.r = 4;
+    let square = xyGroup[0];
+    let square2 = xyGroup[1];
+    if (xyGroup.r === 4) {
+      square[0] = square[0] + 2;
+      square[1] = square[1] + 2;
+      square2[0] = square2[0] + 1;
+      square2[1] = square2[1] + 1;
     }
-    console.log(xyGroup.r);
+
     if (xyGroup.r < 2) {
       xyGroup.r = 4;
     } else {
