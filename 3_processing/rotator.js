@@ -56,10 +56,10 @@ export const rotator = {
       square.color = "transparent";
     }
 
-    const ymax = 0;
-    const ymin = rows;
-    const xmax = 0;
-    const xmin = columns;
+    let ymax = 0;
+    let ymin = rows;
+    let xmax = 0;
+    let xmin = columns;
     for (let square of xyGroup) {
       if (square[0] > ymax) ymax = square[0];
       if (square[0] < ymin) ymin = square[0];
@@ -93,12 +93,21 @@ export const rotator = {
       xyGroup.leftSquares = [];
       for (let square of xyGroup) {
         if (square[1] < xmid) {
-          square.distanceToMid = Math.ceil(square[0] - ymid);
-          xyGroup.botSquares.push(square);
+          square.distanceXToMid = Math.floor(xmid - square[1]);
+          xyGroup.leftSquares.push(square);
         }
       }
     }
-    console.log(xyGroup.botSquares);
+    if (!xyGroup.rightSquares) {
+      xyGroup.rightSquares = [];
+      for (let square of xyGroup) {
+        if (square[1] > xmid) {
+          square.distanceXToMid = Math.ceil(square[1] - xmid);
+          xyGroup.rightSquares.push(square);
+        }
+      }
+    }
+    console.log(xyGroup.rightSquares);
     xyGroup[1].color = "blue";
     // for (let square of xyGroup.topSquares) {
     //   square.color = "teal";
@@ -166,8 +175,14 @@ export const rotator = {
         square[0] = square[0] + square.distanceToMid;
         square[1] = square[1] - square.distanceToMid;
       }
-      // xyGroup[1][0] = xyGroup[1][0] - 1;
-      // xyGroup[1][1] = xyGroup[1][1] - 1;
+      for (let square of xyGroup.leftSquares) {
+        square[0] = square[0] + square.distanceXToMid;
+        square[1] = square[1] + square.distanceXToMid;
+      }
+      for (let square of xyGroup.rightSquares) {
+        square[0] = square[0] - square.distanceXToMid;
+        square[1] = square[1] - square.distanceXToMid;
+      }
       for (let square of xyGroup.botSquares) {
         square[0] = square[0] - square.distanceToMid;
         square[1] = square[1] + square.distanceToMid;
