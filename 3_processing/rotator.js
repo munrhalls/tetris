@@ -56,15 +56,20 @@ export const rotator = {
       square.color = "transparent";
     }
 
-    let ymax = 0;
-    let ymin = rows;
+    const ymax = 0;
+    const ymin = rows;
+    const xmax = 0;
+    const xmin = columns;
     for (let square of xyGroup) {
       if (square[0] > ymax) ymax = square[0];
       if (square[0] < ymin) ymin = square[0];
+      if (square[1] > xmax) xmax = square[1];
+      if (square[1] < xmin) xmin = square[1];
     }
-    let yLength = ymax - ymin;
-    let ymid = ymin + yLength / 2;
-    // xyGroup.sort((a, b) => a[0] > b[0]);
+    const yLength = ymax - ymin;
+    const ymid = ymin + yLength / 2;
+    const xLength = xmax - xmin;
+    const xmid = xmin + xLength / 2;
 
     if (!xyGroup?.topSquares) {
       xyGroup.topSquares = [];
@@ -84,13 +89,23 @@ export const rotator = {
         }
       }
     }
+    if (!xyGroup.leftSquares) {
+      xyGroup.leftSquares = [];
+      for (let square of xyGroup) {
+        if (square[1] < xmid) {
+          square.distanceToMid = Math.ceil(square[0] - ymid);
+          xyGroup.botSquares.push(square);
+        }
+      }
+    }
     console.log(xyGroup.botSquares);
-    for (let square of xyGroup.topSquares) {
-      square.color = "teal";
-    }
-    for (let square of xyGroup.botSquares) {
-      square.color = "blue";
-    }
+    xyGroup[1].color = "blue";
+    // for (let square of xyGroup.topSquares) {
+    //   square.color = "teal";
+    // }
+    // for (let square of xyGroup.botSquares) {
+    //   square.color = "blue";
+    // }
     // let square = xyGroup[0];
     // square.color = "darkblue";
     // let square2 = xyGroup[1];
@@ -151,6 +166,8 @@ export const rotator = {
         square[0] = square[0] + square.distanceToMid;
         square[1] = square[1] - square.distanceToMid;
       }
+      // xyGroup[1][0] = xyGroup[1][0] - 1;
+      // xyGroup[1][1] = xyGroup[1][1] - 1;
       for (let square of xyGroup.botSquares) {
         square[0] = square[0] - square.distanceToMid;
         square[1] = square[1] + square.distanceToMid;
