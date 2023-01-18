@@ -109,13 +109,12 @@ export const rotator = {
     }
     console.log(xyGroup.rightSquares);
 
-    xyGroup[1].color = "blue";
-    // for (let square of xyGroup.topSquares) {
-    //   square.color = "teal";
-    // }
-    // for (let square of xyGroup.botSquares) {
-    //   square.color = "blue";
-    // }
+    for (let square of xyGroup.topSquares) {
+      square.color = "teal";
+    }
+    for (let square of xyGroup.botSquares) {
+      square.color = "blue";
+    }
     // let square = xyGroup[0];
     // square.color = "darkblue";
     // let square2 = xyGroup[1];
