@@ -234,6 +234,22 @@ export const rotator = {
     return xyGroup;
   },
   rotateTetroClockwise: function rotateTetroClockwise(xyGroup) {
+    if (!xyGroup.r) xyGroup.r = 1;
+
+    for (let square of xyGroup) {
+      square.color = "transparent";
+    }
+    console.log(xyGroup.r);
+    if (xyGroup.r < 2) {
+      xyGroup.r = 4;
+    } else {
+      xyGroup.r = xyGroup.r - 1;
+    }
+    return xyGroup;
+  },
+  archived_rotateTetroClockwise: function archived_rotateTetroClockwise(
+    xyGroup
+  ) {
     let rails = calculator.getVirtualRails(xyGroup);
 
     processor.xyGroup.freeze = false;
