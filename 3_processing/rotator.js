@@ -50,8 +50,15 @@ export const rotator = {
     return flippingGroup;
   },
   rotateTetroCounterClockwise: function rotateTetroCounterClockwise(xyGroup) {
-    if (!xyGroup.r) xyGroup.r = 4;
+    if (!xyGroup.quadrant) {
+      xyGroup.quadrant = 4;
+    } else if (xyGroup.quadrant - 1 < 1) {
+      xyGroup.quadrant = 4;
+    } else {
+      xyGroup.quadrant = xyGroup.quadrant - 1;
+    }
 
+    console.log(xyGroup.quadrant);
     for (let square of xyGroup) {
       square.color = "transparent";
     }
@@ -98,16 +105,15 @@ export const rotator = {
         }
       }
     }
-    if (!xyGroup.rightSquares) {
-      xyGroup.rightSquares = [];
+    if (!xyGroup.quadrantightSquares) {
+      xyGroup.quadrantightSquares = [];
       for (let square of xyGroup) {
         if (square[1] > xmid) {
           square.distanceXToMid = Math.ceil(square[1] - xmid);
-          xyGroup.rightSquares.push(square);
+          xyGroup.quadrantightSquares.push(square);
         }
       }
     }
-    console.log(xyGroup.rightSquares);
 
     for (let square of xyGroup.topSquares) {
       square.color = "teal";
@@ -122,7 +128,7 @@ export const rotator = {
     // let square3 = xyGroup[2];
     // square3.color = "darkblue";
 
-    if (xyGroup.r === 1) {
+    if (xyGroup.quadrant === 1) {
       // square[0] = square[0] - 3;
       // square[1] = square[1] - 3;
       // square2[0] = square2[0] - 2;
@@ -143,12 +149,12 @@ export const rotator = {
         square[0] = square[0] - square.distanceXToMid;
         square[1] = square[1] - square.distanceXToMid;
       }
-      for (let square of xyGroup.rightSquares) {
+      for (let square of xyGroup.quadrantightSquares) {
         square[0] = square[0] + square.distanceXToMid;
         square[1] = square[1] + square.distanceXToMid;
       }
     }
-    if (xyGroup.r === 2) {
+    if (xyGroup.quadrant === 2) {
       // square[0] = square[0] - 3;
       // square[1] = square[1] + 3;
       // square2[0] = square2[0] - 2;
@@ -168,12 +174,12 @@ export const rotator = {
         square[0] = square[0] + square.distanceXToMid;
         square[1] = square[1] + square.distanceXToMid;
       }
-      for (let square of xyGroup.rightSquares) {
+      for (let square of xyGroup.quadrantightSquares) {
         square[0] = square[0] - square.distanceXToMid;
         square[1] = square[1] - square.distanceXToMid;
       }
     }
-    if (xyGroup.r === 3) {
+    if (xyGroup.quadrant === 3) {
       // square[0] = square[0] + 3;
       // square[1] = square[1] + 3;
       // square2[0] = square2[0] + 2;
@@ -194,12 +200,12 @@ export const rotator = {
         square[0] = square[0] - square.distanceXToMid;
         square[1] = square[1] - square.distanceXToMid;
       }
-      for (let square of xyGroup.rightSquares) {
+      for (let square of xyGroup.quadrantightSquares) {
         square[0] = square[0] + square.distanceXToMid;
         square[1] = square[1] + square.distanceXToMid;
       }
     }
-    if (xyGroup.r === 4) {
+    if (xyGroup.quadrant === 4) {
       for (let square of xyGroup.topSquares) {
         square[0] = square[0] + square.distanceToMid;
         square[1] = square[1] - square.distanceToMid;
@@ -213,7 +219,7 @@ export const rotator = {
         square[0] = square[0] + square.distanceXToMid;
         square[1] = square[1] + square.distanceXToMid;
       }
-      for (let square of xyGroup.rightSquares) {
+      for (let square of xyGroup.quadrantightSquares) {
         square[0] = square[0] - square.distanceXToMid;
         square[1] = square[1] - square.distanceXToMid;
       }
@@ -226,33 +232,29 @@ export const rotator = {
       // square3[1] = square3[1] - 1;
     }
 
-    console.log(xyGroup.r);
-    if (xyGroup.r < 2) {
-      xyGroup.r = 4;
-    } else {
-      xyGroup.r = xyGroup.r - 1;
-    }
     return xyGroup;
   },
   rotateTetroClockwise: function rotateTetroClockwise(xyGroup) {
-    if (!xyGroup.r) xyGroup.r = 1;
+    if (!xyGroup.quadrant) {
+      xyGroup.quadrant = 2;
+    } else if (xyGroup.quadrant + 1 > 4) {
+      xyGroup.quadrant = 1;
+    } else {
+      xyGroup.quadrant = xyGroup.quadrant + 1;
+    }
+
+    console.log(xyGroup.quadrant);
     let square = xyGroup[0];
     let square2 = xyGroup[1];
-    // if (xyGroup.r === 4) {
+    // if (xyGroup.quadrant === 4) {
     //   square[0] = square[0] + 2;
     //   square[1] = square[1] + 2;
     //   square2[0] = square2[0] + 1;
     //   square2[1] = square2[1] + 1;
     // }
+    if (xyGroup.quadrant === 4) {
+    }
 
-    if (xyGroup.r === 2) {
-    }
-    console.log(xyGroup.r);
-    if (xyGroup.r > 3) {
-      xyGroup.r = 1;
-    } else {
-      xyGroup.r = xyGroup.r + 1;
-    }
     return xyGroup;
   },
   archived_rotateTetroClockwise: function archived_rotateTetroClockwise(
