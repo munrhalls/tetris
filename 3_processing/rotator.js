@@ -70,7 +70,7 @@ export const rotator = {
       xyGroup.topSquares = [];
       for (let square of xyGroup) {
         if (square[0] < ymid) {
-          square.distanceToMid = ymid - square[0];
+          square.distanceToMid = Math.floor(ymid - square[0]);
           xyGroup.topSquares.push(square);
         }
       }
@@ -79,7 +79,7 @@ export const rotator = {
       xyGroup.botSquares = [];
       for (let square of xyGroup) {
         if (square[0] > ymid) {
-          square.distanceToMid = square[0] - ymid;
+          square.distanceToMid = Math.ceil(square[0] - ymid);
           xyGroup.botSquares.push(square);
         }
       }
