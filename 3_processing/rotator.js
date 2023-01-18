@@ -238,20 +238,20 @@ export const rotator = {
     if (!xyGroup.r) xyGroup.r = 1;
     let square = xyGroup[0];
     let square2 = xyGroup[1];
-    if (xyGroup.r === 4) {
-      square[0] = square[0] + 2;
-      square[1] = square[1] + 2;
-      square2[0] = square2[0] + 1;
-      square2[1] = square2[1] + 1;
-    }
+    // if (xyGroup.r === 4) {
+    //   square[0] = square[0] + 2;
+    //   square[1] = square[1] + 2;
+    //   square2[0] = square2[0] + 1;
+    //   square2[1] = square2[1] + 1;
+    // }
 
     if (xyGroup.r === 2) {
     }
-
-    if (xyGroup.r < 2) {
-      xyGroup.r = 4;
+    console.log(xyGroup.r);
+    if (xyGroup.r > 3) {
+      xyGroup.r = 1;
     } else {
-      xyGroup.r = xyGroup.r - 1;
+      xyGroup.r = xyGroup.r + 1;
     }
     return xyGroup;
   },
