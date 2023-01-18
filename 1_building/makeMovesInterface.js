@@ -13,7 +13,6 @@ export default function makeMovesInterface() {
     if (!processor.xyGroup) return;
     // LEFT
     if (e.code === "ArrowLeft") {
-      console.log("????");
       if (checker.isAtBoundLeft(processor.xyGroup)) return;
       if (frozenChecker.isAtFrozenTetroLeft(processor.xyGroup)) {
         tetroFreezer.freezeTetro(processor.xyGroup);

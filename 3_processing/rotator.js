@@ -1,3 +1,7 @@
+// rotation
+// if axis mid even, it's uneven squares num, axis mid = square
+// if axis mid uneven, it's even squares num, no axis mid square = below axis mid go to less than it, above axis mid go to more than it
+
 const columns = parseInt(tetris.getAttribute("columns"));
 const rows = parseInt(tetris.getAttribute("rows"));
 import { calculator } from "./calculator.js";
@@ -6,6 +10,7 @@ import { frozenChecker } from "../3_processing/frozenChecker.js";
 import { tetroFreezer } from "../4_displaying/tetroFreezer.js";
 
 export const rotator = {
+  quarter: 1,
   flipTetro: function flipTetro(xyGroup) {
     let flippingGroup = processor.xyGroup.map((square) =>
       square.map((coord) => coord)
@@ -41,10 +46,134 @@ export const rotator = {
     for (let yx of flippingGroup) {
       yx.color = flippingGroup.color;
     }
+    flippingGroup.lastRotation = xyGroup.lastRotation;
     return flippingGroup;
   },
   rotateTetroCounterClockwise: function rotateTetroCounterClockwise(xyGroup) {
-    const virtualSquare = calculator.getVirtualSquare(xyGroup);
+    if (!xyGroup.r) xyGroup.r = 1;
+
+    for (let square of xyGroup) {
+      square.color = "transparent";
+    }
+
+    let ymax = 0;
+    let ymin = rows;
+    for (let square of xyGroup) {
+      if (square[0] > ymax) ymax = square[0];
+      if (square[0] < ymin) ymin = square[0];
+    }
+    let yLength = ymax - ymin;
+    let ymid = ymin + yLength / 2;
+    // xyGroup.sort((a, b) => a[0] > b[0]);
+
+    if (!xyGroup?.topSquares) {
+      xyGroup.topSquares = [];
+      for (let square of xyGroup) {
+        if (square[0] < ymid) {
+          square.distanceToMid = ymid - square[0];
+          xyGroup.topSquares.push(square);
+        }
+      }
+    }
+    if (!xyGroup?.botSquares) {
+      xyGroup.botSquares = [];
+      for (let square of xyGroup) {
+        if (square[0] > ymid) {
+          square.distanceToMid = square[0] - ymid;
+          xyGroup.botSquares.push(square);
+        }
+      }
+    }
+    console.log(xyGroup.botSquares);
+    for (let square of xyGroup.topSquares) {
+      square.color = "teal";
+    }
+    for (let square of xyGroup.botSquares) {
+      square.color = "blue";
+    }
+    // let square = xyGroup[0];
+    // square.color = "darkblue";
+    // let square2 = xyGroup[1];
+    // square2.color = "darkblue";
+    // let square3 = xyGroup[2];
+    // square3.color = "darkblue";
+
+    if (xyGroup.r === 4) {
+      // square[0] = square[0] - 3;
+      // square[1] = square[1] - 3;
+      // square2[0] = square2[0] - 2;
+      // square2[1] = square2[1] - 2;
+      // square3[0] = square3[0] - 1;
+      // square3[1] = square3[1] - 1;
+      for (let square of xyGroup.topSquares) {
+        square[0] = square[0] - square.distanceToMid;
+        square[1] = square[1] - square.distanceToMid;
+      }
+      for (let square of xyGroup.botSquares) {
+        square[0] = square[0] + square.distanceToMid;
+        square[1] = square[1] + square.distanceToMid;
+      }
+    }
+    if (xyGroup.r === 3) {
+      // square[0] = square[0] - 3;
+      // square[1] = square[1] + 3;
+      // square2[0] = square2[0] - 2;
+      // square2[1] = square2[1] + 2;
+      // square3[0] = square3[0] - 1;
+      // square3[1] = square3[1] + 1;
+      for (let square of xyGroup.topSquares) {
+        square[0] = square[0] - square.distanceToMid;
+        square[1] = square[1] + square.distanceToMid;
+      }
+      for (let square of xyGroup.botSquares) {
+        square[0] = square[0] + square.distanceToMid;
+        square[1] = square[1] - square.distanceToMid;
+      }
+    }
+    if (xyGroup.r === 2) {
+      // square[0] = square[0] + 3;
+      // square[1] = square[1] + 3;
+      // square2[0] = square2[0] + 2;
+      // square2[1] = square2[1] + 2;
+      // square3[0] = square3[0] + 1;
+      // square3[1] = square3[1] + 1;
+      for (let square of xyGroup.topSquares) {
+        square[0] = square[0] + square.distanceToMid;
+        square[1] = square[1] + square.distanceToMid;
+      }
+      for (let square of xyGroup.botSquares) {
+        square[0] = square[0] - square.distanceToMid;
+        square[1] = square[1] - square.distanceToMid;
+      }
+    }
+    if (xyGroup.r === 1) {
+      for (let square of xyGroup.topSquares) {
+        square[0] = square[0] + square.distanceToMid;
+        square[1] = square[1] - square.distanceToMid;
+      }
+      for (let square of xyGroup.botSquares) {
+        square[0] = square[0] - square.distanceToMid;
+        square[1] = square[1] + square.distanceToMid;
+      }
+
+      // square[0] = square[0] + 3;
+      // square[1] = square[1] - 3;
+      // square2[0] = square2[0] + 2;
+      // square2[1] = square2[1] - 2;
+      // square3[0] = square3[0] + 1;
+      // square3[1] = square3[1] - 1;
+    }
+
+    if (xyGroup.r >= 4) {
+      xyGroup.r = 1;
+    } else {
+      xyGroup.r = xyGroup.r + 1;
+    }
+    return xyGroup;
+  },
+  rotateTetroClockwise: function rotateTetroClockwise(xyGroup) {
+    let rails = calculator.getVirtualRails(xyGroup);
+
     processor.xyGroup.freeze = false;
     let rotationGroup = [
       ...processor.xyGroup.map((square) => [...square.map((coord) => coord)]),
@@ -52,98 +181,25 @@ export const rotator = {
     rotationGroup.color = processor.xyGroup.color;
 
     for (let square of rotationGroup) {
-      const xRelativeToRightBorder = virtualSquare.right - square[1];
-      const yRelativeToTopBorder = square[0] - virtualSquare.top;
-      square[0] = virtualSquare.top + xRelativeToRightBorder;
-      console.log(
-        "virtualSquare.top:",
-        virtualSquare.top,
-        "minus 'yRelativeToTopBorder:'",
-        yRelativeToTopBorder
-      );
-      square[1] = virtualSquare.left + yRelativeToTopBorder;
-      console.log(
-        "virtualSquare.top:",
-        virtualSquare.top,
-        "minus 'yRelativeToTopBorder:'",
-        yRelativeToTopBorder
-      );
+      let y = square[0];
+      let x = square[1];
       square.color = rotationGroup.color;
+      // const distanceXtoLeftBorder = x - rails.left;
+      // const distanceYtoTopBorder = y - rails.top;
+      const relativeDistanceOfXFromXMid = square[1] - Math.ceil(rails.xmid);
+      const relativeDistanceOfYFromYMid = square[0] - Math.ceil(rails.ymid);
+      square[0] = Math.ceil(rails.ymid) + relativeDistanceOfXFromXMid;
+      square[1] = Math.ceil(rails.xmid) + relativeDistanceOfYFromYMid;
+
+      if (xyGroup.lastRotation === "counterClockwise") {
+        square[1] = square[1] + Math.floor(rails.bot - rails.top);
+      }
     }
+
+    rotationGroup.lastRotation = "clockwise";
     const pass = calculator.handleRotationChecks(rotationGroup);
     if (!pass) return processor.xyGroup;
-    if (pass && virtualSquare.freeze === true) rotationGroup.freeze = true;
-    return rotationGroup;
-  },
-  rotateTetroClockwise: function rotateTetroClockwise(xyGroup) {
-    let virtualSquare = calculator.getVirtualSquare(xyGroup);
-    processor.xyGroup.freeze = false;
-    let rotationGroup = [
-      ...processor.xyGroup.map((square) => [...square.map((coord) => coord)]),
-    ];
-    rotationGroup.color = processor.xyGroup.color;
-    for (let square of rotationGroup) {
-      const xRelativeToLeftBorder = square[1] - virtualSquare.left;
-      const yRelativeToTopBorder = square[0] - virtualSquare.top;
-      square[0] = virtualSquare.top + xRelativeToLeftBorder;
-      square[1] = virtualSquare.right - yRelativeToTopBorder;
-      console.log(
-        "virtualSquare.right:",
-        virtualSquare.right,
-        "minus 'yRelativeToTopBorder:'",
-        yRelativeToTopBorder
-      );
-      square.color = rotationGroup.color;
-    }
-    const pass = calculator.handleRotationChecks(rotationGroup);
-    if (!pass) return processor.xyGroup;
-    if (pass && virtualSquare.freeze === true) rotationGroup.freeze = true;
+    if (pass && rails.freeze === true) rotationGroup.freeze = true;
     return rotationGroup;
   },
 };
-
-// rotating back and forth, not causing the square to move
-// max - min -> both axis -> store larger one
-// sort -> max - min, divide by 2, + min = mid
-// do for y and x
-// now, y mid + half larger axis, - half larger axis
-// same for x, x mid + half larger axis, x mid - half larger axis
-// got virtual square
-
-// rotate left, get the virtual square right, left, top
-// loop all squares
-// x distance to right border = virt square right - x
-// y distance to top border = y - virt square top
-// now, y = virtual square left + x distance to right border
-// now, x = virtual square top + y distance to top border
-
-// problem
-// x mid can be even or uneven
-// y mid can be even or uneven
-// same with half larger axis
-
-//trace:
-
-// rotation counter clockwise passses through
-// start, press a -> get max min's, get larger axis, get mids, get virtual square
-// let's say it's 13 - 8 x -> 5 -> 7.5 x mid
-// 12 - 9 y -> 3 -> 10.5 y mid
-// larger axis, it's x and it's 5, half of larger axis is 2.5
-// virtual square is:
-// top is y mid 10.5 - 2.5, that's 8
-// bot is y mid 10.5 + 2.5 that's 13
-// left is x mid 7.5 - 2.5 that's 5
-// right is x mid 7.5 + 2.5 that's 10
-
-// [10, 9], [10, 10], [11, 10], [12, 10], [12, 11]
-
-// now, looping all squares
-// x distance to right border = virt right (10) - x 9  = 1
-// y distance to top border = y (9) - virt square top (8) = 1
-// y = virt left (5) + x distance to right border (2) = 7
-// x = virt top (8) + 1 = 9
-
-// now, cases:
-// rotate same direction (counter clockwise)
-//
-// rotation clockwise passes through
