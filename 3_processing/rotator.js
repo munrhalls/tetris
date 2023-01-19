@@ -11,45 +11,6 @@ import { tetroFreezer } from "../4_displaying/tetroFreezer.js";
 import { mover } from "./mover.js";
 
 export const rotator = {
-  quarter: 1,
-  flipTetro: function flipTetro(xyGroup) {
-    let flippingGroup = processor.xyGroup.map((square) =>
-      square.map((coord) => coord)
-    );
-    flippingGroup.color = processor.xyGroup.color;
-
-    const sort = flippingGroup.sort((a, b) => a[0] > b[0]);
-    const min = sort[0][0];
-    const max = sort[sort.length - 1][0];
-    const height = max - min;
-    const mid = min + height / 2;
-
-    let aboveMid = [];
-    let belowMid = [];
-    for (let yx of flippingGroup) {
-      if (yx[0] < mid) {
-        aboveMid.push(yx);
-      }
-      if (yx[0] > mid) {
-        belowMid.push(yx);
-      }
-    }
-
-    for (let yx of aboveMid) {
-      yx[0] = yx[0] + (mid - yx[0]) * 2;
-    }
-    for (let yx of belowMid) {
-      yx[0] = yx[0] + (mid - yx[0]) * 2;
-    }
-
-    if (frozenChecker.isCrossingFrozenTetro(flippingGroup))
-      return processor.xyGroup;
-    for (let yx of flippingGroup) {
-      yx.color = flippingGroup.color;
-    }
-    flippingGroup.lastRotation = xyGroup.lastRotation;
-    return flippingGroup;
-  },
   setOriginalReference: function setOriginalReference(xyGroup) {
     xyGroup.rotationReference = true;
 
@@ -315,6 +276,44 @@ export const rotator = {
     const pass = !frozenChecker.isCrossingFrozenTetro(rotationGroup);
     if (!pass) return xyGroup;
     return rotationGroup;
+  },
+  archived_flipTetro: function flipTetro(xyGroup) {
+    let flippingGroup = processor.xyGroup.map((square) =>
+      square.map((coord) => coord)
+    );
+    flippingGroup.color = processor.xyGroup.color;
+
+    const sort = flippingGroup.sort((a, b) => a[0] > b[0]);
+    const min = sort[0][0];
+    const max = sort[sort.length - 1][0];
+    const height = max - min;
+    const mid = min + height / 2;
+
+    let aboveMid = [];
+    let belowMid = [];
+    for (let yx of flippingGroup) {
+      if (yx[0] < mid) {
+        aboveMid.push(yx);
+      }
+      if (yx[0] > mid) {
+        belowMid.push(yx);
+      }
+    }
+
+    for (let yx of aboveMid) {
+      yx[0] = yx[0] + (mid - yx[0]) * 2;
+    }
+    for (let yx of belowMid) {
+      yx[0] = yx[0] + (mid - yx[0]) * 2;
+    }
+
+    if (frozenChecker.isCrossingFrozenTetro(flippingGroup))
+      return processor.xyGroup;
+    for (let yx of flippingGroup) {
+      yx.color = flippingGroup.color;
+    }
+    flippingGroup.lastRotation = xyGroup.lastRotation;
+    return flippingGroup;
   },
   archived_rotateTetroClockwise: function archived_rotateTetroClockwise(
     xyGroup

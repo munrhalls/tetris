@@ -5,7 +5,7 @@ import runner from "./2_running/runner.js";
 
 const tetris = document.getElementById("tetris");
 const gameOver = document.getElementById("gameOver");
-let frequency = 50;
+let frequency = 150;
 
 function makeGame() {
   makeBoard();

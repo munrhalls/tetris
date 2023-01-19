@@ -49,12 +49,6 @@ export default function makeMovesInterface() {
       processor.xyGroup = mover.moveTetroBottom(processor.xyGroup);
       painter.paintTetro(processor.xyGroup);
     }
-    // FLIP
-    if (e.code === "KeyW") {
-      painter.unpaintTetro(processor.xyGroup);
-      processor.xyGroup = rotator.flipTetro(processor.xyGroup);
-      painter.paintTetro(processor.xyGroup);
-    }
     // ROTATE COUNTERCLOCKWISE
     if (e.code === "KeyA") {
       if (checker.isAtBoundBottom(processor.xyGroup)) {
