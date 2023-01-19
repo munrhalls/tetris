@@ -11,7 +11,7 @@ export const calculator = {
     const checkedrail = this.handleVirtualRailChecks(uncheckedrail);
     return checkedrail;
   },
-  calcVirtualRails: function calcVirtualRails() {
+  archived_calcVirtualRails: function calcVirtualRails() {
     const allx = this.xyGroup.map((yx) => yx[1]).sort((a, b) => a > b);
     const xmin = allx[0];
     const xmid = allx[0] + (allx[allx.length - 1] - allx[0]) / 2;
