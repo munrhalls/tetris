@@ -84,7 +84,7 @@ body {
 
 
 /* game */
-#gameOver {
+#end {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -98,23 +98,23 @@ body {
     flex-direction: column;
 }
 
-#gameOver .title {
+#end .title {
     font-size: 1rem;
     margin: 2rem 1rem 1rem 1rem;
     
 }
 
-#gameOver .score {
+#end .score {
     font-size: 1rem;
     margin: 1rem 1rem;
 }   
 
-#gameOver .highest-assembly {
+#end .highest-assembly {
     font-size: 1rem;
     margin: 1rem 1rem;
 }
 
-#gameOver #restartBtn {
+#end #restartBtn {
     color: '#fff';
     width: 140px;
     height: 80px;
