@@ -26,7 +26,7 @@ const runner = {
     setInterval(function () {
       const timer = document.getElementById("timer");
       let delta = Date.now() - start;
-      seconds = Math.floor(delta / 100);
+      seconds = Math.floor(delta / 1000);
 
       if (seconds > 59) {
         start = Date.now();
