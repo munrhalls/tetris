@@ -236,15 +236,14 @@ export const rotator = {
         square[1] = square[1] + square.distanceXToMid;
       }
     }
-
-    if (xyGroup.quadrant === 4) {
+    if (xyGroup.quadrant === 2) {
       for (let square of xyGroup.topSquares) {
-        square[0] = square[0] - square.distanceToMid;
-        square[1] = square[1] - square.distanceToMid;
-      }
-      for (let square of xyGroup.botSquares) {
         square[0] = square[0] + square.distanceToMid;
         square[1] = square[1] + square.distanceToMid;
+      }
+      for (let square of xyGroup.botSquares) {
+        square[0] = square[0] - square.distanceToMid;
+        square[1] = square[1] - square.distanceToMid;
       }
       for (let square of xyGroup.leftSquares) {
         square[0] = square[0] + square.distanceXToMid;
@@ -273,14 +272,14 @@ export const rotator = {
         square[1] = square[1] + square.distanceXToMid;
       }
     }
-    if (xyGroup.quadrant === 2) {
+    if (xyGroup.quadrant === 4) {
       for (let square of xyGroup.topSquares) {
-        square[0] = square[0] + square.distanceToMid;
-        square[1] = square[1] + square.distanceToMid;
-      }
-      for (let square of xyGroup.botSquares) {
         square[0] = square[0] - square.distanceToMid;
         square[1] = square[1] - square.distanceToMid;
+      }
+      for (let square of xyGroup.botSquares) {
+        square[0] = square[0] + square.distanceToMid;
+        square[1] = square[1] + square.distanceToMid;
       }
       for (let square of xyGroup.leftSquares) {
         square[0] = square[0] + square.distanceXToMid;
