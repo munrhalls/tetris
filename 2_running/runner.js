@@ -7,7 +7,7 @@ const runner = {
   isOver: false,
   runGame: function runGame(frequency) {
     tetris.style.display = "block";
-    gameOver.style.display = "none";
+    end.style.display = "none";
 
     this.game = setInterval(function () {
       if (this.isOver) return runner.handleGameOver();

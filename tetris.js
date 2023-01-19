@@ -4,7 +4,7 @@ import makeMovesInterface from "./1_building/makeMovesInterface.js";
 import runner from "./2_running/runner.js";
 
 const tetris = document.getElementById("tetris");
-const gameOver = document.getElementById("gameOver");
+const end = document.getElementById("end");
 let frequency = 150;
 
 function makeGame() {

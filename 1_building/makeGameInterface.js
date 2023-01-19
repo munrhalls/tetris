@@ -1,8 +1,8 @@
 import runner from "../2_running/runner.js";
 
 export default function makeGameInterface() {
-  const startBtn = document.getElementById("startBtn");
-  const pauseBtn = document.getElementById("pauseBtn");
+  const startBtn = document.getElementById("start");
+  const pauseBtn = document.getElementById("pause");
   startBtn.onclick = function () {
     runner.stopGame();
   };

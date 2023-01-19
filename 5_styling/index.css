@@ -1,8 +1,6 @@
-@import './tetris.css';
 @import './reset.css';
 @import './font.css';
 @import './colors.css';
-@import './score.css';
 
 *, *::before, *::after {
     box-sizing: border-box;
@@ -18,14 +16,50 @@ body {
 
 }
 
-#leftbar {
+#tetris {
+    position: relative;
+    margin: 0 auto;
+    border: 3px solid #313131;
+    background: #fff;
+
+    height: fit-content;
+}
+
+#tetris .row {
+    display: flex;    
+}
+
+#tetris .cell {
+    border-right: 1px solid #000;
+    border-bottom: 1px solid #000;
+}
+
+.tetrominoe {
+    position: absolute;
+    background: black;
+}
+
+.frozen {
+    box-shadow: inset 0 0 5px 2px #fff;
+    opacity: 1;
+}
+
+
+.hidden {
+    display: none;
+}
+
+
+
+.leftbar {
     height: 100%;
     min-width: 30%;
     background-color: #333;
 
     display: flex;
-    justify-content: center;
-    align-items: flex-start;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
 }
 
 .btn {
@@ -37,14 +71,19 @@ body {
     color: #000;
     cursor: pointer;
 }
+.score {
+    color: #fff;
+    font-size: 3rem;
+}
+.score-title {
 
-.hidden {
-    display: none;
+}
+.score-number {
+    
 }
 
 
-
-
+/* game */
 #gameOver {
     position: absolute;
     top: 0;

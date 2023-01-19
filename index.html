@@ -9,18 +9,21 @@
     <title>Tetris</title>
 </head>
 <body>
-    <aside id="leftbar">
-        <section id="score">
-            <h1>SCORE:</h1>
-                <h1 id="scoreDisplayer"></h1>
+    <aside class="leftbar">
+        <section class="score">
+            <h1 class="score-title">SCORE:</h1>
+            <h1 class="score-number">123</h1>
         </section>
-        <button id="startBtn" class="btn">START</button>
-        <button id="pauseBtn" class="btn hidden">PAUSE</button>
+        <button id="start" class="btn">START</button>
+        <button id="pause" class="btn hidden">PAUSE</button>
     </aside>
 
-    <main id="tetris"></main>
+    <main >
+        <article id="tetris"></article>
+        <article id="end">Game over</article>
+    </main>
     
-    <article id="gameOver">Game over</article>
+    
     <script src="tetris.js" type="module"></script>
 </body>
 </html>
