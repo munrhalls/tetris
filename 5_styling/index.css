@@ -80,7 +80,14 @@ body {
     text-align: center;
     padding: 1.5rem;
 }
-
+#timer {
+    color: #fff;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-size: 2rem;
+    text-align: center;
+    padding: 1.5rem;
+}
 
 /* 3. TETRIS */
 

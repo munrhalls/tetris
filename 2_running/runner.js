@@ -7,6 +7,7 @@ const runner = {
   isOver: false,
   frequency: 100,
   runGame: function runGame() {
+    this.handleTimer();
     tetris.style.display = "block";
     end.style.display = "none";
 
@@ -18,10 +19,29 @@ const runner = {
   stopGame: function stopGame() {
     clearInterval(this.game);
   },
+  handleTimer: function handleTimer() {
+    var start = Date.now();
+    let minutes = 0;
+    let seconds = 0;
+    setInterval(function () {
+      const timer = document.getElementById("timer");
+      let delta = Date.now() - start;
+      seconds = Math.floor(delta / 100);
+
+      if (seconds > 59) {
+        start = Date.now();
+        minutes++;
+        seconds = 0;
+      }
+      timer.innerText = `${minutes}:${seconds}`;
+    }, 1000);
+  },
   handleGameOver: function handleGameOver() {
     this.isOver = true;
+    document.getElementById("start").classList.remove("hidden");
+    document.getElementById("pause").classList.add("hidden");
     document.getElementById("tetris").style.display = "none";
-    document.getElementById("gameOver").style.display = "block";
+    document.getElementById("end").style.display = "block";
     clearInterval(this.game);
   },
 };
