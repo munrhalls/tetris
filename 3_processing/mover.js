@@ -14,6 +14,18 @@ export const mover = {
     }
     return xyGroup;
   },
+  offsetTetroLeft: function offsetTetroLeft(xyGroup, offset) {
+    for (let xy of xyGroup) {
+      xy[1] = xy[1] + offset;
+    }
+    return xyGroup;
+  },
+  offsetTetroRight: function offsetTetroRight(xyGroup, offset) {
+    for (let xy of xyGroup) {
+      xy[1] = xy[1] - offset;
+    }
+    return xyGroup;
+  },
   moveTetroRight: function moveTetroRight(xyGroup) {
     for (let xy of xyGroup) {
       xy[1] = xy[1] + 1;

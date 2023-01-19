@@ -8,6 +8,7 @@ import { calculator } from "./calculator.js";
 import processor from "./processor.js";
 import { frozenChecker } from "../3_processing/frozenChecker.js";
 import { tetroFreezer } from "../4_displaying/tetroFreezer.js";
+import { mover } from "./mover.js";
 
 export const rotator = {
   quarter: 1,
@@ -115,7 +116,22 @@ export const rotator = {
     if (frozenChecker.isCrossingFrozenTetro(uncheckedRotation)) return false;
     return true;
   },
-  handleOffsets: function handleOffsets() {},
+  handleOffsets: function handleOffsets(xyGroup) {
+    let xmin = columns;
+    let xmax = 0;
+    for (let square of xyGroup) {
+      if (square[1] < xmin) xmin = square[1];
+      if (square[1] > xmax) xmax = square[1];
+    }
+    if (xmin < 1) {
+      const offsetLeft = Math.abs(1 - xmin);
+      xyGroup = mover.offsetTetroLeft(xyGroup, offsetLeft);
+    }
+    if (xmax > columns - 1) {
+      const offsetRight = xmax - (columns - 1);
+      xyGroup = mover.offsetTetroRight(xyGroup, offsetRight);
+    }
+  },
   rotateTetroCounterClockwise: function rotateTetroCounterClockwise(xyGroup) {
     if (!xyGroup.rotationReference) this.setOriginalReference(xyGroup);
     if (!xyGroup.quadrant) {
@@ -203,7 +219,8 @@ export const rotator = {
         square[1] = square[1] - square.distanceXToMid;
       }
     }
-    if (!this.handleRotationChecks(xyGroup)) return alert("!");
+
+    this.handleOffsets(xyGroup);
     return xyGroup;
   },
   rotateTetroClockwise: function rotateTetroClockwise(xyGroup) {
@@ -217,7 +234,6 @@ export const rotator = {
       xyGroup.quadrant = xyGroup.quadrant + 1;
     }
 
-    console.log("to ", xyGroup.quadrant);
     if (xyGroup.quadrant === 1) {
       for (let square of xyGroup.topSquares) {
         square[0] = square[0] - square.distanceToMid;
@@ -290,6 +306,7 @@ export const rotator = {
         square[1] = square[1] - square.distanceXToMid;
       }
     }
+    this.handleOffsets(xyGroup);
     return xyGroup;
   },
   archived_rotateTetroClockwise: function archived_rotateTetroClockwise(
