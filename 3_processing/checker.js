@@ -1,12 +1,13 @@
 const columns = parseInt(tetris.getAttribute("columns"));
 const rows = parseInt(tetris.getAttribute("rows"));
+import runner from "../2_running/runner.js";
 
 const checker = {
   checkGameOver: function checkGameOver() {
     const firstRow = document.getElementsByClassName("row first")[0];
     for (let cell of [...firstRow.children]) {
       if ([...cell.classList].includes("frozen")) {
-        return this.handleGameOver();
+        return runner.handleGameOver();
       }
     }
   },
