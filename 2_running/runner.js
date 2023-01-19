@@ -5,14 +5,15 @@ import checker from "./../3_processing/checker.js";
 const runner = {
   game: false,
   isOver: false,
-  runGame: function runGame(frequency) {
+  frequency: 100,
+  runGame: function runGame() {
     tetris.style.display = "block";
     end.style.display = "none";
 
     this.game = setInterval(function () {
       if (this.isOver) return runner.handleGameOver();
       requestAnimFrame(repaintFrame);
-    }, frequency);
+    }, this.frequency);
   },
   stopGame: function stopGame() {
     clearInterval(this.game);

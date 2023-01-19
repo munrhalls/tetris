@@ -5,13 +5,12 @@ import runner from "./2_running/runner.js";
 
 const tetris = document.getElementById("tetris");
 const end = document.getElementById("end");
-let frequency = 150;
 
 function makeGame() {
   makeBoard();
   makeGameInterface();
   makeMovesInterface();
-  runner.runGame(frequency);
+  // runner.runGame();
 }
 
 document.addEventListener("DOMContentLoaded", makeGame);

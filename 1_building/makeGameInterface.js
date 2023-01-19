@@ -4,9 +4,9 @@ export default function makeGameInterface() {
   const startBtn = document.getElementById("start");
   const pauseBtn = document.getElementById("pause");
   startBtn.onclick = function () {
-    runner.stopGame();
+    runner.runGame();
   };
   pauseBtn.onclick = function () {
-    console.log("pause");
+    runner.stopGame();
   };
 }
