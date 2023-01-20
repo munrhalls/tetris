@@ -5,7 +5,14 @@ import checker from "./../3_processing/checker.js";
 const runner = {
   game: false,
   isOver: false,
-  frequency: 100,
+  frequency: 500,
+  timer: {
+    interval: null,
+    pause: 0,
+    minutes: 0,
+    seconds: 0,
+  },
+  seconds: [0],
   runGame: function runGame() {
     this.handleTimer();
     tetris.style.display = "block";
@@ -17,23 +24,26 @@ const runner = {
     }, this.frequency);
   },
   stopGame: function stopGame() {
+    runner.timer.pause = Date.now();
+    clearInterval(this.timer.interval);
     clearInterval(this.game);
   },
   handleTimer: function handleTimer() {
-    var start = Date.now();
-    let minutes = 0;
-    let seconds = 0;
-    setInterval(function () {
-      const timer = document.getElementById("timer");
-      let delta = Date.now() - start;
-      seconds = Math.floor(delta / 1000);
+    // option - have two counts, after pause, run the 2nd count
+    // option - hardcode it
+    // option
 
-      if (seconds > 59) {
-        start = Date.now();
-        minutes++;
-        seconds = 0;
-      }
-      timer.innerText = `${minutes}:${seconds}`;
+    // let start = Date.now();
+    this.timer.interval = setInterval(function () {
+      // let delta = Date.now() - start;
+      // let gameSeconds = Math.floor(delta / 1000);
+      // console.log(gameSeconds);
+      // runner.seconds = runner.seconds + gameSeconds;
+      // if (runner.timer.seconds > 59) {
+      //   start = Date.now();
+      //   runner.timer.seconds = 0;
+      // }
+      // document.getElementById("timer").innerText = `${seconds}`;
     }, 1000);
   },
   handleGameOver: function handleGameOver() {
@@ -42,6 +52,7 @@ const runner = {
     document.getElementById("pause").classList.add("hidden");
     document.getElementById("tetris").style.display = "none";
     document.getElementById("end").style.display = "block";
+    clearInterval(this.timer.interval);
     clearInterval(this.game);
   },
 };
