@@ -12,7 +12,12 @@ const runner = {
     minutes: 0,
     seconds: 0,
   },
-  seconds: [0],
+  time: undefined,
+  start: undefined,
+  pause: undefined,
+  afterPause: undefined,
+  pauseTime: undefined,
+  gameTime: undefined,
   runGame: function runGame() {
     this.handleTimer();
     tetris.style.display = "block";
@@ -24,26 +29,26 @@ const runner = {
     }, this.frequency);
   },
   stopGame: function stopGame() {
-    runner.timer.pause = Date.now();
+    this.pause = Date.now();
     clearInterval(this.timer.interval);
     clearInterval(this.game);
   },
   handleTimer: function handleTimer() {
-    // option - have two counts, after pause, run the 2nd count
-    // option - hardcode it
-    // option
-
-    // let start = Date.now();
+    if (this.pause) {
+      this.afterPause = Date.now();
+      this.pauseTime = this.afterPause - this.pause;
+    }
+    console.log(this.pauseTime);
+    if (!this.start) this.start = Date.now();
+    if (this.pauseTime) this.start = this.start + this.pauseTime;
     this.timer.interval = setInterval(function () {
-      // let delta = Date.now() - start;
-      // let gameSeconds = Math.floor(delta / 1000);
-      // console.log(gameSeconds);
-      // runner.seconds = runner.seconds + gameSeconds;
+      let delta = Date.now() - runner.start;
+      runner.time = Math.floor(delta / 1000);
       // if (runner.timer.seconds > 59) {
       //   start = Date.now();
       //   runner.timer.seconds = 0;
       // }
-      // document.getElementById("timer").innerText = `${seconds}`;
+      document.getElementById("timer").innerText = `${runner.time}`;
     }, 1000);
   },
   handleGameOver: function handleGameOver() {

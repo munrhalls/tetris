@@ -1,6 +1,7 @@
 import { mover } from "./mover.js";
 import checker from "./checker.js";
 import { frozenChecker } from "./frozenChecker.js";
+import scorer from "./scorer.js";
 import { painter } from "../4_displaying/painter.js";
 import { tetroFreezer } from "../4_displaying/tetroFreezer.js";
 import makeNewTetro from "../1_building/makeNewTetro.js";
@@ -35,10 +36,12 @@ const processor = {
     } else {
       if (checker.isAtBoundBottom(this.xyGroup)) {
         tetroFreezer.freezeTetro(this.xyGroup);
+        scorer.processLineClears(this.xyGroup);
         return (this.xyGroup = null);
       }
       if (frozenChecker.isAtFrozenTetroBottom(this.xyGroup)) {
         tetroFreezer.freezeTetro(this.xyGroup);
+        scorer.processLineClears(this.xyGroup);
         return (this.xyGroup = null);
       }
 
