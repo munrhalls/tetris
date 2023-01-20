@@ -6,6 +6,7 @@ import processor from "../3_processing/processor.js";
 import { frozenChecker } from "../3_processing/frozenChecker.js";
 import { tetroFreezer } from "../4_displaying/tetroFreezer.js";
 import { painter } from "../4_displaying/painter.js";
+import scorer from "../3_processing/scorer.js";
 
 export default function makeMovesInterface() {
   window.addEventListener("keydown", function (e) {
@@ -39,10 +40,12 @@ export default function makeMovesInterface() {
     if (e.code === "ArrowDown") {
       if (checker.isAtBoundBottom(processor.xyGroup)) {
         tetroFreezer.freezeTetro(processor.xyGroup);
+        scorer.processLineClears(processor.xyGroup);
         return (processor.xyGroup = null);
       }
       if (frozenChecker.isAtFrozenTetroBottom(processor.xyGroup)) {
         tetroFreezer.freezeTetro(processor.xyGroup);
+        scorer.processLineClears(processor.xyGroup);
         return (processor.xyGroup = null);
       }
       painter.unpaintTetro(processor.xyGroup);
