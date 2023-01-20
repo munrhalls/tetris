@@ -20,20 +20,26 @@ const lineClearer = {
       (cell) => parseInt(cell.id.split("-")[1]) < rowNum
     );
 
-    //store updated arr
+    let updatedCells = [];
     for (let cell of frozen) {
-      // coords
-      // get cell
-      // store classlist
-      // reset cell
-      // y + 1
-      // reset cell
-      // add stored classlist
-      // add updated classlist
-      // push to updated arr
+      if ([...cell.classList].includes("updated")) continue;
+      const coords = [cell.id.split("-")[1], cell.id.split("-")[2]];
+      const classList = [...cell.classList];
+      painter.resetCell(coords);
+      const coordsBelow = [parseInt(coords[0]) + 1, coords[1]];
+      const cellBelow = document.getElementById(
+        `cellXY-${coordsBelow[0]}-${coordsBelow[1]}`
+      );
+      painter.resetCell(coordsBelow);
+      // fix class list
+      cellBelow.classList = classList.join(" ");
+      cellBelow.classList.add("updated");
+      updatedCells.push(cellBelow);
     }
-    //loop updated arr
-    // out updated class
+
+    for (let cell of updatedCells) {
+      cell.classList.remove("updated");
+    }
   },
 };
 
