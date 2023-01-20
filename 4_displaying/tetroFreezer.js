@@ -7,10 +7,10 @@ export const tetroFreezer = {
   frozenLines: [],
   freezeCell: function freezeCell(xy) {
     const cell = document.getElementById(`cellXY-${xy[0]}-${xy[1]}`);
-    scorer.markRowByFrozenCount(xy[0]);
     cell.classList.add("frozen");
     cell.classList.add("purple");
     cell.classList.add("color");
+    scorer.markRowByFrozenCount(xy[0]);
   },
   freezeTetro: function freezeTetro(xyGroup) {
     for (let xy of xyGroup) {
