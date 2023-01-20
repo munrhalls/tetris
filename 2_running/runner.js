@@ -7,17 +7,16 @@ const runner = {
   isOver: false,
   frequency: 500,
   timer: {
-    interval: null,
-    pause: 0,
-    minutes: 0,
     seconds: 0,
+    minutes: 0,
+    start: undefined,
+    pause: undefined,
+    afterPause: undefined,
+    pauseTime: undefined,
+    gameTime: undefined,
+    interval: null,
   },
-  time: undefined,
-  start: undefined,
-  pause: undefined,
-  afterPause: undefined,
-  pauseTime: undefined,
-  gameTime: undefined,
+
   runGame: function runGame() {
     this.handleTimer();
     tetris.style.display = "block";
@@ -29,26 +28,33 @@ const runner = {
     }, this.frequency);
   },
   stopGame: function stopGame() {
-    this.pause = Date.now();
+    this.timer.pause = Date.now();
     clearInterval(this.timer.interval);
     clearInterval(this.game);
   },
   handleTimer: function handleTimer() {
-    if (this.pause) {
-      this.afterPause = Date.now();
-      this.pauseTime = this.afterPause - this.pause;
+    if (this.timer.pause) {
+      this.timer.afterPause = Date.now();
+      this.timer.pauseTime = this.timer.afterPause - this.timer.pause;
     }
-    console.log(this.pauseTime);
-    if (!this.start) this.start = Date.now();
-    if (this.pauseTime) this.start = this.start + this.pauseTime;
+    console.log(this.timer.pauseTime);
+    if (!this.timer.start) this.timer.start = Date.now();
+    if (this.timer.pauseTime)
+      this.timer.start = this.timer.start + this.timer.pauseTime;
     this.timer.interval = setInterval(function () {
-      let delta = Date.now() - runner.start;
-      runner.time = Math.floor(delta / 1000);
-      // if (runner.timer.seconds > 59) {
-      //   start = Date.now();
-      //   runner.timer.seconds = 0;
-      // }
-      document.getElementById("timer").innerText = `${runner.time}`;
+      let delta = Date.now() - runner.timer.start;
+      runner.timer.seconds = Math.floor(delta / 1000);
+      if (runner.timer.seconds > 59) {
+        runner.timer.minutes += 1;
+        runner.timer.seconds = 0;
+      }
+
+      let seconds = runner.timer.seconds;
+      let minutes = runner.timer.minutes;
+      if (seconds < 10) seconds = `0${seconds}`;
+      if (minutes < 10) minutes = `0${minutes}`;
+
+      document.getElementById("timer").innerText = `${minutes}:${seconds}`;
     }, 1000);
   },
   handleGameOver: function handleGameOver() {
