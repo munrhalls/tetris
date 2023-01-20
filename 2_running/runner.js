@@ -1,6 +1,5 @@
 import requestAnimFrame from "./../4_displaying/animateFrame.js";
 import repaintFrame from "./../4_displaying/repaintFrame.js";
-import checker from "./../3_processing/checker.js";
 
 const runner = {
   game: false,
@@ -37,10 +36,10 @@ const runner = {
       this.timer.afterPause = Date.now();
       this.timer.pauseTime = this.timer.afterPause - this.timer.pause;
     }
-    console.log(this.timer.pauseTime);
     if (!this.timer.start) this.timer.start = Date.now();
     if (this.timer.pauseTime)
       this.timer.start = this.timer.start + this.timer.pauseTime;
+
     this.timer.interval = setInterval(function () {
       let delta = Date.now() - runner.timer.start;
       runner.timer.seconds = Math.floor(delta / 1000);

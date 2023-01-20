@@ -15,6 +15,7 @@ export default function makeBoard() {
     const row = document.createElement("div");
     row.style.height = `${standardSquare}px`;
     row.classList.add(`row`);
+    row.setAttribute("frozencount", 0);
     row.id = `x-${x}`;
 
     for (let y = 0; y < columns; y++) {

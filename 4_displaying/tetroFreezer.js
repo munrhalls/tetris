@@ -1,11 +1,13 @@
 const columns = parseInt(tetris.getAttribute("columns"));
 const rows = parseInt(tetris.getAttribute("rows"));
+import scorer from "../3_processing/scorer.js";
 
 export const tetroFreezer = {
   frozenTetroes: [],
   frozenLines: [],
   freezeCell: function freezeCell(xy) {
     const cell = document.getElementById(`cellXY-${xy[0]}-${xy[1]}`);
+    scorer.markRowByFrozenCount(xy[0]);
     cell.classList.add("frozen");
     cell.classList.add("purple");
     cell.classList.add("color");

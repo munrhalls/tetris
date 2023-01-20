@@ -36,12 +36,10 @@ const processor = {
     } else {
       if (checker.isAtBoundBottom(this.xyGroup)) {
         tetroFreezer.freezeTetro(this.xyGroup);
-        scorer.processLineClears(this.xyGroup);
         return (this.xyGroup = null);
       }
       if (frozenChecker.isAtFrozenTetroBottom(this.xyGroup)) {
         tetroFreezer.freezeTetro(this.xyGroup);
-        scorer.processLineClears(this.xyGroup);
         return (this.xyGroup = null);
       }
 

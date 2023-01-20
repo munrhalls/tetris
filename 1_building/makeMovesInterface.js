@@ -40,12 +40,10 @@ export default function makeMovesInterface() {
     if (e.code === "ArrowDown") {
       if (checker.isAtBoundBottom(processor.xyGroup)) {
         tetroFreezer.freezeTetro(processor.xyGroup);
-        scorer.processLineClears(processor.xyGroup);
         return (processor.xyGroup = null);
       }
       if (frozenChecker.isAtFrozenTetroBottom(processor.xyGroup)) {
         tetroFreezer.freezeTetro(processor.xyGroup);
-        scorer.processLineClears(processor.xyGroup);
         return (processor.xyGroup = null);
       }
       painter.unpaintTetro(processor.xyGroup);

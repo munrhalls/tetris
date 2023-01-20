@@ -2,14 +2,14 @@ const columns = parseInt(tetris.getAttribute("columns"));
 const rows = parseInt(tetris.getAttribute("rows"));
 
 const scorer = {
-  processLineClears: function processLineClears(newlyFrozen) {
-    let ymax = 0;
-    let ymin = rows + 1;
-    for (let square of newlyFrozen) {
-      if (square[0] > ymax) ymax = square[0];
-      if (square[0] < ymin) ymin = square[0];
-    }
-    console.log(ymin, ymax);
+  markRowByFrozenCount: function markRowByFrozenCount(rowNum) {
+    const row = document.getElementById(`x-${rowNum}`);
+    let frozenCount = parseInt(row.getAttribute("frozencount")) + 1;
+    row.setAttribute("frozencount", frozenCount);
+    if (parseInt(frozenCount) === row.children.length) this.handleScoring(row);
+  },
+  handleScoring: function handleScoring(row) {
+    console.log("LINE CLEAR", row);
   },
 };
 
