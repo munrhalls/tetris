@@ -2,6 +2,11 @@ const columns = parseInt(tetris.getAttribute("columns"));
 const rows = parseInt(tetris.getAttribute("rows"));
 
 export const painter = {
+  resetCell: function resetCell(xy) {
+    let cell = document.getElementById(`cellXY-${xy[0]}-${xy[1]}`);
+    cell.classList = [];
+    cell.classList.add("cell");
+  },
   unpaintCell: function unpaintCell(xy) {
     if (!xy) throw new Error("Received no coordinates.");
     if (xy[0] < 0) return;

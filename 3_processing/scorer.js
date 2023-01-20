@@ -8,13 +8,17 @@ const scorer = {
     const row = document.getElementById(`x-${rowNum}`);
     let frozenCount = parseInt(row.getAttribute("frozencount")) + 1;
     row.setAttribute("frozencount", frozenCount);
-    if (parseInt(frozenCount) === row.children.length) this.handleScoring(row);
+    if (parseInt(frozenCount) === row.children.length) {
+      row.setAttribute("frozencount", 0);
+      this.handleScoring(row);
+    }
   },
   handleScoring: function handleScoring(row) {
     const scoreDisplay = document.getElementById("scoreDisplay");
     this.score += columns;
     scoreDisplay.innerText = this.score;
     lineClearer.clearRow(row);
+    lineClearer.updateRows(row);
   },
 };
 

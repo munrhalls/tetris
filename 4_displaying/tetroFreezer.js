@@ -12,6 +12,7 @@ export const tetroFreezer = {
     cell.classList.add("color");
     scorer.markRowByFrozenCount(xy[0]);
   },
+
   freezeTetro: function freezeTetro(xyGroup) {
     for (let xy of xyGroup) {
       if (xy[0] < 0) return;
