@@ -13,7 +13,6 @@ const lineClearer = {
   },
   updateRows: function updateRows(rowCleared) {
     const rowClearedNum = parseInt(rowCleared.id.split("-")[1]);
-
     let frozenRows = [...document.getElementsByClassName("row")].filter(
       (row) => {
         const isWithFrozenCells = parseInt(row.getAttribute("frozencount")) > 0;
@@ -22,21 +21,21 @@ const lineClearer = {
         return isWithFrozenCells && isAboveRowCleared;
       }
     );
-    console.log(frozenRows);
+
     let rowsBelow = [];
     let frozenCounts = [];
 
     for (let row of frozenRows) {
-      const rowBelow = document.getElementById(
-        `x-${parseInt(row.id.split("-")[1])}`
-      );
+      const id = `x-${parseInt(row.id.split("-")[1]) + 1}`;
+      const rowBelow = document.getElementById(id);
+      rowsBelow.push(rowBelow);
+      frozenCounts.push(row.getAttribute("frozencount"));
+      row.setAttribute("frozencount", 0);
     }
-    // push row after to rows after store
-    // push row frozen count to store
-    // set row count to 0
-
-    // loop rows after
-    // set row frozen count to frozen counts [i]
+    for (let i = 0; i < rowsBelow.length; i++) {
+      rowsBelow[i].setAttribute("frozencount", frozenCounts[i]);
+    }
+    console.log(rowsBelow);
     this.updateRowCells(rowClearedNum);
   },
   updateRowCells: function updateRowCells(rowNum) {
