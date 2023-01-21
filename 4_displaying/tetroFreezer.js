@@ -18,7 +18,7 @@ export const tetroFreezer = {
       if (xy[0] < 0) return;
       this.freezeCell(xy);
     }
-    this.updateFrozenTetroes(xyGroup);
+    // this.updateFrozenTetroes(xyGroup);
     // this.handleLineClears();
   },
   handleLineClears: function handleLineClears() {
