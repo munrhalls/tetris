@@ -24,6 +24,8 @@ const lineClearer = {
 
     let rowsBelow = [];
     let frozenCounts = [];
+    let cellsBelow = [];
+    let frozenClasslists = [];
 
     for (let row of frozenRows) {
       const id = `x-${parseInt(row.id.split("-")[1]) + 1}`;
@@ -31,18 +33,31 @@ const lineClearer = {
       rowsBelow.push(rowBelow);
       frozenCounts.push(row.getAttribute("frozencount"));
       row.setAttribute("frozencount", 0);
+      let frozenCells = [...row.getElementsByClassName("frozen")];
+
+      for (let cell of frozenCells) {
+        const id = `cellXY-${parseInt(cell.id.split("-")[1]) + 1}-${
+          cell.id.split("-")[2]
+        }`;
+        const cellBelow = document.getElementById(id);
+        cellsBelow.push(cellBelow);
+        frozenClasslists.push(cell.classList);
+        cell.classList = [];
+        cell.classList.add("cell");
+      }
+
+      for (let i = 0; i < cellsBelow; i++) {
+        cellsBelow[i].classList = frozenClasslists[i].join(" ");
+      }
     }
     for (let i = 0; i < rowsBelow.length; i++) {
       rowsBelow[i].setAttribute("frozencount", frozenCounts[i]);
     }
-    console.log(rowsBelow);
     this.updateRowCells(rowClearedNum);
   },
-  updateRowCells: function updateRowCells(rowNum) {
-    let frozenCells = [...document.getElementsByClassName("frozen")].filter(
-      (cell) => parseInt(cell.id.split("-")[1]) < rowNum
-    );
 
+  updateRowCells: function updateRowCells(frozenRow) {
+    let frozenCells = [...frozenRow.getElementsByClassName("frozen")];
     let cells = [];
 
     for (let cell of frozenCells) {
