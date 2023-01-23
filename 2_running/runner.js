@@ -4,7 +4,7 @@ import repaintFrame from "./../4_displaying/repaintFrame.js";
 const runner = {
   game: false,
   isOver: false,
-  frequency: 500,
+  frequency: 350,
   timer: {
     seconds: 0,
     minutes: 0,

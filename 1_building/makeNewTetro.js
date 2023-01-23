@@ -35,7 +35,7 @@ function rndLineAtRndDir(xyGroup) {
 
   for (let i = 0; i < rndNum; i++) {
     let lastSquare = [...xyGroup[xyGroup.length - 1]];
-    let thickness = [0, 1, 2, 3][getRandomInt(0, 4)];
+    let thickness = [0, 1, 2][getRandomInt(0, 4)];
     let thickSquare;
 
     if (lastSquare?.length !== 2)
