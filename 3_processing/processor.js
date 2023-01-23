@@ -17,20 +17,25 @@ const processor = {
       this.xyGroup = [
         [12, 7],
         [12, 8],
-        [12, 9],
-        [11, 7],
         [11, 8],
-        [11, 9],
-        [10, 7],
-        [10, 8],
+        [11, 7],
+        // [11, 7],
+        // [11, 8],
+        // [11, 9],
+        // [10, 7],
+        // [10, 8],
         // [12, 10],
         // [12, 11],
         // [12, 12],
       ];
       this.xyGroup.color = "purple";
+      this.xyGroup[0].color = "blue";
+      this.xyGroup[1].color = "green";
+      this.xyGroup[2].color = "red";
+      this.xyGroup[3].color = "orange";
       let count = 0;
       for (let square of this.xyGroup) {
-        square.color = "purple";
+        // square.color = "purple";
         square.id = count;
         count++;
       }
