@@ -12,9 +12,9 @@ const lineClearer = {
   updateRows: function updateRows(row) {
     const clearNum = parseInt(row.id.split("-")[1]);
     const cellNums = [...Array(row.children.length).keys()];
-    console.log(cellNums);
+    const rows = [...document.getElementsByClassName("row")];
 
-    let moveRows = [...document.getElementsByClassName("row")].filter(
+    let moveRows = rows.filter(
       (row) =>
         parseInt(row.id.split("-")[1]) < clearNum &&
         row.getAttribute("frozencount") > 0
@@ -23,8 +23,10 @@ const lineClearer = {
     let moveRowNums = moveRows.map((row) => parseInt(row.id.split("-")[1]));
     moveRowNums.sort((a, b) => b > a);
     for (let rowNum of moveRowNums) {
+      const frozenCount = rows[rowNum].getAttribute("frozencount");
+      rows[rowNum].setAttribute("frozencount", 0);
+      rows[rowNum + 1].setAttribute("frozencount", frozenCount);
       for (let cellNum of cellNums) {
-        console.log(cellNum);
         this.updateCell(rowNum, cellNum);
       }
     }
