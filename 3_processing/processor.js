@@ -15,10 +15,11 @@ const processor = {
       // this.xyGroup = makeNewTetro();
       // tests
       this.xyGroup = [
-        [12, 7],
         [12, 8],
-        [11, 8],
-        [11, 7],
+        [12, 9],
+        [12, 7],
+        [13, 7],
+        [13, 8],
         // [11, 7],
         // [11, 8],
         // [11, 9],
@@ -28,11 +29,13 @@ const processor = {
         // [12, 11],
         // [12, 12],
       ];
-      this.xyGroup.color = "purple";
+      // this.xyGroup.color = "purple";
       this.xyGroup[0].color = "blue";
-      this.xyGroup[1].color = "green";
-      this.xyGroup[2].color = "red";
+      this.xyGroup[1].color = "blue";
+      this.xyGroup[2].color = "orange";
       this.xyGroup[3].color = "orange";
+      this.xyGroup[4].color = "orange";
+      // this.xyGroup[5].color = "orange";
       let count = 0;
       for (let square of this.xyGroup) {
         // square.color = "purple";

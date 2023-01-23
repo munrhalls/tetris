@@ -88,23 +88,29 @@ export const rotator = {
   },
   moveLeft: function (square) {
     square[1] = square[1] - 1;
-    return square;
   },
   moveBottom: function moveBottom(square) {
     square[0] = square[0] + 1;
   },
+  moveRight: function moveRight(square) {
+    square[1] = square[1] + 1;
+  },
+  moveUp: function moveUp(square) {
+    square[0] = square[0] - 1;
+  },
   rotateTetroCounterClockwise: function rotateTetroCounterClockwise(xyGroup) {
     let rotationGroup = structuredClone(xyGroup);
+    console.log("rotation group", rotationGroup);
 
     if (!rotationGroup.rotationReference)
-      this.setOriginalReference(rotationGroup);
-    if (!rotationGroup.quadrant) {
-      rotationGroup.quadrant = 4;
-    } else if (rotationGroup.quadrant - 1 < 1) {
-      rotationGroup.quadrant = 4;
-    } else {
-      rotationGroup.quadrant = rotationGroup.quadrant - 1;
-    }
+      if (!rotationGroup.quadrant) {
+        // this.setOriginalReference(rotationGroup);
+        rotationGroup.quadrant = 4;
+      } else if (rotationGroup.quadrant - 1 < 1) {
+        rotationGroup.quadrant = 4;
+      } else {
+        rotationGroup.quadrant = rotationGroup.quadrant - 1;
+      }
 
     let ymax = 0;
     let ymin = rows;
@@ -121,84 +127,59 @@ export const rotator = {
     const xLength = xmax - xmin;
     const xmid = xmin + xLength / 2;
 
-    console.log(rotationGroup);
+    // rotationGroup[0].color = "transparent";
+    // rotationGroup[1].color = "transparent";
+    // rotationGroup[2].color = "transparent";
+    // rotationGroup[3].color = "transparent";
 
-    rotationGroup[0].color = "blue";
-    rotationGroup[1].color = "green";
-    rotationGroup[2].color = "red";
-    rotationGroup[3].color = "orange";
+    if (!rotationGroup.quadrantsReference) {
+      rotationGroup.quadrantsReference = true;
+      rotationGroup.startsTopRight = [rotationGroup[0], rotationGroup[1]];
+      // rotationGroup.startsTopRight = rotationGroup.filter((xy) => {
+      //   if (xy[0] < ymid && xy[1] > xmid) {
+      //     return xy;
+      //   }
+      // });
+      // rotationGroup.startsTopLeft = rotationGroup.filter((xy) => {
+      //   if (xy[0] < ymid && xy[1] < xmid) return xy;
+      // });
+    }
 
-    rotationGroup.topRight = rotationGroup.find(
-      (xy) => xy[0] === ymin && xy[1] === xmax
-    );
+    // rotationGroup.startsBottomRight = rotationGroup.find(
+    //   (xy) => xy[0] === ymax && xy[1] === xmax
+    // );
 
-    rotationGroup.bottomRight = rotationGroup.find(
-      (xy) => xy[0] === ymax && xy[1] === xmax
-    );
+    // rotationGroup.startsBottomLeft = rotationGroup.find(
+    //   (xy) => xy[0] === ymax && xy[1] === xmin
+    // );
 
-    rotationGroup.bottomLeft = rotationGroup.find(
-      (xy) => xy[0] === ymax && xy[1] === xmin
-    );
-
-    rotationGroup.topLeft = rotationGroup.find(
-      (xy) => xy[0] === ymin && xy[1] === xmin
-    );
+    // rotationGroup.startsTopLeft = rotationGroup.find(
+    //   (xy) => xy[0] === ymin && xy[1] === xmin
+    // );
+    // 4 directions array
+    // direction = starts<position> + number
 
     if (rotationGroup.quadrant === 4) {
-      let square = rotationGroup.topRight;
-      this.moveLeft(square);
-      let square2 = rotationGroup.bottomRight;
-      square2[0] = square2[0] - 1;
-      square2[1] = square2[1];
-      let square3 = rotationGroup.bottomLeft;
-      square3[0] = square3[0];
-      square3[1] = square3[1] + 1;
-      let square4 = rotationGroup.topLeft;
-      square4[0] = square[0] + 1;
-      square4[1] = square4[1];
+      for (let square of rotationGroup.startsTopRight) {
+        this.moveLeft(square);
+      }
     }
     if (rotationGroup.quadrant === 3) {
-      let square = rotationGroup.topLeft;
-      square[0] = square[0] + 1;
-      square[1] = square[1];
-      let square2 = rotationGroup.topRight;
-      square2[0] = square2[0];
-      square2[1] = square2[1] - 1;
-      let square3 = rotationGroup.bottomRight;
-      square3[0] = square3[0] - 1;
-      square3[1] = square3[1];
-      let square4 = rotationGroup.topLeft;
-      square4[0] = square[0];
-      square4[1] = square4[1] + 1;
+      for (let square of rotationGroup.startsTopRight) {
+        this.moveBottom(square);
+      }
     }
     if (rotationGroup.quadrant === 2) {
-      let square = rotationGroup.find((xy) => xy[0] === 13 && xy[1] === 7);
-      square[0] = square[0];
-      square[1] = square[1] + 1;
-      let square2 = rotationGroup.find((xy) => xy[0] === 12 && xy[1] === 7);
-      square2[0] = square2[0] + 1;
-      square2[1] = square2[1];
-      let square3 = rotationGroup.find((xy) => xy[0] === 12 && xy[1] === 8);
-      square3[0] = square3[0];
-      square3[1] = square3[1] - 1;
-      let square4 = rotationGroup.topLeft;
-      square4[0] = square[0] - 1;
-      square4[1] = square4[1];
+      for (let square of rotationGroup.startsTopRight) {
+        this.moveRight(square);
+      }
     }
     if (rotationGroup.quadrant === 1) {
-      let square = rotationGroup.find((xy) => xy[0] === 13 && xy[1] === 8);
-      square[0] = square[0] - 1;
-      square[1] = square[1];
-      let square2 = rotationGroup.find((xy) => xy[0] === 13 && xy[1] === 7);
-      square2[0] = square2[0];
-      square2[1] = square2[1] + 1;
-      let square3 = rotationGroup.find((xy) => xy[0] === 12 && xy[1] === 7);
-      square3[0] = square3[0] + 1;
-      square3[1] = square3[1];
-      let square4 = rotationGroup.topLeft;
-      square4[0] = square[0];
-      square4[1] = square4[1] - 1;
+      for (let square of rotationGroup.startsTopRight) {
+        this.moveUp(square);
+      }
     }
+    console.log("after", rotationGroup.quadrant, rotationGroup.startsTopRight);
     // if (rotationGroup.quadrant === 1) {
     //   for (let square of rotationGroup.topSquares) {
     //     square[0] = square[0] - square.distanceToMid;
