@@ -20,7 +20,6 @@ export default function makeNewTetro() {
   rndLineAtRndDir(xyGroup);
   rndLineAtRndDir(xyGroup);
   rndLineAtRndDir(xyGroup);
-  rndLineAtRndDir(xyGroup);
 
   xyGroup.color = colors[getRandomInt(0, colors.length)];
   for (let xy of xyGroup) {
@@ -35,7 +34,7 @@ function rndLineAtRndDir(xyGroup) {
 
   for (let i = 0; i < rndNum; i++) {
     let lastSquare = [...xyGroup[xyGroup.length - 1]];
-    let thickness = [0, 1, 2][getRandomInt(0, 4)];
+    let thickness = [0, 1, 2][getRandomInt(0, 3)];
     let thickSquare;
 
     if (lastSquare?.length !== 2)
