@@ -15,7 +15,6 @@ const runner = {
     gameTime: undefined,
     interval: null,
   },
-
   runGame: function runGame() {
     this.handleTimer();
     tetris.style.display = "block";
@@ -23,8 +22,20 @@ const runner = {
 
     this.game = setInterval(function () {
       if (this.isOver) return runner.handleGameOver();
+      runner.updateSpeed(this.minutes);
       requestAnimFrame(repaintFrame);
     }, this.frequency);
+  },
+  updateSpeed: function updateSpeed() {
+    if (runner.minutes > 1) {
+      runner.frequency = runner.frequency = 300;
+    }
+    if (this.minutes > 2) {
+      runner.frequency = 250;
+    }
+    if (this.minutes > 3) {
+      runner.frequency = 150;
+    }
   },
   stopGame: function stopGame() {
     this.timer.pause = Date.now();
@@ -43,10 +54,7 @@ const runner = {
     this.timer.interval = setInterval(function () {
       let delta = Date.now() - runner.timer.start;
       runner.timer.seconds = Math.floor(delta / 1000);
-      if (runner.timer.seconds > 59) {
-        runner.timer.minutes += 1;
-        runner.timer.seconds = 0;
-      }
+      runner.timer.minutes = Math.floor(runner.timer.seconds / 60);
 
       let seconds = runner.timer.seconds;
       let minutes = runner.timer.minutes;

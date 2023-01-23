@@ -13,6 +13,7 @@ const processor = {
   processCoordSys: function processCoordSys() {
     if (!this.xyGroup) {
       // this.xyGroup = makeNewTetro();
+      // tests
       this.xyGroup = [
         [12, 9],
         [12, 10],
