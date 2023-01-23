@@ -99,6 +99,8 @@ export const rotator = {
       rotationGroup.quadrant = rotationGroup.quadrant - 1;
     }
 
+    console.log(rotationGroup.rightSquares);
+
     if (rotationGroup.quadrant === 1) {
       for (let square of rotationGroup.topSquares) {
         square[0] = square[0] - square.distanceToMid;
@@ -192,6 +194,7 @@ export const rotator = {
       rotationGroup.quadrant = rotationGroup.quadrant + 1;
     }
 
+    console.log(rotationGroup.quadrant);
     if (rotationGroup.quadrant === 1) {
       for (let square of rotationGroup.topSquares) {
         square[0] = square[0] - square.distanceToMid;
