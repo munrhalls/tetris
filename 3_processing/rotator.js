@@ -100,17 +100,16 @@ export const rotator = {
   },
   rotateTetroCounterClockwise: function rotateTetroCounterClockwise(xyGroup) {
     let rotationGroup = structuredClone(xyGroup);
-    console.log("rotation group", rotationGroup);
 
     if (!rotationGroup.rotationReference)
-      if (!rotationGroup.quadrant) {
-        // this.setOriginalReference(rotationGroup);
-        rotationGroup.quadrant = 4;
-      } else if (rotationGroup.quadrant - 1 < 1) {
-        rotationGroup.quadrant = 4;
-      } else {
-        rotationGroup.quadrant = rotationGroup.quadrant - 1;
-      }
+      this.setOriginalReference(rotationGroup);
+    if (!rotationGroup.quadrant) {
+      rotationGroup.quadrant = 4;
+    } else if (rotationGroup.quadrant - 1 < 1) {
+      rotationGroup.quadrant = 4;
+    } else {
+      rotationGroup.quadrant = rotationGroup.quadrant - 1;
+    }
 
     let ymax = 0;
     let ymin = rows;
@@ -126,133 +125,85 @@ export const rotator = {
     const ymid = ymin + yLength / 2;
     const xLength = xmax - xmin;
     const xmid = xmin + xLength / 2;
-
-    // rotationGroup[0].color = "transparent";
-    // rotationGroup[1].color = "transparent";
-    // rotationGroup[2].color = "transparent";
-    // rotationGroup[3].color = "transparent";
-
-    if (!rotationGroup.quadrantsReference) {
-      rotationGroup.quadrantsReference = true;
-      rotationGroup.startsTopRight = [rotationGroup[0], rotationGroup[1]];
-      // rotationGroup.startsTopRight = rotationGroup.filter((xy) => {
-      //   if (xy[0] < ymid && xy[1] > xmid) {
-      //     return xy;
-      //   }
-      // });
-      // rotationGroup.startsTopLeft = rotationGroup.filter((xy) => {
-      //   if (xy[0] < ymid && xy[1] < xmid) return xy;
-      // });
-    }
-
-    // rotationGroup.startsBottomRight = rotationGroup.find(
-    //   (xy) => xy[0] === ymax && xy[1] === xmax
-    // );
-
-    // rotationGroup.startsBottomLeft = rotationGroup.find(
-    //   (xy) => xy[0] === ymax && xy[1] === xmin
-    // );
-
-    // rotationGroup.startsTopLeft = rotationGroup.find(
-    //   (xy) => xy[0] === ymin && xy[1] === xmin
-    // );
-    // 4 directions array
-    // direction = starts<position> + number
-
+    console.log(rotationGroup.quadrant);
     if (rotationGroup.quadrant === 4) {
-      for (let square of rotationGroup.startsTopRight) {
-        this.moveLeft(square);
+      for (let square of rotationGroup.topSquares) {
+        square[0] = square[0] + square.distanceToMid;
+        square[1] = square[1] - square.distanceToMid;
+      }
+      for (let square of rotationGroup.botSquares) {
+        square[0] = square[0] - square.distanceToMid;
+        square[1] = square[1] + square.distanceToMid;
+      }
+      for (let square of rotationGroup.leftSquares) {
+        square[0] = square[0] + square.distanceXToMid;
+        square[1] = square[1] + square.distanceXToMid;
+      }
+      for (let square of rotationGroup.rightSquares) {
+        square[0] = square[0] - square.distanceXToMid;
+        square[1] = square[1] - square.distanceXToMid;
       }
     }
     if (rotationGroup.quadrant === 3) {
-      for (let square of rotationGroup.startsTopRight) {
-        this.moveBottom(square);
+      for (let square of rotationGroup.topSquares) {
+        square[0] = square[0] + square.distanceToMid;
+        square[1] = square[1] + square.distanceToMid;
+        square.color = "orange";
+      }
+      for (let square of rotationGroup.botSquares) {
+        square[0] = square[0] - square.distanceToMid;
+        square[1] = square[1] - square.distanceToMid;
+        square.color = "red";
+      }
+      for (let square of rotationGroup.leftSquares) {
+        square[0] = square[0] - square.distanceXToMid;
+        square[1] = square[1] + square.distanceXToMid;
+        square.color = "green";
+      }
+      for (let square of rotationGroup.rightSquares) {
+        square[0] = square[0] + square.distanceXToMid;
+        square[1] = square[1] - square.distanceXToMid;
       }
     }
     if (rotationGroup.quadrant === 2) {
-      for (let square of rotationGroup.startsTopRight) {
-        this.moveRight(square);
+      for (let square of rotationGroup.topSquares) {
+        square[0] = square[0] - square.distanceToMid;
+        square[1] = square[1] + square.distanceToMid;
+      }
+      for (let square of rotationGroup.botSquares) {
+        square[0] = square[0] + square.distanceToMid;
+        square[1] = square[1] - square.distanceToMid;
+      }
+      for (let square of rotationGroup.leftSquares) {
+        square[0] = square[0] - square.distanceXToMid;
+        square[1] = square[1] - square.distanceXToMid;
+      }
+      for (let square of rotationGroup.rightSquares) {
+        square[0] = square[0] + square.distanceXToMid;
+        square[1] = square[1] + square.distanceXToMid;
       }
     }
     if (rotationGroup.quadrant === 1) {
-      for (let square of rotationGroup.startsTopRight) {
-        this.moveUp(square);
+      for (let square of rotationGroup.topSquares) {
+        square.color = "orange";
+        square[0] = square[0] - square.distanceToMid;
+        square[1] = square[1] - square.distanceToMid;
+      }
+      for (let square of rotationGroup.botSquares) {
+        square[0] = square[0] + square.distanceToMid;
+        square[1] = square[1] + square.distanceToMid;
+      }
+
+      for (let square of rotationGroup.leftSquares) {
+        square[0] = square[0] + square.distanceXToMid;
+        square[1] = square[1] - square.distanceXToMid;
+        square.color = "green";
+      }
+      for (let square of rotationGroup.rightSquares) {
+        square[0] = square[0] - square.distanceXToMid;
+        square[1] = square[1] + square.distanceXToMid;
       }
     }
-    console.log("after", rotationGroup.quadrant, rotationGroup.startsTopRight);
-    // if (rotationGroup.quadrant === 1) {
-    //   for (let square of rotationGroup.topSquares) {
-    //     square[0] = square[0] - square.distanceToMid;
-    //     square[1] = square[1] - square.distanceToMid;
-    //   }
-    //   for (let square of rotationGroup.botSquares) {
-    //     square[0] = square[0] + square.distanceToMid;
-    //     square[1] = square[1] + square.distanceToMid;
-    //   }
-
-    //   for (let square of rotationGroup.leftSquares) {
-    //     square[0] = square[0] - square.distanceXToMid;
-    //     square[1] = square[1] - square.distanceXToMid;
-    //   }
-    //   for (let square of rotationGroup.rightSquares) {
-    //     square[0] = square[0] + square.distanceXToMid;
-    //     square[1] = square[1] + square.distanceXToMid;
-    //   }
-    // }
-    // if (rotationGroup.quadrant === 2) {
-    //   for (let square of rotationGroup.topSquares) {
-    //     square[0] = square[0] - square.distanceToMid;
-    //     square[1] = square[1] + square.distanceToMid;
-    //   }
-    //   for (let square of rotationGroup.botSquares) {
-    //     square[0] = square[0] + square.distanceToMid;
-    //     square[1] = square[1] - square.distanceToMid;
-    //   }
-    //   for (let square of rotationGroup.leftSquares) {
-    //     square[0] = square[0] + square.distanceXToMid;
-    //     square[1] = square[1] + square.distanceXToMid;
-    //   }
-    //   for (let square of rotationGroup.rightSquares) {
-    //     square[0] = square[0] - square.distanceXToMid;
-    //     square[1] = square[1] - square.distanceXToMid;
-    //   }
-    // }
-    // if (rotationGroup.quadrant === 3) {
-    //   for (let square of rotationGroup.topSquares) {
-    //     square[0] = square[0] + square.distanceToMid;
-    //     square[1] = square[1] + square.distanceToMid;
-    //   }
-    //   for (let square of rotationGroup.botSquares) {
-    //     square[0] = square[0] - square.distanceToMid;
-    //     square[1] = square[1] - square.distanceToMid;
-    //   }
-    //   for (let square of rotationGroup.leftSquares) {
-    //     square[0] = square[0] - square.distanceXToMid;
-    //     square[1] = square[1] - square.distanceXToMid;
-    //   }
-    //   for (let square of rotationGroup.rightSquares) {
-    //     square[0] = square[0] + square.distanceXToMid;
-    //     square[1] = square[1] + square.distanceXToMid;
-    //   }
-    // }
-    // if (rotationGroup.quadrant === 4) {
-    //   for (let square of rotationGroup.topSquares) {
-    //     square[0] = square[0] + square.distanceToMid;
-    //     square[1] = square[1] - square.distanceToMid;
-    //   }
-    //   for (let square of rotationGroup.botSquares) {
-    //     square[0] = square[0] - square.distanceToMid;
-    //     square[1] = square[1] + square.distanceToMid;
-    //   }
-    //   for (let square of rotationGroup.leftSquares) {
-    //     square[0] = square[0] + square.distanceXToMid;
-    //     square[1] = square[1] + square.distanceXToMid;
-    //   }
-    //   for (let square of rotationGroup.rightSquares) {
-    //     square[0] = square[0] - square.distanceXToMid;
-    //     square[1] = square[1] - square.distanceXToMid;
-    //   }
-    // }
 
     this.handleOffsets(rotationGroup);
     const pass = !frozenChecker.isCrossingFrozenTetro(rotationGroup);
