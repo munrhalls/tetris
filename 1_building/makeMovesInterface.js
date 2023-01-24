@@ -53,7 +53,6 @@ export default function makeMovesInterface() {
     }
     // ROTATE COUNTERCLOCKWISE
     if (e.code === "KeyA") {
-      testRotation();
       if (checker.isAtBoundBottom(processor.xyGroup)) {
         tetroFreezer.freezeTetro(processor.xyGroup);
         return (processor.xyGroup = null);

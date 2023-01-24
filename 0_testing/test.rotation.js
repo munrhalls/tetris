@@ -7,6 +7,7 @@ import { rotator } from "../3_processing/rotator.js";
 // 4. Should work for varied kinds of tetrominoes.
 
 function testRotation() {
+  // 4.
   for (let i = 0; i < 50; i++) {
     let tetro = makeNewTetro();
     const tetroSave = [...tetro];
@@ -16,7 +17,7 @@ function testRotation() {
 
 function runRotationTests(tetroSave, tetro) {
   console.log("Testing rotation..");
-
+  // 3. 2. & 1.
   testCounterClockwise(tetroSave, tetro);
   testClockwise(tetroSave, tetro);
   testBoth(tetroSave, tetro);
