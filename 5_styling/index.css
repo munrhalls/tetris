@@ -51,6 +51,24 @@
     height: 12rem;
     width: 8rem;
 }
+#start {
+    position: relative;
+}
+#start:after {
+    position: absolute;
+    top: 0;
+    left: 20%;
+    bottom: 0;
+    content: ' ';
+    width: 79%;
+    height: 100%;
+    background-color: #fff;
+    opacity: 0.05;
+}
+#start:after:hover {
+    visibility: visible;
+    z-index: 10;
+}
 .btn.hidden {
     display: none;
 }
