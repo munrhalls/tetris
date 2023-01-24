@@ -126,8 +126,6 @@ export const rotator = {
     const xLength = xmax - xmin;
     const xmid = xmin + xLength / 2;
 
-    console.log("rotateTetroCounterClockwise ", rotationGroup.quadrant);
-
     if (rotationGroup.quadrant === 4) {
       for (let square of rotationGroup.topSquares) {
         square[0] = square[0] + square.distanceToMid;
@@ -146,22 +144,18 @@ export const rotator = {
         square[1] = square[1] - square.distanceXToMid;
       }
     }
-    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    /
     if (rotationGroup.quadrant === 3) {
       for (let square of rotationGroup.topSquares) {
         square[0] = square[0] + square.distanceToMid;
         square[1] = square[1] + square.distanceToMid;
-        square.color = "orange";
       }
       for (let square of rotationGroup.botSquares) {
         square[0] = square[0] - square.distanceToMid;
         square[1] = square[1] - square.distanceToMid;
-        square.color = "red";
       }
       for (let square of rotationGroup.leftSquares) {
         square[0] = square[0] - square.distanceXToMid;
         square[1] = square[1] + square.distanceXToMid;
-        square.color = "green";
       }
       for (let square of rotationGroup.rightSquares) {
         square[0] = square[0] + square.distanceXToMid;
@@ -186,13 +180,9 @@ export const rotator = {
         square[1] = square[1] + square.distanceXToMid;
       }
     }
-    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2    //// 3 TO 2
 
     if (rotationGroup.quadrant === 1) {
-      console.log("1111111111111 counter");
-
       for (let square of rotationGroup.topSquares) {
-        square.color = "orange";
         square[0] = square[0] - square.distanceToMid;
         square[1] = square[1] - square.distanceToMid;
       }
@@ -204,7 +194,6 @@ export const rotator = {
       for (let square of rotationGroup.leftSquares) {
         square[0] = square[0] + square.distanceXToMid;
         square[1] = square[1] - square.distanceXToMid;
-        square.color = "green";
       }
       for (let square of rotationGroup.rightSquares) {
         square[0] = square[0] - square.distanceXToMid;
@@ -234,24 +223,16 @@ export const rotator = {
       rotationGroup.quadrant = rotationGroup.quadrant + 1;
     }
 
-    console.log("rotateTetroClockwise ", rotationGroup.quadrant);
-    /// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2
-    /// 1 TO 2
     if (rotationGroup.quadrant === 1) {
-      // check
       for (let square of rotationGroup.topSquares) {
-        square.color = "orange";
         square[0] = square[0] - square.distanceToMid;
         square[1] = square[1] + square.distanceToMid;
       }
       for (let square of rotationGroup.botSquares) {
-        square.color = "red";
-
         square[0] = square[0] + square.distanceToMid;
         square[1] = square[1] - square.distanceToMid;
       }
       for (let square of rotationGroup.leftSquares) {
-        square.color = "green";
         square[0] = square[0] - square.distanceXToMid;
         square[1] = square[1] - square.distanceXToMid;
       }
@@ -261,19 +242,15 @@ export const rotator = {
       }
     }
     if (rotationGroup.quadrant === 2) {
-      console.log("222222222222 clockwise");
       for (let square of rotationGroup.topSquares) {
-        square.color = "orange";
         square[0] = square[0] + square.distanceToMid;
         square[1] = square[1] + square.distanceToMid;
       }
       for (let square of rotationGroup.botSquares) {
-        square.color = "red";
         square[0] = square[0] - square.distanceToMid;
         square[1] = square[1] - square.distanceToMid;
       }
       for (let square of rotationGroup.leftSquares) {
-        square.color = "green";
         square[0] = square[0] - square.distanceXToMid;
         square[1] = square[1] + square.distanceXToMid;
       }
@@ -282,8 +259,6 @@ export const rotator = {
         square[1] = square[1] - square.distanceXToMid;
       }
     }
-    /// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2/// 1 TO 2
-    /// 1 TO 2
     if (rotationGroup.quadrant === 3) {
       for (let square of rotationGroup.topSquares) {
         square[0] = square[0] + square.distanceToMid;
