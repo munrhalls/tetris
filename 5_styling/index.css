@@ -89,7 +89,9 @@
 }
 
 /* 3. TETRIS */
-
+.game {
+    position: relative;
+}
 #tetris {
     position: relative;
     margin: 0 auto;
@@ -115,15 +117,17 @@
 #end {
     position: absolute;
     top: 0;
-    bottom: 0;
+    bottom: 4.75rem;
     left: 0;
     right: 0;
     background: #000;
+    border: 1px solid #fff;
     color: #fff;
     display: flex;
     justify-content: center;
     align-content: center;
     flex-direction: column;
+    padding: 1.5rem;
 }
 #end.hidden {
     display: none;
@@ -134,8 +138,19 @@
 }
 #end .score {
     font-size: 1rem;
-    margin: 1rem 1rem;
+    margin: 2rem 1rem;
 }   
+#end .play-again {
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#end #playAgainBtn {
+    
+}
+
 #end .highest-assembly {
     font-size: 1rem;
     margin: 1rem 1rem;

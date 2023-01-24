@@ -10,6 +10,7 @@ import scorer from "../3_processing/scorer.js";
 import testRotation from "../0_testing/test.rotation.js";
 
 export default function makeMovesInterface() {
+  // T E S T S
   // testRotation();
 
   window.addEventListener("keydown", function (e) {

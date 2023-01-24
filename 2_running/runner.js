@@ -17,8 +17,8 @@ const runner = {
   },
   runGame: function runGame() {
     this.handleTimer();
-    tetris.style.display = "block";
-    end.style.display = "none";
+    // tetris.style.display = "block";
+    end.style.display = "block";
 
     this.game = setInterval(function () {
       if (this.isOver) return runner.handleGameOver();
@@ -66,12 +66,18 @@ const runner = {
   },
   handleGameOver: function handleGameOver() {
     this.isOver = true;
+    clearInterval(this.timer.interval);
+    clearInterval(this.game);
     document.getElementById("start").classList.remove("hidden");
     document.getElementById("pause").classList.add("hidden");
     document.getElementById("tetris").style.display = "none";
     document.getElementById("end").style.display = "block";
-    clearInterval(this.timer.interval);
-    clearInterval(this.game);
+    const playAgainBtn = document.getElementById("playAgainBtn");
+    playAgainBtn.onclick = function () {
+      startBtn.classList.add("hidden");
+      pauseBtn.classList.remove("hidden");
+      runner.runGame();
+    };
   },
 };
 
