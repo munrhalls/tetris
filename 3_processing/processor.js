@@ -12,25 +12,25 @@ const processor = {
   xyGroup: null,
   processCoordSys: function processCoordSys() {
     if (!this.xyGroup) {
-      this.xyGroup = makeNewTetro();
+      // this.xyGroup = makeNewTetro();
       // tests
-      // this.xyGroup = [
-      //   [12, 7],
-      //   [12, 8],
-      //   [12, 9],
-      //   [11, 11],
-      //   [11, 12],
-      //   [12, 10],
-      //   [12, 11],
-      //   [12, 12],
-      //   [13, 12],
-      // ];
-      // let count = 0;
-      // for (let square of this.xyGroup) {
-      //   square.color = "darkblue";
-      //   square.id = count;
-      //   count++;
-      // }
+      this.xyGroup = [
+        [12, 7],
+        [12, 8],
+        [12, 9],
+        [11, 11],
+        [11, 12],
+        [12, 10],
+        [12, 11],
+        [12, 12],
+        [13, 12],
+      ];
+      let count = 0;
+      for (let square of this.xyGroup) {
+        square.color = "darkblue";
+        square.id = count;
+        count++;
+      }
     } else {
       if (checker.isAtBoundBottom(this.xyGroup)) {
         tetroFreezer.freezeTetro(this.xyGroup);

@@ -125,7 +125,7 @@ export const rotator = {
     const ymid = ymin + yLength / 2;
     const xLength = xmax - xmin;
     const xmid = xmin + xLength / 2;
-    console.log(rotationGroup.quadrant);
+
     if (rotationGroup.quadrant === 4) {
       for (let square of rotationGroup.topSquares) {
         square[0] = square[0] + square.distanceToMid;
@@ -227,14 +227,19 @@ export const rotator = {
     console.log(rotationGroup.quadrant);
     if (rotationGroup.quadrant === 1) {
       for (let square of rotationGroup.topSquares) {
+        square.color = "orange";
         square[0] = square[0] - square.distanceToMid;
         square[1] = square[1] + square.distanceToMid;
       }
       for (let square of rotationGroup.botSquares) {
+        square.color = "red";
+
         square[0] = square[0] + square.distanceToMid;
         square[1] = square[1] - square.distanceToMid;
       }
       for (let square of rotationGroup.leftSquares) {
+        square.color = "green";
+
         square[0] = square[0] - square.distanceXToMid;
         square[1] = square[1] - square.distanceXToMid;
       }
@@ -245,19 +250,22 @@ export const rotator = {
     }
     if (rotationGroup.quadrant === 2) {
       for (let square of rotationGroup.topSquares) {
+        square.color = "orange";
         square[0] = square[0] + square.distanceToMid;
-        square[1] = square[1] + square.distanceToMid;
-      }
-      for (let square of rotationGroup.botSquares) {
-        square[0] = square[0] - square.distanceToMid;
         square[1] = square[1] - square.distanceToMid;
       }
+      for (let square of rotationGroup.botSquares) {
+        square.color = "red";
+        square[0] = square[0] - square.distanceToMid;
+        square[1] = square[1] + square.distanceToMid;
+      }
       for (let square of rotationGroup.leftSquares) {
-        square[0] = square[0] + square.distanceXToMid;
+        square.color = "green";
+        square[0] = square[0] - square.distanceXToMid;
         square[1] = square[1] + square.distanceXToMid;
       }
       for (let square of rotationGroup.rightSquares) {
-        square[0] = square[0] - square.distanceXToMid;
+        square[0] = square[0] + square.distanceXToMid;
         square[1] = square[1] - square.distanceXToMid;
       }
     }
