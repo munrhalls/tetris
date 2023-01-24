@@ -43,8 +43,13 @@
     align-items: center;
 }
 .btn:hover {
-    box-shadow: inset  0 0 12px 3px #fff;
+    box-shadow: inset  0 0 3px 3px #fff;
     border-bottom: 3px solid #fff;
+}
+#start, 
+#pause {
+    height: 12rem;
+    width: 8rem;
 }
 .btn.hidden {
     display: none;
@@ -54,7 +59,7 @@
     color: #fff;
 }
 .score-title {
-    /* font-size: 3rem; */
+    text-align: center;
 }
 .score-number {
     margin-top: 1rem;
@@ -62,6 +67,7 @@
     font-size: 2rem;
     text-align: center;
     padding: 1.5rem;
+    text-shadow: 1px 1px 2px #fff, 0 0 1rem #fff, 0 0 0.1rem #fff;
 }
 #timer {
     color: #fff;
