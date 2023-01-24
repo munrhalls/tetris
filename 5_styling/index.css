@@ -17,21 +17,7 @@ body {
 
 }
 
-/* TETRIS */
-#tetris {
-    position: relative;
-    margin: 0 auto;
-    border: 3px solid #313131;
-    background: #fff;
-
-    height: fit-content;
-}
-
-
-
-
 /* 2. LEFTBAR */
-
 .leftbar {
     height: 100%;
     min-width: 30%;
@@ -91,24 +77,28 @@ body {
 
 /* 3. TETRIS */
 
+#tetris {
+    position: relative;
+    margin: 0 auto;
+    border: 3px solid #313131;
+    background: #fff;
+
+    height: fit-content;
+}
 #tetris .row {
     display: flex;    
 }
-
 #tetris .cell {
     border-right: 1px solid #000;
     border-bottom: 1px solid #000;
 }
-
 .tetrominoe {
     position: absolute;
     background: black;
 }
-
 .frozen {
     opacity: 1;
 }
-
 #end {
     position: absolute;
     top: 0;
@@ -128,19 +118,15 @@ body {
 #end .title {
     font-size: 1rem;
     margin: 2rem 1rem 1rem 1rem;
-    
 }
-
 #end .score {
     font-size: 1rem;
     margin: 1rem 1rem;
 }   
-
 #end .highest-assembly {
     font-size: 1rem;
     margin: 1rem 1rem;
 }
-
 #end #restartBtn {
     color: '#fff';
     width: 140px;
@@ -150,6 +136,45 @@ body {
 /* 4. RIGHTBAR */
 .rightbar {
     min-width: 30%;
-    margin-left: 1.5rem;
+    margin: 1.5rem;
+    
     /* border: 1px solid #fff; */
+}
+
+.rightbar-section {
+    margin-bottom: 1.5rem;
+    color: #fff;
+}
+.objective p {
+    margin: 0.5rem 0;
+}
+.instructions-subtitle {
+    margin: 1rem 0;
+}
+.instructions-set {
+    margin: 1rem 0; 
+}
+.instructions-keySymbolsContainer {
+    display: flex;
+    margin: 0.5rem 0;
+}
+.instructions-keySymbol {
+    border: 1px solid #fff;
+    border-radius: 5px;
+    height: 2rem;
+    width: 2rem;
+    margin-left: 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.instructions-keySymbol:hover {
+    box-shadow: 0 0 5px 3px #fff;
+}
+.instructions-keyDescription {
+    margin: 0 1rem;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
