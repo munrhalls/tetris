@@ -6,7 +6,6 @@ export const tetroFreezer = {
   freezeCell: function freezeCell(xy) {
     const cell = document.getElementById(`cellXY-${xy[0]}-${xy[1]}`);
     cell.classList.add("frozen");
-    cell.classList.add("purple");
     cell.classList.add("color");
     scorer.markRowByFrozenCount(xy[0]);
   },

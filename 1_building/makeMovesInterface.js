@@ -7,6 +7,7 @@ import { frozenChecker } from "../3_processing/frozenChecker.js";
 import { tetroFreezer } from "../4_displaying/tetroFreezer.js";
 import { painter } from "../4_displaying/painter.js";
 import scorer from "../3_processing/scorer.js";
+import testRotation from "../0_testing/test.rotation.js";
 
 export default function makeMovesInterface() {
   window.addEventListener("keydown", function (e) {
@@ -52,6 +53,7 @@ export default function makeMovesInterface() {
     }
     // ROTATE COUNTERCLOCKWISE
     if (e.code === "KeyA") {
+      testRotation();
       if (checker.isAtBoundBottom(processor.xyGroup)) {
         tetroFreezer.freezeTetro(processor.xyGroup);
         return (processor.xyGroup = null);
@@ -61,6 +63,7 @@ export default function makeMovesInterface() {
         return (processor.xyGroup = null);
       }
       painter.unpaintTetro(processor.xyGroup);
+
       processor.xyGroup = rotator.rotateTetroCounterClockwise(
         processor.xyGroup
       );
