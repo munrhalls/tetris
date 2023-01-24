@@ -100,6 +100,11 @@ body {
     text-shadow: 1px 1px 2px #fff, 0 0 1rem #fff, 0 0 0.1rem #fff;
     font-weight: bold;
 }
+#endScoreDisplay {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+    border: none;
+}
 .time {
     border: 1px solid #fff;
     padding: .75rem;
@@ -146,12 +151,13 @@ body {
     opacity: 1;
 }
 #end {
+    min-height: 45rem;
     min-width: 30rem;
     background: #000;
     border: 1px solid #fff;
     color: #fff;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-content: center;
     flex-direction: column;
     padding: 1.5rem;
@@ -165,10 +171,10 @@ body {
 }
 #end .score {
     font-size: 1rem;
-    margin: 2rem 1rem;
+    margin: 3rem 1rem;
 }   
 #end .play-again {
-    margin-top: 1.5rem;
+    margin-top: 3rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
