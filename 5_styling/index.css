@@ -91,6 +91,7 @@
 /* 3. TETRIS */
 .game {
     position: relative;
+    min-width: 40%;
 }
 #tetris {
     position: relative;

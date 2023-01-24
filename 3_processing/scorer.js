@@ -20,6 +20,9 @@ const scorer = {
     lineClearer.clearRow(row);
     lineClearer.updateRows(row);
   },
+  reset: function () {
+    this.score = 0;
+  },
 };
 
 export default scorer;

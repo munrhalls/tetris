@@ -1,5 +1,8 @@
 import requestAnimFrame from "./../4_displaying/animateFrame.js";
 import repaintFrame from "./../4_displaying/repaintFrame.js";
+import scorer from "../3_processing/scorer.js";
+import processor from "../3_processing/processor.js";
+import resetBoard from "../1_building/resetBoard.js";
 
 const runner = {
   game: false,
@@ -17,8 +20,8 @@ const runner = {
   },
   runGame: function runGame() {
     this.handleTimer();
-    // tetris.style.display = "block";
-    end.style.display = "block";
+    tetris.style.display = "block";
+    end.style.display = "none";
 
     this.game = setInterval(function () {
       if (this.isOver) return runner.handleGameOver();
@@ -64,20 +67,34 @@ const runner = {
       document.getElementById("timer").innerText = `${minutes}:${seconds}`;
     }, 1000);
   },
-  handleGameOver: function handleGameOver() {
-    this.isOver = true;
-    clearInterval(this.timer.interval);
-    clearInterval(this.game);
+  setGameOverDOM: function setGameOverDOM() {
     document.getElementById("start").classList.remove("hidden");
     document.getElementById("pause").classList.add("hidden");
-    document.getElementById("tetris").style.display = "none";
-    document.getElementById("end").style.display = "block";
-    const playAgainBtn = document.getElementById("playAgainBtn");
-    playAgainBtn.onclick = function () {
-      startBtn.classList.add("hidden");
-      pauseBtn.classList.remove("hidden");
-      runner.runGame();
+    document.getElementById("endScoreDisplay").innerText = scorer.score;
+    document.getElementById("timer").innerText = "00:00";
+
+    tetris.style.display = "none";
+    end.style.display = "block";
+  },
+  handleGameOver: function handleGameOver() {
+    clearInterval(this.timer.interval);
+    clearInterval(this.game);
+    this.isOver = true;
+    this.timer = {
+      seconds: 0,
+      minutes: 0,
+      start: undefined,
+      pause: undefined,
+      afterPause: undefined,
+      pauseTime: undefined,
+      gameTime: undefined,
+      interval: null,
     };
+    this.frequency = 350;
+    this.setGameOverDOM();
+    scorer.reset();
+    processor.reset();
+    resetBoard();
   },
 };
 

@@ -46,6 +46,9 @@ const processor = {
       painter.paintTetro(this.xyGroup);
     }
   },
+  reset: function () {
+    this.xyGroup = null;
+  },
 };
 
 export default processor;
