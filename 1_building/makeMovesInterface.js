@@ -10,7 +10,8 @@ import scorer from "../3_processing/scorer.js";
 import testRotation from "../0_testing/test.rotation.js";
 
 export default function makeMovesInterface() {
-  testRotation();
+  // testRotation();
+
   window.addEventListener("keydown", function (e) {
     if (!runner.runGame) return;
     if (!processor.xyGroup) return;
