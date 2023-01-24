@@ -1,7 +1,3 @@
-// rotation
-// if axis mid even, it's uneven squares num, axis mid = square
-// if axis mid uneven, it's even squares num, no axis mid square = below axis mid go to less than it, above axis mid go to more than it
-
 const columns = parseInt(tetris.getAttribute("columns"));
 const rows = parseInt(tetris.getAttribute("rows"));
 import { calculator } from "./calculator.js";

@@ -1,6 +1,7 @@
 import makeNewTetro from "../1_building/makeNewTetro.js";
 import { rotator } from "../3_processing/rotator.js";
 
+// Test at: makeMovesInterface.js.
 // 1.Tetrominoe start positions, should be equal after rotating N-times when N is divisible by 4.
 // 2. Should be true for both clockwise & counterclockwise.
 // 3. Should be true for alternating between clockwise & counterclockwise.
